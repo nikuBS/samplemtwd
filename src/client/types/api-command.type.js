@@ -411,6 +411,8 @@ Tw.API_CMD = {
   BFF_07_0106: { path: '/core-bill/:version/use-contents-prepay/auto-process-bank', method: Tw.API_METHOD.POST },
   BFF_07_0107: { path: '/core-bill/:version/auto-payments-nc', method: Tw.API_METHOD.POST},
   BFF_07_0108: { path: '/core-bill/:version/auto-payments-nc', method: Tw.API_METHOD.PUT},
+  BFF_07_0110: { path: '/core-bill/:version/real-time/transfer-bank', method: Tw.API_METHOD.GET},
+  BFF_07_0111: { path: '/core-bill/:version/bill-pay/pay-cardinfo', method: Tw.API_METHOD.GET},
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: Tw.API_METHOD.GET },
@@ -611,8 +613,8 @@ Tw.API_CMD = {
   STACK_SEARCH_USER_CLICK: { path: '/search/tworld/log/save', method: Tw.API_METHOD.GET },
   // SEARCH_APP: { path: '/search/tworld/mobile-app', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
   // SEARCH_WEB: { path: '/search/tworld/mobile-web', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
-  SEARCH_APP: { path: '/search/tworld/mobile-app5', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
-  SEARCH_WEB: { path: '/search/tworld/mobile-web5', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
+  SEARCH_APP: { path: '/search/tworld/mobile-app6', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
+  SEARCH_WEB: { path: '/search/tworld/mobile-web6', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
@@ -682,8 +684,8 @@ Tw.NODE_CMD = {
   GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: Tw.API_METHOD.GET },
   GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET },
   GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: Tw.API_METHOD.GET },
-  GET_SSO_URL: { path: '/common/sso-url', method: Tw.API_METHOD.GET }
-
+  GET_SSO_URL: { path: '/common/sso-url', method: Tw.API_METHOD.GET },
+  GET_PREFERENCE_PROPERTY: { path: '/pref-property', method: Tw.API_METHOD.GET }
 };
 
 Tw.SESSION_CMD = {

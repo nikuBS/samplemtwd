@@ -26,7 +26,7 @@ Tw.MyTFareBillGuideCommon.prototype = {
 
   _init: function () {
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+    // new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
 
   /**
@@ -149,7 +149,9 @@ Tw.MyTFareBillGuideCommon.prototype = {
    */
   _goProdPage: function (event) {
     var url = $(event.currentTarget).data('prod-page-url');
-    this._history.goLoad(url);
+    if (!!url) {
+      this._history.goLoad(url);
+    }
   },
   // 요금납부 호출
   _feePayBtnEvt: function (event) {

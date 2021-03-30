@@ -84,7 +84,7 @@ _%>
                 </div>
                 <!-- 배너 영역 :end -->
                 <!-- 201201 [OP002-10282] 수정03 -->
-                <section class="cont-card">
+                <section class="cont-card" data-id="other-menus">
                     <div class="section-inner">
                         <div class="head-tit">다른 메뉴를 찾고 계신가요?</div>
                         <div class="card-cont">
@@ -97,7 +97,7 @@ _%>
                                             <i class="ico"><img src="<%= CDN %>/img/myt/<%= item.icon %>" alt=""></i><%= item.name %>
                                         </a>
                                         <% } else { %>
-                                        <a href="<%= item.url %>" data-xt_eid="<%= item.xt_eid %>" data-xt_csid="NO" data-xt_action="BC">
+                                        <a href="#" data-url="<%= item.url %>" data-xt_eid="<%= item.xt_eid %>" data-xt_csid="NO" data-xt_action="BC">
                                             <i class="ico"><img src="<%= CDN %>/img/myt/<%= item.icon %>" alt=""></i><%= item.name %>
                                         </a>
                                         <% } %>

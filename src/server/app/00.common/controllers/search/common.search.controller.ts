@@ -29,7 +29,7 @@ class CommonSearch extends TwViewController {
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const from = req.header('referer') ? req.query.from : null;
     const pageNum = req.query.page || 1;
-    let sort = req.query.sort || 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.direct-D';
+    let sort = req.query.sort || 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.direct-D.phone-D.tablet-D.accessory-D';
     let redirectParam = req.query.redirect || 'Y';
     const _this = this;
     // const sort = 'A';  // 추천순 (Admin)
@@ -160,9 +160,6 @@ class CommonSearch extends TwViewController {
             if (!FormatHelper.isEmpty(svcInfo)) {
               requestObject.userId = svcInfo.userId;
             }
-
-
-
 
             Observable.combineLatest(
               _this.apiService.request( searchApi, requestObject, {}),

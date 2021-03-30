@@ -1,9 +1,11 @@
 Tw.UIService = function () {
+  this.historyService = new Tw.HistoryService();
   this.setBack();
   this.setForward();
   this.setReplace();
   this.setBackRefresh();
   this.setInputEvent();
+  this.setNetfunnel();
 };
 
 Tw.UIService.prototype = {
@@ -13,25 +15,25 @@ Tw.UIService.prototype = {
    */
   setBack: function () {
     /* 뒤로가기 추가 */
-    $('.fe-common-back').on('click', function ($event) {
+    $('.fe-common-back').on('click', $.proxy(function ($event) {
       Tw.Logger.info('[Common Back]');
       if ( Tw.BrowserHelper.isApp() && $($event.currentTarget).parent().data('history') <= 1 &&
         !(/\/main\/home/.test(location.href) || /\/main\/store/.test(location.href))) {
-        location.replace('/main/home');
+        this.historyService.replaceURL('/main/home');
       } else {
-        window.history.back();
+        this.historyService.goBack();
       }
-    });
+    },this));
   },
   /**
    * @desc fe-common-forward 클래스 가진 모든 element에 click event 바인딩(앞으로 가기)
    * @private
    */
   setForward: function () {
-    $('.fe-common-forward').on('click', function () {
+    $('.fe-common-forward').on('click', $.proxy(function () {
       Tw.Logger.info('[Common Forward]');
-      window.history.forward();
-    });
+      this.historyService.go(1);
+    }, this));
   },
 
   /**
@@ -39,11 +41,11 @@ Tw.UIService.prototype = {
    * @private
    */
   setReplace: function () {
-    $('.fe-replace-history').on('click', function ($event) {
+    $('.fe-replace-history').on('click', $.proxy(function (event) {
       Tw.Logger.info('[Replace History]');
-      location.replace($event.currentTarget.href);
+      this.historyService.replaceURL(event.currentTarget.href);
       return false;
-    });
+    }, this));
   },
 
   /**
@@ -92,5 +94,26 @@ Tw.UIService.prototype = {
         $target.val($target.val().slice(0, maxLength));
       }
     }
+  },
+
+  /**
+   * @desc a tag 로 페이지 이동시 특정 속성값 체크하여 netfunnel 적용하기 위한 이벤트처리
+   * @private
+   */
+  setNetfunnel: function () {
+    $('[data-netf-href]').on('click', $.proxy(function (event) {
+      var href = $(event.currentTarget).attr('href');
+      if (href) {
+        event.preventDefault();
+        this.historyService.goLoad(href);
+      }
+    }, this));
+    $('[data-netf-replace]').on('click', $.proxy(function (event) {
+      var href = $(event.currentTarget).attr('href');
+      if (href) {
+        event.preventDefault();
+        this.historyService.replaceURL(href);
+      }
+    }, this));
   }
 };

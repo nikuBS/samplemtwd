@@ -78,7 +78,7 @@ return [sortCode, codeToData(sortCode)]
             </form>
         </div>
         <!-- //191001 [OP002-4009] 수정01 -->
-        <!-- 
+        <!--
         <div class="resultsearch-box">
             <span class="custom-form">
             <% if(keyword===inKeyword){ %>
@@ -90,7 +90,7 @@ return [sortCode, codeToData(sortCode)]
                 <span class="c-type1"></span></span>
                 <label for="resultsearch" class="on">결과 내 재검색</label>
             <% } %>
-        </div> 
+        </div>
         -->
     </div>
     <!--// #header -->
@@ -168,10 +168,10 @@ return [sortCode, codeToData(sortCode)]
                     <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 요금제 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                            <a href="/myt-join/submain" data-netf-href="true" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 <%= searchKategorie.immediate.data[0].mainData %>
-                            </a> 
-                            회선의 요금제는<br> 
+                            </a>
+                            회선의 요금제는<br>
                             <em class="highlight">
                                 <a class="list-data" href="/myt-join/myplan" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                     <%= searchKategorie.immediate.data[0].subData %>
@@ -188,10 +188,10 @@ return [sortCode, codeToData(sortCode)]
                     <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 데이터 잔여량 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                            <a href="/myt-join/submain" data-netf-href="true" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 <%= searchKategorie.immediate.data[0].mainData %>
-                            </a> 
-                            회선의<br> 총 데이터 잔여량은  
+                            </a>
+                            회선의<br> 총 데이터 잔여량은
                             <em class="highlight">
                                 <a class="list-data fe-data-remaind" href="/myt-data/hotdata" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
@@ -207,10 +207,10 @@ return [sortCode, codeToData(sortCode)]
                     <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 실시간 이용요금 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                            <a href="/myt-join/submain" data-netf-href="true" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 <%= searchKategorie.immediate.data[0].mainData %>
-                            </a> 
-                            회선의 실시간 이용요금은<br>  
+                            </a>
+                            회선의 실시간 이용요금은<br>
                             <em class="highlight">
                                 <a class="list-data fe-realtime-fee" href="/myt-fare/bill/hotbill" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
@@ -226,9 +226,9 @@ return [sortCode, codeToData(sortCode)]
                     <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 휴대폰 결제 이용요금 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                            <a href="/myt-join/submain" data-netf-href="true" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 <%= searchKategorie.immediate.data[0].mainData %>
-                            </a> 
+                            </a>
                             회선의 휴대폰 결제 이용요금은<br>
                             <em class="highlight">
                                 <a class="list-data" href="/myt-fare/bill/small" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
@@ -249,7 +249,7 @@ return [sortCode, codeToData(sortCode)]
                             T멤버십 등급은
                             <em class="highlight">
                                 <a href="/membership/my" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].BNNR_BOT_BTN_NM1 %>">
-                                    <%= 
+                                    <%=
                                     searchKategorie.immediate.data[0].mainData === 'V'?'VIP':
                                     searchKategorie.immediate.data[0].mainData === 'G'?'Gold':
                                     searchKategorie.immediate.data[0].mainData === 'S'?'Silver':'일반'
@@ -275,10 +275,10 @@ return [sortCode, codeToData(sortCode)]
                     <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 부가서비스 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                            <a href="/myt-join/submain" data-netf-href="true" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 <%= searchKategorie.immediate.data[0].mainData %>
-                            </a> 
-                            회선의 이용 중인 부가서비스는<br>  
+                            </a>
+                            회선의 이용 중인 부가서비스는<br>
                             <em class="highlight fe-prod-cnt-wireless">
                                 옵션/할인
                                 <a class="list-data fe-wireless-discount-additions-cnt" href="/myt-join/myplan" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
@@ -310,7 +310,7 @@ return [sortCode, codeToData(sortCode)]
                     <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 음성 잔여량 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                            <a href="/myt-join/submain" data-netf-href="true" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 <%= searchKategorie.immediate.data[0].mainData %>
                             </a>
                             회선의<br> 총 음성 잔여량은
@@ -329,7 +329,7 @@ return [sortCode, codeToData(sortCode)]
                     <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 요금약정 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                            <a href="/myt-join/submain" data-netf-href="true" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 <%= searchKategorie.immediate.data[0].mainData %>
                             </a>
                             회선은<br>
@@ -350,7 +350,7 @@ return [sortCode, codeToData(sortCode)]
                     <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 요금약정 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                            <a href="/myt-join/submain" data-netf-href="true" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 <%= searchKategorie.immediate.data[0].mainData %>
                             </a>
                             회선은<br>
@@ -369,7 +369,7 @@ return [sortCode, codeToData(sortCode)]
                     <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 단말기 할부금 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                            <a href="/myt-join/submain" data-netf-href="true" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 <%= searchKategorie.immediate.data[0].mainData %>
                             </a>
                             회선의 단말기 잔여 할부금은<br>
@@ -390,7 +390,7 @@ return [sortCode, codeToData(sortCode)]
                     <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 단말기 할부금 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                            <a href="/myt-join/submain" data-netf-href="true" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 <%= searchKategorie.immediate.data[0].mainData %>
                             </a>
                             회선의<br>가장 최근 구매한 단말기 잔여 할부금은
@@ -471,7 +471,7 @@ return [sortCode, codeToData(sortCode)]
 
         <!-- 검색 개선 의견 보내기 -->
         <div class="cont-box nogaps-hoz">
-            <div class="tod-search-feedback">
+            <div class="tod-search-feedback searchFeedbackSurvey">
 
             </div>
         </div>
@@ -697,8 +697,7 @@ return [sortCode, codeToData(sortCode)]
     </script>
     <!--T앱 검색결과[E]-->
 
-    <!--다이렉트샵 검색결과[S]-->
-    <!-- .cont-box -->
+    <!--다이렉트샵 검색결과[S]
     <script type="text/x-handlebars-template" id="direct_base">
         <hr class="cont-sp type1 direct" aria-hidden="true">
         <div class="cont-box list nogaps-btm direct" id="searchlist_direct">
@@ -729,14 +728,13 @@ return [sortCode, codeToData(sortCode)]
         </div>
         <hr class="cont-sp type1 direct" aria-hidden="true">
     </script>
-    <!--// .cont-box -->
-    <!--다이렉트샵 검색결과[E]-->
+    -->
 
 
 <!--휴대폰 검색결과[S]-->
     <script type="text/x-handlebars-template" id="phone_base">
         <hr class="cont-sp type1 phone" aria-hidden="true">
-        <div class="cont-box list nogaps-btm direct" id="searchlist_phone">
+        <div class="cont-box list nogaps-btm phone" id="searchlist_phone">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
                     <% if(searchKategorie.phone.count>5){ %>
@@ -767,7 +765,7 @@ return [sortCode, codeToData(sortCode)]
 <!--태블릿/2nd Device 검색결과[S]-->
 <script type="text/x-handlebars-template" id="tablet_base">
     <hr class="cont-sp type1 tablet" aria-hidden="true">
-    <div class="cont-box list nogaps-btm direct" id="searchlist_tablet">
+    <div class="cont-box list nogaps-btm tablet" id="searchlist_tablet">
         <div class="tod-searchlist-head">
             <h3 class="tit">
                 <% if(searchKategorie.tablet.count>5){ %>
@@ -798,7 +796,7 @@ return [sortCode, codeToData(sortCode)]
 <!--액세서리 검색결과[S]-->
 <script type="text/x-handlebars-template" id="accessory_base">
     <hr class="cont-sp type1 accessory" aria-hidden="true">
-    <div class="cont-box list nogaps-btm direct" id="searchlist_accessory">
+    <div class="cont-box list nogaps-btm accessory" id="searchlist_accessory">
         <div class="tod-searchlist-head">
             <h3 class="tit">
                 <% if(searchKategorie.accessory.count>5){ %>

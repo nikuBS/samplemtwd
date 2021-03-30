@@ -27,16 +27,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       // local 테스트틀 하기 위해 추가
       if ( (process.env.NODE_ENV === pageInfo.advancement.env && pageInfo.advancement.visible)
         || process.env.NODE_ENV === 'local' ) {
-        // netfunnel 통해서 진입한 경우
-        const isNetFunnel = req.query && req.query.netfunnel === 'Y';
-        if (pageInfo.advancement.netFunnelVisible && !isNetFunnel) {
-          res.render('../../../common/views/components/netfunnel.start.component.html', {
-            referer: '/myt-join/submain?netfunnel=Y',
-            action: 'myt_join_submain'
-          });
-        } else {
-          this._render(req, res, next, svcInfo, allSvc, child, pageInfo);
-        }
+        this._render(req, res, next, svcInfo, allSvc, child, pageInfo);
         return false;
       }
     }
@@ -71,10 +62,10 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
     Observable.combineLatest(
       requestApiList
     ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, numSvc, wlap,
-                   myjinfo, prodDisInfo, benefitInfo, billInfo, membership, sms]) => {
+                   myjinfo, prodDisInfo, benefitInfo, billInfo, membership, sms, feePlan]) => {
       const responses = [myline, myif, myhs, myap, mycpp, myinsp,
         myps, mylps, numSvc, wlap];
-      const newResponses = [myjinfo, prodDisInfo, benefitInfo, billInfo, membership, sms];
+      const newResponses = [myjinfo, prodDisInfo, benefitInfo, billInfo, membership, sms, feePlan];
       const _parsing = this.__parsingRequestData({
         res, responses, data
       });
@@ -93,7 +84,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 
   __newParsingRequestData(parsingInfo) {
     const { res, responses, data } = parsingInfo;
-    const [myjinfo, mydisinfo, benefitInfo, billInfo, membership, sms] = responses;
+    const [myjinfo, mydisinfo, benefitInfo, billInfo, membership, sms, feePlan] = responses;
     // 가입개통정보
     data.myJoinInfo = myjinfo;
     // 개통/변경이력 마지막 정보
@@ -190,6 +181,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         };
       }
     }
+
+    data.feePlan = feePlan;
   }
 
   _requestApiList(svcInfo) {
@@ -209,7 +202,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       this._getBenefitInfo(),
       this._getBillInfo(svcInfo),
       this._getMembershipInfo(),
-      this._getWireSmsInfo()
+      this._getWireSmsInfo(),
+      this._getFeePlan()
     ];
   }
 
@@ -664,7 +658,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         billType: 'CMMA_A3_B13-44',
         payMthdType: 'CMMA_A3_B13-45',
         reservation: 'CMMA_A3_B13-46',
-        childHotdata:'CMMA_A3_B13-47',
+        childHotdata: 'CMMA_A3_B13-47',
         childBillGuide: 'CMMA_A3_B13-48',
         childHotbill: 'CMMA_A3_B13-49',
         pause: 'CMMA_A3_B13-50',
@@ -676,7 +670,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         changeNumber: 'CMMA_A3_B13-56',
         banner: 'CMMA_A3_B13-57',
         product: 'CMMA_A3_B13-110'
-      }
+      };
     } else if (this.type === 1) {
       // PPS
       return {
@@ -690,7 +684,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         changePassword: 'CMMA_A3_B13-101',
         banner: 'CMMA_A3_B13-102',
         product: 'CMMA_A3_B13-112'
-      }
+      };
     } else {
       // 유선
       return {
@@ -718,7 +712,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         transferFee: 'CMMA_A3_B13-77',
         wireNumChange: 'CMMA_A3_B13-78',
         product: 'CMMA_A3_B13-111'
-      }
+      };
     }
   }
 }

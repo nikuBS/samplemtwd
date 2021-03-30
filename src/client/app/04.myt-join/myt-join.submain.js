@@ -847,6 +847,16 @@ Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
       return false;
     }, this));
   }
+
+  // 다른메뉴로 이동 이벤트 처리로 변경
+  this.$container.find('[data-id=other-menus] a').on('click', $.proxy(function(event) {
+    var $target = $(event.currentTarget);
+    var url = $target.data('url');
+    if (url) {
+      this._historyService.goLoad(url);
+    }
+    return false;
+  }, this));
 };
 Tw.MytJoinAdvSubMain.prototype._initialize = function() {
   this._getTosAdminMytJoinBanner();

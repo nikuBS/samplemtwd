@@ -512,10 +512,6 @@ Tw.MyTFareBillCommon.prototype = {
    * @desc 완료 페이지 이동
    */
   goComplete: function (options) {
-    /*if (Tw.FormatHelper.isEmpty(options)) {
-      Tw.Logger.error('[goComplete] options is Empty!!');
-      return;
-    }*/
     options = options || {};
     options.type = this.type;
     options.amount = this.getAmount();

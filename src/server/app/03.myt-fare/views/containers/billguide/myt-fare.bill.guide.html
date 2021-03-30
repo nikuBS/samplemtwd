@@ -194,19 +194,28 @@ _%>
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <!-- //191115 웹접근성 수정_02 -->
         <div class="container">
-            <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B12_C43-1", multiple : "CMMA_A3_B12_C43-2" } }); _%>
+            <%- include('../../../../../common/views/components/common.select-line.component.v2.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B12_C43-1", multiple : "CMMA_A3_B12_C43-2" } }); _%>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="calling-plan">
+                    <%_ const url = feePlan.isLink ? '/product/callplan?prod_id=' + feePlan.prodId : '';  _%>
+                    <%_if(url){_%>
                     <button class="wrap-link" data-target="goProdPageBtn"
-                            data-prod-page-url="/product/callplan?prod_id=<%= svcInfo.prodId %>">
+                            data-prod-page-url="<%-url%>">
                         <!-- DV001-14236 뱃지 MY-> 이용중으로 변경 -->
                         <i class="badge icon-badge-plan-my use"><span class="blind">이용 중</span></i>
-                        <span class="stit"><%= svcInfo.prodNm %></span>
+                        <span class="stit"><%= feePlan.prodNm || ''%></span>
                     </button>
+                    <%_} else {_%>
+                    <span class="wrap-link tod-no-link">
+                        <!-- DV001-14236 뱃지 MY-> 이용중으로 변경 -->
+                        <i class="badge icon-badge-plan-my use"><span class="blind">이용 중</span></i>
+                        <span class="stit"><%= feePlan.prodNm || ''%></span>
+                    </span>
+                    <%_}_%>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -361,6 +370,7 @@ _%>
             </div>
             <!--// .cont-box -->
         </div>
+        <div class="dim" data-id="line-dim" style="display: none;"></div>
     </div>
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>

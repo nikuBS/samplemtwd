@@ -176,18 +176,25 @@ Tw.MyTFareBillAccount.prototype = {
    */
   _checkPay: function (e) {
     if (this._validationService.isAllValid()) {
-      this._popupService.open({
-          'hbs': 'MF_01_01_01',
-          'title': Tw.MYT_FARE_PAYMENT_NAME.ACCOUNT,
-          'unit': Tw.CURRENCY_UNIT.WON
-        },
-        $.proxy(this._openCheckPay, this), // open callback
-        $.proxy(this._afterPaySuccess, this), // close callback
-        'check-pay',
-        $(e.currentTarget)
-      );
+      var self = this;
+      var data = this._getData();
+      this._validationService.checkFinancial()
+        .bank() // 은행상태 체크
+        .validation(data.bankCd, function () { // 콜백은 성공일때만 실행된다.
+          self._popupService.open({
+              'hbs': 'MF_01_01_01',
+              'title': Tw.MYT_FARE_PAYMENT_NAME.ACCOUNT,
+              'unit': Tw.CURRENCY_UNIT.WON
+            },
+            $.proxy(self._openCheckPay, self), // open callback
+            $.proxy(self._afterPaySuccess, self), // close callback
+            'check-pay',
+            $(e.currentTarget)
+          );
+        });
     }
   },
+
   /**
    * @function
    * @desc 납부내역 확인 팝업 event 및 data 처리

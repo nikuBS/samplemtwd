@@ -59,17 +59,8 @@ class MytDataSubmainController extends TwViewController {
       // local 테스트틀 하기 위해 추가
       if ((process.env.NODE_ENV === pageInfo.advancement.env && pageInfo.advancement.visible)
         || process.env.NODE_ENV === 'local') {
-        // netfunnel 통해서 진입한 경우
-        const isNetFunnel = req.query && req.query.netfunnel === 'Y';
-        if (pageInfo.advancement.netFunnelVisible && !isNetFunnel) {
-          res.render('../../../common/views/components/netfunnel.start.component.html', {
-            referer: '/myt-data/submain?netfunnel=Y',
-            action: 'myt_data_submain'
-          });
-        } else {
-          const advInst = new MytDataSubmainAdvController();
-          advInst.initPage(req, res, next);
-        }
+        const advInst = new MytDataSubmainAdvController();
+        advInst.initPage(req, res, next);
         return false;
       }
     }

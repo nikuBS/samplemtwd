@@ -95,7 +95,14 @@ class MyTFareBillSmall extends TwViewController {
    * @returns {Observable<any>}
    */
   private getHistory(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0079, {}); // 소액결제 이용내역 조회;
+    return Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_05_0079, {}), // 소액결제 이용내역 조회
+      this.apiService.request(API_CMD.BFF_05_0066, {}) // 콘텐츠 이용료 한도조회(휴대폰 결제 미동의 확인을 위해 조회)
+    ).map(([history, limit]) => {
+      history.code = limit.code;
+      history.msg = limit.msg;
+      return history;
+    });
   }
 
   /**

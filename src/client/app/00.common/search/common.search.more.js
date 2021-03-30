@@ -51,7 +51,7 @@ $.extend(Tw.CommonSearchMore.prototype,
       cateCd: '',
       ordCol: '',
       coPtnrNm: '',
-      sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+      sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.phone-D.tablet-D.accessory-D.tmembership-R.event-D.sale-C' +
         '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
     },
     /**
@@ -178,11 +178,14 @@ $.extend(Tw.CommonSearchMore.prototype,
 
       // 최근 검색어 클릭시 초기화
       this.$container.on('click', '#auto_complete_list li, #recently_keyword_list li a', function (/* e */) {
-        Tw.CommonHelper.setCookie('search_sort::rate', 'A');
-        Tw.CommonHelper.setCookie('search_sort::service', 'A');
-        Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
-        Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
-        Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+        Tw.CommonHelper.setCookie('search_sort::rate', 'C');
+        Tw.CommonHelper.setCookie('search_sort::service', 'C');
+        Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
+        Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
+        // Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+        Tw.CommonHelper.setCookie('search_sort::phone', 'D');
+        Tw.CommonHelper.setCookie('search_sort::tablet', 'D');
+        Tw.CommonHelper.setCookie('search_sort::accessory', 'D');
       });
 
       function sortCodeToName(code) {
@@ -196,12 +199,10 @@ $.extend(Tw.CommonSearchMore.prototype,
       $(window).bind('pageshow', function (event) {
         if ( event.originalEvent.persisted ) {
         } else {
-          console.log('화면진입 sort 재정렬');
           $('.fe-btn-sort-rate').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::rate')));
           $('.fe-btn-sort-service').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::service')));
           $('.fe-btn-sort-tv_internet').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::tv_internet')));
           $('.fe-btn-sort-troaming').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::troaming')));
-          $('.fe-btn-sort-direct').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::direct')));
         }
       });
 
@@ -269,7 +270,7 @@ $.extend(Tw.CommonSearchMore.prototype,
               data[i][key] = data[i][key].replace('|', '');
             }
           }
-          if ( ( category === 'direct' || category === 'phone' || category === 'tablet' || category === 'accessory' ) && key === 'TYPE' ) {
+          if ( ( /*category === 'direct' ||*/ category === 'phone' || category === 'tablet' || category === 'accessory' ) && key === 'TYPE' ) {
             if ( data[i][key] === 'shopacc' ) {
               if ( data[i].PRODUCT_TYPE !== '' ) {
                 data[i].linkUrl = Tw.OUTLINK.DIRECT_IOT + '?categoryId=' + data[i].CATEGORY_ID +
@@ -736,7 +737,7 @@ $.extend(Tw.CommonSearchMore.prototype,
               query: encodeURIComponent(query),
               collection: 'all',
               researchCd: 1,
-              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.phone-D.tablet-D.accessory-D.tmembership-R.event-D.sale-C' +
                 '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A',
               researchQuery: encodeURIComponent(researchQuery),
               device: 'A'
@@ -746,7 +747,7 @@ $.extend(Tw.CommonSearchMore.prototype,
               query: encodeURIComponent(query),
               collection: 'all',
               researchCd: 1,
-              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.phone-D.tablet-D.accessory-D.tmembership-R.event-D.sale-C' +
                 '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A',
               researchQuery: encodeURIComponent(researchQuery),
               device: 'I'
@@ -757,7 +758,7 @@ $.extend(Tw.CommonSearchMore.prototype,
             query: encodeURIComponent(query),
             collection: 'all',
             researchCd: 1,
-            sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+            sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.phone-D.tablet-D.accessory-D.tmembership-R.event-D.sale-C' +
               '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A',
             researchQuery: encodeURIComponent(researchQuery)
           };
@@ -768,7 +769,7 @@ $.extend(Tw.CommonSearchMore.prototype,
             reqOptions = {
               query: encodeURIComponent(query),
               collection: 'all',
-              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.phone-D.tablet-D.accessory-D.tmembership-R.event-D.sale-C' +
                 '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A',
               device: 'A'
             };
@@ -776,7 +777,7 @@ $.extend(Tw.CommonSearchMore.prototype,
             reqOptions = {
               query: encodeURIComponent(query),
               collection: 'all',
-              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.phone-D.tablet-D.accessory-D.tmembership-R.event-D.sale-C' +
                 '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A',
               device: 'I'
             };
@@ -785,7 +786,7 @@ $.extend(Tw.CommonSearchMore.prototype,
           reqOptions = {
             query: encodeURIComponent(query),
             collection: 'all',
-            sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+            sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.phone-D.tablet-D.accessory-D.tmembership-R.event-D.sale-C' +
               '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
           };
         }
@@ -805,7 +806,7 @@ $.extend(Tw.CommonSearchMore.prototype,
               contentsCnt = Number(res.result.search[i][keyName].count);
 
 
-              if ( keyName === 'smart' || keyName === 'immediate' || keyName === 'banner' || keyName === 'lastevent' ) {
+              if ( keyName === 'smart' || keyName === 'immediate' || keyName === 'banner' || keyName === 'lastevent' || keyName === 'direct' ) {
                 continue;
               } else {
                 var categoryStr = '.fe-' + keyName + '-count';
@@ -935,7 +936,10 @@ $.extend(Tw.CommonSearchMore.prototype,
       sort += '.service-C';
       sort += '.tv_internet-C';
       sort += '.troaming-C';
-      sort += '.direct-D';
+      // sort += '.direct-D';
+      sort += '.phone-D';
+      sort += '.tablet-D';
+      sort += '.accessory-D';
       requestUrl += sort;
       this._addRecentlyKeyword(keyword);
       this._moveUrl(requestUrl);
@@ -944,8 +948,10 @@ $.extend(Tw.CommonSearchMore.prototype,
       Tw.CommonHelper.setCookie('search_sort::service', 'C');
       Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
       Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
-      Tw.CommonHelper.setCookie('search_sort::direct', 'D');
-
+      // Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+      Tw.CommonHelper.setCookie('search_sort::phone', 'D');
+      Tw.CommonHelper.setCookie('search_sort::tablet', 'D');
+      Tw.CommonHelper.setCookie('search_sort::accessory', 'D');
     },
     /**
      * @function
@@ -974,6 +980,7 @@ $.extend(Tw.CommonSearchMore.prototype,
       this._pageNum = this._showMoreCnt + 1;
       Tw.Logger.info('[common.search.more] [_showMore]', 'this._showMoreCnt : [' + this._showMoreCnt + ']');
       Tw.Logger.info('[common.search.more] [_showMore]', 'this._pageNum : [' + this._pageNum + ']');
+      Tw.Logger.info('[common.search.more] [_showMore] this._reqOptions.sortCd : ', this._reqOptions.sortCd);
 
       var sort = this._category + '-' +
         this._reqOptions.sortCd.substring(this._reqOptions.sortCd.indexOf(this._category + '-') + this._category.length +
@@ -1086,11 +1093,14 @@ $.extend(Tw.CommonSearchMore.prototype,
       function getParam(sname) {
         var params = linkUrl.substr(linkUrl.indexOf('?') + 1);
         var sval = '';
-        params = params.split('&');
-        for ( var i = 0; i < params.length; i++ ) {
-          var temp = params[i].split('=');
-          if ( [temp[0]] === sname ) {
-            sval = temp[1];
+
+        if ( params ) {
+          params = params.split('&');
+          for ( var i = 0; i < params.length; i++ ) {
+            var temp = params[i].split('=');
+            if ( temp && temp.length > 1 && temp[0] === sname ) {
+              sval = temp[1];
+            }
           }
         }
         return sval;
@@ -1106,14 +1116,17 @@ $.extend(Tw.CommonSearchMore.prototype,
 
       var sort = '';
       if ( category === 'all' ) {
-        var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 'search_sort::direct'];
+        var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', /*'search_sort::direct',*/ 'search_sort::phone', 'search_sort::tablet', 'search_sort::accessory'];
         //shortcut-C.rate-C.service-C.tv_internet-C.troaming-C
         sort = 'shortcut-C';
         sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'C');
         sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'C');
         sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'C');
         sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'C');
-        sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
+        // sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
+        sort += '.phone-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
+        sort += '.tablet-' + (Tw.CommonHelper.getCookie(sortsName[5]) || 'D');
+        sort += '.accessory-' + (Tw.CommonHelper.getCookie(sortsName[6]) || 'D');
         linkUrl = replaceQueryParam('sort', sort, linkUrl);
       } else {
         sort = Tw.CommonHelper.getCookie('search_sort::' + category);
@@ -1128,21 +1141,25 @@ $.extend(Tw.CommonSearchMore.prototype,
      * @returns {void}
      */
     _showSelectFilter: function (evt) {
-      console.log('[_showSelectFilter] this._searchInfo.search[0] :',  this._searchInfo.search[0]);
-      var searchResult = {sort: ''};
+      // console.log('[_showSelectFilter] this._searchInfo.search[0] :',  this._searchInfo.search[0]);
+      var sort = 'D';
 
       if ( this._searchInfo.search[0] ) {
-        if ( this._searchInfo.search[0].direct ) {
-          searchResult = this._searchInfo.search[0].direct;
-        } else if ( this._searchInfo.search[0].phone ) {
-          searchResult = this._searchInfo.search[0].phone;
-        } else if ( this._searchInfo.search[0].tablet ) {
-          searchResult = this._searchInfo.search[0].tablet;
-        } else if ( this._searchInfo.search[0].accessory ) {
-          searchResult = this._searchInfo.search[0].accessory;
+        if ( this._searchInfo.search[0].direct && this._searchInfo.search[0].direct.sort ) {
+          sort = this._searchInfo.search[0].direct.sort;
+        } else if ( this._searchInfo.search[0].phone && this._searchInfo.search[0].phone.sort ) {
+          sort = this._searchInfo.search[0].phone.sort;
+        } else if ( this._searchInfo.search[0].tablet && this._searchInfo.search[0].tablet.sort ) {
+          sort = this._searchInfo.search[0].tablet.sort;
+        } else if ( this._searchInfo.search[0].accessory && this._searchInfo.search[0].accessory.sort ) {
+          sort = this._searchInfo.search[0].accessory.sort;
         }
       }
 
+      if ( sort && sort.indexOf('-') !== -1 ) {
+        sort = sort.substr(sort.indexOf('-') + 1);
+      }
+      
       var listData = [
         // { 'label-attr': 'for=ra0', 'txt': Tw.SEARCH_FILTER_STR.ACCURACY,
         //   'radio-attr':'id="ra0" data-type="R" name="selectFilter" value="'+Tw.SEARCH_FILTER_STR.ACCURACY+'" '+
@@ -1150,22 +1167,22 @@ $.extend(Tw.CommonSearchMore.prototype,
         {
           'label-attr': 'for=ra4', 'txt': Tw.SEARCH_FILTER_STR.CLICK,
           'radio-attr': 'id="ra4" data-type="C" name="selectFilter" value="' + Tw.SEARCH_FILTER_STR.CLICK + '" ' +
-            (searchResult.sort === 'C' ? 'checked' : '')
+            (sort === 'C' ? 'checked' : '')
         },
         {
           'label-attr': 'for=ra1', 'txt': Tw.SEARCH_FILTER_STR.NEW,
           'radio-attr': 'id="ra1" data-type="D" name="selectFilter" value="' + Tw.SEARCH_FILTER_STR.NEW + '" ' +
-            (searchResult.sort === 'D' ? 'checked' : '')
+            (sort === 'D' ? 'checked' : '')
         },
         {
           'label-attr': 'for=ra2', 'txt': Tw.SEARCH_FILTER_STR.LOW,
           'radio-attr': 'id="ra2" data-type="L" name="selectFilter" value="' + Tw.SEARCH_FILTER_STR.LOW + '" ' +
-            (searchResult.sort === 'L' ? 'checked' : '')
+            (sort === 'L' ? 'checked' : '')
         },
         {
           'label-attr': 'for=ra3', 'txt': Tw.SEARCH_FILTER_STR.HIGH,
           'radio-attr': 'id="ra3" data-type="H" name="selectFilter" value="' + Tw.SEARCH_FILTER_STR.HIGH + '" ' +
-            (searchResult.sort === 'H' ? 'checked' : '')
+            (sort === 'H' ? 'checked' : '')
         }
       ];
       this._popupService.open({

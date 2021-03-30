@@ -19,7 +19,8 @@ Tw.ChatbotMainService = function() {
         { command: Tw.API_CMD.BFF_05_0058, params: {} },                             // 1. 요금 납부방법 (01:은행자동납부, 02:카드자동납부, G1:은행지로자동납부)
         { command: Tw.API_CMD.BFF_05_0030, params: {} },                            // 2. 미납 내역 조회 (/core-bill/v1/bill-pay/unpaid-bills)
         { command: Tw.API_CMD.BFF_05_0149, params: {} },                            // 3. 일시정지 (svcStCd: AC(사용중), SP(일시정지))
-        { command: Tw.API_CMD.BFF_05_0235, params: {profile_id : 'default', item_ids : ['app_use_traffic_category_ratio','app_use_traffic_game_median_yn','app_use_traffic_music_ratio_median_yn']}}
+        { command: Tw.API_CMD.BFF_05_0235, params: {profile_id : 'default', item_ids : ['app_use_traffic_category_ratio','app_use_traffic_game_median_yn','app_use_traffic_music_ratio_median_yn']}},
+        { command: Tw.API_CMD.BFF_01_0069, params: {property: 'str.chatbot.keyword.date'} } // 챗봇 그리팅 메시지 키워드 노출 날짜 환경설정 조회
     ];
 
     // 챗봇 팝업 노출대상 화면 리스트 (10/22)
@@ -28,7 +29,7 @@ Tw.ChatbotMainService = function() {
     };
 
     // 발화어 리스트
-    this._greetingKeywords = this._chatbotCommonService._greetingKeywords;
+    this._greetingKeywords = [];
 
     // 챗봇 팝업 타입
     this._typeA = false;
@@ -218,6 +219,9 @@ Tw.ChatbotMainService.prototype = {
                 this._mlsChannelId  = 'tw_greeting_rank_sub_fare';
                 break;                    
         }
+
+        // 그리팅 메시지 키워드 목록을 구한다
+        this._greetingKeywords = this._chatbotCommonService._getGreetingKeywords();
 
         var isAllowedOs = false;
         if(Tw.BrowserHelper.isIos()){
@@ -1079,10 +1083,9 @@ Tw.ChatbotMainService.prototype = {
                     var linkUrl = this._greetingKeywords[j].linkUrl;
                     //message.replace(/\n/g, '<br/>');
                     if ((greetingRangking[i] === keyword) && (this._mlsGreetingTextType === type)){
-                        Tw.Logger.info('[chatbotmain.service] [_preDrawChatbot] message : ', message);
-                        Tw.Logger.info('[chatbotmain.service] [_preDrawChatbot] type : ', type);
-                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type, linkUrl : linkUrl};
+                        var greetingKeywordInfo = {keyword: keyword, message: message, type: type, linkUrl: linkUrl, xtEid: this._greetingKeywords[j].xtEid, isOutLink: this._greetingKeywords[j].isOutLink};
                         this._greetingKeywordInfos.push(greetingKeywordInfo);
+                        
                         // textType이 'B'인 경우 두줄 디자인으로
                         if (type === 'B'){
                             this._greetingLines = 'twoline';
@@ -1125,7 +1128,7 @@ Tw.ChatbotMainService.prototype = {
                     this._apiService.requestArray(this._defaultRequestUrls)
                         .done($.proxy(this._checkTargetGroup, this))
                         .fail(function(error){
-                            Tw.Logger.info('[chatbotmain.service] [_requestApis] requestArray fail : ', error);
+                            Tw.Logger.error('[chatbotmain.service] [_requestApis] requestArray fail : ', error);
                         });
                 }
             } else {
@@ -1143,11 +1146,12 @@ Tw.ChatbotMainService.prototype = {
      * @function
      * @desc 말풍선 노출 대상군 확인
      */
-    _checkTargetGroup: function (billmthInfo, unpaidBillInfo, pauseInfo, userProfileInfo) {        
+    _checkTargetGroup: function (billmthInfo, unpaidBillInfo, pauseInfo, userProfileInfo, keywordDateResult) {        
         Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] billmthInfo : ', billmthInfo);
         Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] unpaidBillInfo : ', unpaidBillInfo);
         Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] pauseInfo : ', pauseInfo);
         Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] userProfileInfo : ', userProfileInfo);
+        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] keywordDateResult : ', keywordDateResult);
         
         /* *******************************************
             1. 자동납부 신청 관련 말풍선 노출 대상군 여부 체크 
@@ -1244,10 +1248,13 @@ Tw.ChatbotMainService.prototype = {
             Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 4.0 MLS User Profile 조회 API(BFF_05_0235) 리턴 에러', userProfileInfo);
         }
 
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
-
         // BFF_05_0232에서 쓰일 item_id
         this._mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType;
+
+        // 노출 날짜에 조건에 맞지 않는 키워드 삭제
+        this._chatbotCommonService._removeGreetingDate(this._mlsGreetingRangking, keywordDateResult);
+
+        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
 
         // 실제 발화어 정보 리스트 세팅        
         var greetingRangking = [];      // 발화어 노출 조건에 부합한 발화어 배열
@@ -1285,7 +1292,7 @@ Tw.ChatbotMainService.prototype = {
                     if (this._xboxYn === 'Y'){
                         greetingRangking.push(mlsKeyword);
                     }                    
-                } else if (this._chatbotCommonService._checkGreetingDate(mlsKeyword)) { // 그리팅 키워드 시작일 종료일 유효성 검사
+                } else {
                     greetingRangking.push(mlsKeyword);
                 }
             }
@@ -1353,8 +1360,7 @@ Tw.ChatbotMainService.prototype = {
                     // vColoring의 경우 A, B 타입 외에 unRegYn(Y/N)으로도 나뉘어 있기 때문에
                     // 루프 돌면서 message가 ''인 경우가 중복으로 생기므로 이럴 경우는 제외시켜줌
                     if (message !== '' ) {
-                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type, linkUrl: linkUrl};
-                        this._greetingKeywordInfos.push(greetingKeywordInfo);
+                        this._greetingKeywordInfos.push( {keyword: keyword, message: message, type: type, linkUrl: linkUrl, xtEid: this._greetingKeywords[j].xtEid, isOutLink: this._greetingKeywords[j].isOutLink} );
                     }
 
                     // textType이 'B'인 경우 두줄 디자인으로

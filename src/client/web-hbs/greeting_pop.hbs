@@ -15,7 +15,7 @@
             <div class="list-wrap nowrap">
                 <div class="list">            
                 {{#each param.[0].greetingKeywordInfos}}
-                    <button class="item bpcpItem {{keyword}}" data-url="{{linkUrl}}">
+                    <button class="item bpcpItem {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="{{xtEid}}" data-xt_csid="NO" data-xt_action="BC">
                         <span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{message}}</span>
                     </button>
                 {{/each}}
@@ -38,17 +38,13 @@
         <div class="tod-combot-btn {{param.[0].greetingLines}}" {{#if param.[0].color}}data-color="{{param.[0].color}}" data-thema="{{param.[0].theme}}"{{/if}}>
 			<span class="beta" aria-hidden="true"><span class="blind">beta</span></span> 
 			{{#if param.[0].greetingKeywordInfos.[0].linkUrl}}
-                {{#if (eq param.[0].greetingKeywordInfos.[0].keyword "vcoloring")}}
-                    <button type="button" class="item fe-home-charge_open {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림">
-                {{else if (eq param.[0].greetingKeywordInfos.[0].keyword "xbox")}}
-                    <button type="button" class="item fe-home-charge_open {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림">
-                {{else if (eq param.[0].greetingKeywordInfos.[0].keyword "galaxy_all")}}
-                    <button type="button" class="item fe-home-charge_open {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}" title="새 창 열림">
+                {{#if (eq param.[0].greetingKeywordInfos.[0].isOutLink "Y")}}
+                    <button type="button" class="item bpcpItemlink {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}" data-xt_eid="{{param.[0].greetingKeywordInfos.[0].xtEid}}" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림">
                 {{else}}
-                    <button type="button" class="item bpcpItemlink {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}">
+                    <button type="button" class="item bpcpItemlink {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}" data-xt_eid="{{param.[0].greetingKeywordInfos.[0].xtEid}}" data-xt_csid="NO" data-xt_action="BC">
                 {{/if}}
             {{else}}
-                <button type="button" class="item bpcpItem {{param.[0].greetingKeywordInfos.[0].keyword}}">
+                <button type="button" class="item bpcpItem {{param.[0].greetingKeywordInfos.[0].keyword}}" data-xt_eid="{{param.[0].greetingKeywordInfos.[0].xtEid}}" data-xt_csid="NO" data-xt_action="BC">
             {{/if}}
                  <span class="chat-icon profile1"></span>
                  <span class="chat-txt"><span class="inner">{{{param.[0].greetingKeywordInfos.[0].message}}}</span></span>
@@ -69,16 +65,22 @@
                         <li>
                             {{#if linkUrl}}
                                 {{#if (eq keyword "vcoloring")}}
-                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
+                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="{{xtEid}}" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
                                 {{else if (eq keyword "xbox")}}
-                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
+                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="{{xtEid}}" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
                                 {{else if (eq keyword "galaxy_all")}}
-                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" title="새 창 열림"><span class="ico-chatbot pay_bill"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
+                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="{{xtEid}}" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림"><span class="ico-chatbot pay_bill"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
+                                {{else if (eq keyword "untactplan")}}
+                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="{{xtEid}}" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림"><span class="ico-chatbot pay_bill"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
+                                {{else if (eq keyword "newphone")}}
+                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="{{xtEid}}" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림"><span class="ico-chatbot pay_bill"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
+                                {{else if (eq keyword "iphone12series")}}
+                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="{{xtEid}}" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림"><span class="ico-chatbot pay_bill"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
                                 {{else}}
-                                <button class="item bpcpItemlink {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>                                 
+                                <button class="item bpcpItemlink {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="{{xtEid}}" data-xt_csid="NO" data-xt_action="BC"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>                                 
                                 {{/if}}
                             {{else}}
-                               <button class="item bpcpItem {{keyword}}"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
+                               <button class="item bpcpItem {{keyword}}" data-xt_eid="{{xtEid}}" data-xt_csid="NO" data-xt_action="BC"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
                             {{/if}}
                         </li>
                     {{/each}} 

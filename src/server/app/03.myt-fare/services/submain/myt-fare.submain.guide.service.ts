@@ -586,6 +586,40 @@ export class MytFareSubmainGuideService extends MytFareSubmainCommonService {
   }
 
   /**
+   * @desc 나의 가입 요금상품
+   */
+  public getFeePlan(): Observable<any> {
+    const {svcAttrCd} = this.info.svcInfo;
+    const isWireless = svcAttrCd.indexOf('S') === -1;
+    const command = isWireless ? API_CMD.BFF_05_0136 : API_CMD.BFF_05_0128; // 무선, 유선
+
+    return this.apiService.request(command, {}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        let data;
+        const result = resp.result;
+        if (isWireless) {
+          const {linkProdId: prodId, prodNm, prodLinkYn: linkYn} = result.feePlanProd;
+          data = {
+            prodId,
+            prodNm,
+            isLink: linkYn === 'Y' && !FormatHelper.isEmpty(prodId)
+          };
+        } else {
+          const {linkProdId: prodId, feeProdNm: prodNm, prodDetailLinkYn: linkYn} = result;
+          data = {
+            prodId,
+            prodNm,
+            isLink: linkYn === 'Y' && !FormatHelper.isEmpty(prodId)
+          };
+        }
+        return data;
+      }
+      // error
+      return {};
+    });
+  }
+
+  /**
    * API Response fail
    * @param res
    * @param data
