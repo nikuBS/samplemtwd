@@ -1480,12 +1480,6 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
                 '{{basFeeAmt}}' +
               '</p>' +
           '</div>' +
-          '{{#if selAgrmtAplyMfixAmt}}' +
-            '<div class="rn-prod-sale">' +
-                '<span>선택약정 반영 시</span> ' +
-                '<em> {{selAgrmtAplyMfixAmt}}</em>' +
-            '</div>' +
-          '{{/if}}' +
           '<div class="rn-prod-info">' +
               '<ul class="p-etc">' +
                   '{{#if basOfrDataQtyCtt}}' +
@@ -1624,12 +1618,6 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                           '{{basFeeAmt}}' +
                         '</p>' +
                     '</div>' +
-                    '{{#if selAgrmtAplyMfixAmt}}' +
-                      '<div class="rn-prod-sale">' +
-                          '<span>선택약정 반영 시</span> ' +
-                          '<em> {{selAgrmtAplyMfixAmt}}</em>' +
-                      '</div>' +
-                    '{{/if}}' +
                     '<div class="rn-prod-info">' +
                         '<ul class="p-etc">' +
                             '{{#if basOfrDataQtyCtt}}' +
@@ -1760,12 +1748,6 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                       '{{basFeeAmt}}' +
                     '</p>' +
                 '</div>' +
-                '{{#if selAgrmtAplyMfixAmt}}' +
-                  '<div class="rn-prod-sale">' +
-                      '<span>선택약정 반영 시</span> ' +
-                      '<em> {{selAgrmtAplyMfixAmt}}</em>' +
-                  '</div>' +
-                '{{/if}}' +
                 '<div class="rn-prod-info">' +
                     '<ul class="p-etc">' +
                         '{{#if basOfrDataQtyCtt}}' +

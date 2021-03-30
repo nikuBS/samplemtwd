@@ -288,13 +288,13 @@ export default class RenewProductPlans extends TwViewController {
    */
   private _getInitPlans(params) {
     return this.apiService.request(API_CMD.BFF_10_0205, params).map(resp => {
-      
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
           msg: resp.msg
         };
       }
+      
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
       }
@@ -316,8 +316,7 @@ export default class RenewProductPlans extends TwViewController {
             basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             tabCode: this._getTabCodeInit(plan), // 통신망에 따른 요금제 모듈 별 클래스
             prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd), // 요금제 노출 유형
-            benefitList: this._parseBenefitList(plan.benefitList), // 혜택
-            selAgrmtAplyMfixAmt : ProductHelper.convProductBasfeeInfo(plan.selAgrmtAplyMfixAmt) // 선택 약정 금액
+            benefitList: this._parseBenefitList(plan.benefitList) // 혜택
           };
         })
       };
@@ -336,7 +335,6 @@ export default class RenewProductPlans extends TwViewController {
           msg: resp.msg
         };
       }
-      console.log(resp.result.products);
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
       }
@@ -357,8 +355,7 @@ export default class RenewProductPlans extends TwViewController {
             basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             tabCode: this._getTabCodeSeries(plan.filters),
             prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-            benefitList: this._parseBenefitList(plan.benefitList),
-            selAgrmtAplyMfixAmt : ProductHelper.convProductBasfeeInfo(plan.selAgrmtAplyMfixAmt)
+            benefitList: this._parseBenefitList(plan.benefitList)
           };
         })
       };
@@ -377,9 +374,6 @@ export default class RenewProductPlans extends TwViewController {
           msg: resp.msg
         };
       }
-      for(let i in resp.result.groupProdList) {
-      }
-      
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
       }
@@ -399,8 +393,7 @@ export default class RenewProductPlans extends TwViewController {
                 ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
               tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
               prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
-              benefitList: this._parseBenefitList(separatePlan.benefitList),
-              selAgrmtAplyMfixAmt : ProductHelper.convProductBasfeeInfo(separatePlan.selAgrmtAplyMfixAmt)
+              benefitList: this._parseBenefitList(separatePlan.benefitList)
             }
           }),
           rcnProductList: resp.result.rcnProductList.map(rcnPlan => {
@@ -430,8 +423,7 @@ export default class RenewProductPlans extends TwViewController {
                     basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
                     tabCode: this._getTabCodeSeries(plan.prodFltList),
                     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-                    benefitList: this._parseBenefitList(plan.benefitList),
-                    selAgrmtAplyMfixAmt : ProductHelper.convProductBasfeeInfo(plan.selAgrmtAplyMfixAmt)
+                    benefitList: this._parseBenefitList(plan.benefitList)
                   };
                 })
               }
@@ -449,8 +441,7 @@ export default class RenewProductPlans extends TwViewController {
                   ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
                 tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
                 prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
-                benefitList: this._parseBenefitList(separatePlan.benefitList),
-                selAgrmtAplyMfixAmt : ProductHelper.convProductBasfeeInfo(separatePlan.selAgrmtAplyMfixAmt)
+                benefitList: this._parseBenefitList(separatePlan.benefitList)
               }
             })
           }
@@ -473,8 +464,7 @@ export default class RenewProductPlans extends TwViewController {
                     basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
                     tabCode: this._getTabCodeSeries(plan.prodFltList),
                     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-                    benefitList: this._parseBenefitList(plan.benefitList),
-                    selAgrmtAplyMfixAmt : ProductHelper.convProductBasfeeInfo(plan.selAgrmtAplyMfixAmt)
+                    benefitList: this._parseBenefitList(plan.benefitList)
                   };
                 })
               }
@@ -497,8 +487,7 @@ export default class RenewProductPlans extends TwViewController {
                 ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
               tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
               prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
-              benefitList: this._parseBenefitList(separatePlan.benefitList),
-              selAgrmtAplyMfixAmt : ProductHelper.convProductBasfeeInfo(separatePlan.selAgrmtAplyMfixAmt)
+              benefitList: this._parseBenefitList(separatePlan.benefitList)
             }
           })
         }
