@@ -190,6 +190,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
               bannerTextComponent.html('');
 
             });
+            new Tw.XtractorService(self.$container);
           }
 
         });
