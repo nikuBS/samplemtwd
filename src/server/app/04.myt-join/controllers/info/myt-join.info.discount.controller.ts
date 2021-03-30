@@ -433,7 +433,7 @@ class MytJoinInfoDiscount extends TwViewController {
     // -------------------------------------------------------------[3. 단말기 분할 상환 정보]
     if ( this.getSizeObjOrArr(installmentList) > 0 ) {
       for ( let i = 0; i < installmentList.length; i++ ) {
-        installmentList[i].titNm = installmentList[i].eqpMdlNmNonMask || installmentList[i].eqpMdlNm;
+        installmentList[i].titNm = installmentList[i].eqpMdlNm;
 
         installmentList[i].totSubsidy = FormatHelper.addComma(installmentList[i].allotApprAmt); // 총 할부지원금액
         installmentList[i].agreeClaimPay = FormatHelper.addComma(installmentList[i].invBamt); // 잔여할부청구금액

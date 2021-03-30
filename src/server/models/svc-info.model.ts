@@ -32,10 +32,9 @@ export interface ISvcInfo {
   personTimeChk: boolean;       // 개인화 진입 아이콘 시간에 따른 비활성화 체크
   personLineTypeChk: boolean;   // 개인화 진입 아이콘 서비스 타입에 따른 비활성화 체크
   personAgentTypeChk: boolean;  // 개인화 진입 아이콘 에이전트 타입에 따른 비활성화 체크
+
   age: number; // 만 나이정보
   isAdult: boolean; // 미성년자 구분 (만 19세 이상)
-  oriRmk: string; // 팬네임 마스킹 안된 정보
-  oriEqpMdlNm: string; // 모델명 마스킹 ph004 적용
 }
 
 export class SvcInfoModel implements ISvcInfo {
@@ -78,8 +77,6 @@ export class SvcInfoModel implements ISvcInfo {
 
   age: number = 0;
   isAdult: boolean = false;
-  oriRmk: string = ''; // 팬네임 마스킹 안된 정보
-  oriEqpMdlNm: string = ''; // 모델명 마스킹 ph004 적용
 
   constructor(object) {
     this.svcMgmtNum = object.svcMgmtNum || this.svcMgmtNum;
@@ -117,7 +114,5 @@ export class SvcInfoModel implements ISvcInfo {
     this.personAgentTypeChk = object.personAgentTypeChk || this.personAgentTypeChk;
     this.age = object.age || this.age;
     this.isAdult = object.isAdult || this.isAdult;
-    this.oriRmk = object.oriRmk || this.oriRmk;
-    this.oriEqpMdlNm = object.oriEqpMdlNm || this.oriEqpMdlNm;
   }
 }
