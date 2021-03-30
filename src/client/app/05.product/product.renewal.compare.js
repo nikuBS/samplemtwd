@@ -118,8 +118,8 @@ Tw.ProductCompare.prototype = {
 
         this.curRedisData = JSON.parse(JSON.stringify(curParse)); // this.curRedisData 와 curParse 주소값 공유(얕은 복사) 끊음 
         this.compareRedisData = JSON.parse(JSON.stringify(compareParse)); // this.compareRedisData 와 compareParse 주소값 공유(얕은 복사) 끊음
-        //console.log('curRedisData:',this.curRedisData);
-        //console.log('compareRedisData:',this.compareRedisData);
+        // console.log('curRedisData:',this.curRedisData);
+        // console.log('compareRedisData:',this.compareRedisData);
         this._setCompareDataCur(this._myPLMData, this.curRedisData);
         this._setCompareDataCompare($target, this.compareRedisData);
         this.compareData.graphData = this._setGraphData();
@@ -129,8 +129,8 @@ Tw.ProductCompare.prototype = {
         var addtionalBenf = this._getAdditionalBenf(curParse, compareParse);
         this.compareData.addtionalBenf = this._parseAdditionBenf(addtionalBenf);
 
-        //console.log("추가혜택",this.compareData.addtionalBenf);
-        //console.log("최종데이터",this.compareData);
+        // console.log("추가혜택",this.compareData.addtionalBenf);
+        // console.log("최종데이터",this.compareData);
         this._openComparePopup(this.compareData, $target);
       
     },
@@ -390,7 +390,7 @@ Tw.ProductCompare.prototype = {
               if(compareRedisData.prodBenfCd_04[i].prodBenfTitCd == choDataArr[j]) {
                 dataCheck = 'N';
               }
-              if((dataCheck == '') && (j == choDataArr - 1)) {
+              if((dataCheck == '') && (j == choDataArr.length - 1)) {
                 choOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
               }
             }
@@ -414,7 +414,6 @@ Tw.ProductCompare.prototype = {
           }
         }
       }
-
       var finishRoof = '';
       var overlab;
       do { // 3. 택 1 혜택 리스트와 개별 혜택 리스트를 비교하여 중복되는 리스트가 있으면 개별 혜택 리스트에서 제거
@@ -488,7 +487,6 @@ Tw.ProductCompare.prototype = {
           } 
         }
       }
-
       if(benfData.chooseList){ //noCurChooseList = true 면 나의 혜택 택 1 영역 - 로 표시됨  /  noCompareChooseList = true 면 비교할 요금제 택 1 영역 - 로 표시됨
         var curHaveList = ''; // noCurSelectList = false 면 나의 혜택 택 1 영역에 '1개 무료 제공' text 삽입  /  noCompareSelectList = false 면 비교할 요금제 혜택 택 1 영역에 '1개 무료 제공' text 삽입
         for(var i = 0; (i < benfData.chooseList.length) && (curHaveList == ''); i++) { // curData에 값이 있는지 확인
