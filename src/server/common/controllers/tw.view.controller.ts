@@ -362,16 +362,7 @@ abstract class TwViewController {
 
           } else {
             if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
-              if (urlMeta.menuId && urlMeta.menuId === 'M000020') {
-                // android 간편로그인 페이지 진입시 비로그인 상태에서 advancement page 정보 조회 후 처리 필요
-                this.getAdvancementPageVisibleCheck({ menuId: urlMeta.menuId, host: req.hostname })
-                  .subscribe((advancementResp) => {
-                    urlMeta.advancement = advancementResp;
-                    this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-                  });
-              } else {
-                this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-              }
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
               // login page
               res.render('error.login-block.html', { target: req.baseUrl + req.url });
