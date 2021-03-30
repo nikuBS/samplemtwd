@@ -26,7 +26,7 @@ Tw.MyTFareBillGuideCommon.prototype = {
 
   _init: function () {
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    // new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+    new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
 
   /**
