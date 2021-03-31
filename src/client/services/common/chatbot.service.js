@@ -16,7 +16,7 @@ Tw.ChatbotService = function() {
 
     // 챗봇 발화어 노출 대상군 판단을 위해 호출 필요한 API List (201014)
     this._defaultRequestUrls = [
-        { command: Tw.API_CMD.BFF_06_0001, params: {} },                             // 1. 리필쿠폰
+        { command: Tw.API_CMD.BFF_06_0001, params: {} },                            // 1. 리필쿠폰
         { command: Tw.API_CMD.BFF_06_0002, params: {} },                            // 1-1. 리필쿠폰 사용이력
         { command: Tw.API_CMD.BFF_05_0058, params: {} },                            // 2. 요금 납부방법 (01:은행자동납부, 02:카드자동납부, G1:은행지로자동납부)
         { command: Tw.API_CMD.BFF_05_0030, params: {} },                            // 3. 미납 내역 조회 (/core-bill/v1/bill-pay/unpaid-bills)
@@ -873,7 +873,13 @@ Tw.ChatbotService.prototype = {
 
         // 말풍선 (챗봇 발화어) 클릭시 
         $('.bpcpItem').on('click', function(e){
-            Tw.Logger.info('[chatbot.service] [_bindEvent] $(.bpcpItem).on(click)', '');
+            Tw.Logger.info('[chatbot.service] [_bindEvent] bpcpItem click', '');
+
+            // 나의 요금 페이지 클릭 이벤트 중복 수행 수정
+            if ( location.pathname === '/myt-fare/submain' ) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
 
             var url = $(e.currentTarget).data('url');
             Tw.Logger.info('[chatbot.service] [_bindEvent] url', url);
@@ -974,7 +980,16 @@ Tw.ChatbotService.prototype = {
             _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
             */
         });
+
         $('.fe-home-charge_open').on('click', function(e){
+            Tw.Logger.info('[chatbot.service] [_bindEvent] fe-home-charge_open click', '');
+            
+            // 나의 요금 페이지 클릭 이벤트 중복 수행 수정
+            if ( location.pathname === '/myt-fare/submain' ) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
             var chatbotGubun = $(e.currentTarget).attr('class').replace('item fe-home-charge_open', '').trim();
             var url = $(e.currentTarget).data('url');
 
@@ -1006,6 +1021,13 @@ Tw.ChatbotService.prototype = {
         // 말풍선 (링크) 클릭시 ( wavve, flo - 상품페이지 이동 )
         $('.bpcpItemlink').on('click', function(e){
             Tw.Logger.info('[chatbot.service] [_bindEvent] bpcpItemlink click', '');
+            
+            // 나의 요금 페이지 클릭 이벤트 중복 수행 수정
+            if ( location.pathname === '/myt-fare/submain' ) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
             var chatbotGubun = $(e.currentTarget).attr('class').replace('item bpcpItemlink', '').trim();
             var url = $(e.currentTarget).data('url'); 
             Tw.Logger.info('[chatbot.service] [_bindEvent] [.bpcpItemlink] bpcpItemlinkurl : ', url);
