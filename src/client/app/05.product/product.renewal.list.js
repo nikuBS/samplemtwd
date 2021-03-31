@@ -474,6 +474,8 @@ Tw.ProductRenewalList.prototype = {
       
       viewMoreParam.idxCtgCd = this._networkInfo[this._curNetworkCount];
       viewMoreParam.opClCd = '02';
+      viewMoreParam.grpSearchProdCount = '20';// 그룹상품 조회 건수
+      viewMoreParam.sepSearchProdCount = '20';// 개별상품 조회 건수
       
       if(this._remainGroupData != 0 && this._curRemainGroupData != 0) {
         this._drawRemainGroup();
