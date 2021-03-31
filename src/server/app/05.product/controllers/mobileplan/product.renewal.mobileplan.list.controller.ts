@@ -129,6 +129,8 @@ export default class RenewProductPlans extends TwViewController {
             } else {
               isCompare = 'Y';
             }
+            params.grpSearchProdCount = '20'; // 그룹상품 조회 건수
+            params.sepSearchProdCount = '20'; // 개별상품 조회 건수
           Observable.combineLatest(
             this._getSeriesPlans(params),
           ).subscribe(([
