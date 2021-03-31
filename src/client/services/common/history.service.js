@@ -260,7 +260,7 @@ Tw.HistoryService.prototype = {
       checkActionId = url.substring(0, url.indexOf('?'));
     }
     var findTarget = _.find(Tw.NetFunnelInfo, function(info) {
-      return checkActionId === '/' + info.actionId;
+      return checkActionId === info.target;
     });
     // netfunnel 환경설정변수 값 중 노출여부 체크
     if (!findTarget || !(findTarget && findTarget.visible)) {
@@ -271,10 +271,7 @@ Tw.HistoryService.prototype = {
       action_id: findTarget.actionId,
       skin_id: 'tworld'
     }, {
-      stop: function() {
-        // 중지 시 별도 처리가 필요한지 검토 필요
-      },
-      success: function(event, data) {
+      success: function() {
         rSuc();
       }
     });

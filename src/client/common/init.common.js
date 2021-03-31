@@ -342,10 +342,15 @@ Tw.Init.prototype = {
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
           var items = resp.result.split(',');
           Tw.NetFunnelInfo = _.map(items, function (item) {
-            return {
-              actionId: item.split('|')[0],
-              visible: parseInt(item.split('|')[1], 10) === 1
-            };
+            if (item && item.split('|').length) {
+              // action_id 형태 => act_myt-data_submain, act_main_home
+              // 순서 대로 act- => /, _ => / 치환
+              return {
+                actionId: item.split('|')[0],
+                target: item.split('|')[0].replace('act-', '/').replace('_', '/'),
+                visible: parseInt(item.split('|')[1], 10) === 1
+              };
+            }
           });
           var netfunnelSkinOption = {
             prepareCallback: function () {

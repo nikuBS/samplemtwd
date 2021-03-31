@@ -654,9 +654,6 @@
     <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
 </div>
 <% include ../components/javascript.component.html %>
-<% if (data.pageInfo.advancement && data.pageInfo.advancement.netFunnelVisible) { %>
-<%- include('../../../common/views/components/netfunnel.complete.component.html') %>
-<% } %>
 <script>
   var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
