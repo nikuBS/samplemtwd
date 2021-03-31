@@ -161,6 +161,9 @@ Tw.CustomerAgentsearchComponent.prototype = {
       if (item.unmanShop === 'Y') {
         item.shopTypeNm.push('무인매장');
       }
+      if (item.skMagicRent && item.skMagicRent === 'Y') {
+        item.skMagicRentNm = Tw.CUSTOMER_AGENT_SEARCH.FILTER['skMagicRent'];
+      }
     };
 
     list.forEach(function (o) {
@@ -177,6 +180,9 @@ Tw.CustomerAgentsearchComponent.prototype = {
       saveTask(o, 'callHistSearch');
       saveTask(o, 'rentYn');
       saveTask(o, 'safeDealKiosk');
+
+      // SK매직
+      saveTask(o, 'skMagicRent');
 
       // 체험존
       saveTask(o, 'fiveGxYn');

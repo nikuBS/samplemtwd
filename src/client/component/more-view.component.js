@@ -134,7 +134,7 @@ Tw.MoreViewComponent.prototype = {
         var convertData = this._convertData(moreData.list, _data.listOption.groupDateKey);
         var _this = this;
         _.forEach(convertData, function (o) {
-          o.hasYear = _this._lastYear === o.year ? false:true;
+          o.hasYear = _this._lastYear !== o.year;
           _this._lastYear = o.hasYear ? o.year : _this._lastYear;
           _data.callBack(o);
         });
