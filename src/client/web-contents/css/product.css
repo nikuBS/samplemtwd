@@ -285,12 +285,12 @@
 .tod-cont-section.tod-nmp-theme .tod-nmp-title .rn-prod-tit {display:table-cell; vertical-align:middle; color:#fff}
 
 /* 검색 결과 */
-.tod-nmp-search-top {overflow:hidden; padding:1.25rem 1.25rem 0.625rem; line-height:1; background-color:#dbdbdb}
+.tod-nmp-search-top {overflow:hidden; padding:1rem 1.25rem 0.625rem; line-height:1; background-color:#dbdbdb}
 .tod-nmp-search-top.noBg {background-color:transparent}
 .tod-nmp-search-top .sh-total {float:left; line-height:1.5625rem; font-size: 0.8125rem; letter-spacing: -0.4px; color: #222222;}
 .tod-nmp-search-top .sh-total > em {color:#f76252}
 .tod-nmp-search-top .sh-reset {float:right;}
-.tod-nmp-search-top .p-btn-reset {display:inline-block; height:1.5625rem; line-height:1.5625rem; border:1px solid transparent; border-radius: 1.5625rem; padding:0 0.625rem; vertical-align:top; font-size: 0.75rem; letter-spacing: -1px; color: #222222; background-color:#f6f8fa;}
+.tod-nmp-search-top .p-btn-reset {display:inline-block; height:1.5625rem; line-height:1.5625rem; border:1px solid transparent; border-radius: 1.5625rem; padding:0 0.625rem; vertical-align:top; font-size: 0.75rem; letter-spacing: -1px; color: #222222; background-color:#ffffff;}
 .tod-nmp-search-top .p-btn-reset::before {display:inline-block; content:""; width:10px; height:10px; margin-right:0.25rem; vertical-align:-1px; background:#f6f8fa url('/img/product/v2/icon-reset.svg') no-repeat 0 50%;}
 .tod-nmp-search-top + .tod-cont-section.tod-nmp-search {padding-top:0}
 
@@ -625,6 +625,8 @@
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info.i-confirm .msg-dd {color:#585959;}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info.i-confirm .msg-dd > em {font-weight:500; color:#222}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info.i-confirm .msg-dt + .msg-dd {margin-top:0.9375rem; padding-top:1.25rem; border-top:1px solid #d6d7d8;}
+
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .nmp-p-ref {margin:1.25rem 1.25rem 0; padding-left:0.875rem; font-size:0.6875rem; color:#767778; background:url('/img/product/v2/icon-ref.png') no-repeat 0 1px; background-size:12px 12px}
 
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box {overflow-y:auto; height:140px; margin-top:1rem; padding:1.25rem; font-size:0.6875rem; color:#585959; background: #efeff1; box-shadow: inset -1px -1px 1px 0 #ffffff, inset 1px 1px 3px 0 #c8c9cb; border-radius: 12px;}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box .tm-tit {font-weight: 500;}
