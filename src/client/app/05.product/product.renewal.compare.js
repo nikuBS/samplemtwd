@@ -629,6 +629,7 @@ Tw.ProductCompare.prototype = {
    */
 
     _transChartData: function(chartData,unit) {
+      // /product/renewal/mobileplan/list -> 내 요금제와 비교 클릭시 생성되는 그래프 영역의 계산식
       data = Number(chartData);
       if(isNaN(data)) {
         if(chartData == '무제한') {
@@ -641,12 +642,32 @@ Tw.ProductCompare.prototype = {
         data = data/1000;
       }
       if(this._networkInfo == '5G') {
+
+        // 10 : 데이터양이 표시된 눈금(10GB)
         if(data <= 10) {
-          return ((data / 10) / 4) * 100;
+          // / 4 : 0GB ~ 무제한까지 총 8칸중에 10GB까지가 두칸이므로 8/2=4
+          // / 10 : 
+          // * 100 : 백분율 
+          return ( (data / 10) / 4 ) * 100;
+        
+        // 100 : 데이터양이 표시된 눈금(100GB)
         } else if(data <= 100) {
-          return (((data - 10) / 30) / 8 + 1 / 4) * 100;
-        } else if(data <= 200) {
-          return (((data - 100) / 100) / 4 + 5 / 8) * 100;
+          // - 10 : 이전 눈금의 영역 10GB 
+          // / 30 : 10GB ~ 100GB 영역의 눈금 단위 30(총 90GB을 3칸으로 나눠 표현함)
+          // / 8 : 총눈금갯수 8칸
+          // 1 / 4 : 기존 0 ~ 10GB까지의 영역을 채우기 위해 더함, 총 8칸중 2칸이므로 약분하여, 2/8 => 1/4임
+          // * 100 : 백분율 
+          return ( ((data - 10) / 30) / 8 + 1 / 4 ) * 100;
+        
+        // 400 : 무제한 이전 눈금의 데이터 단위
+        } else if(data <= 400) {
+          // - 100 : 이전 눈금의 영역 100GB 
+          // / 150 : 100GB ~ 400GB 영역의 눈금 단위 150(총 300GB을 2칸으로 나눠 표현함)
+          // / 8 : 총눈금갯수 8칸
+          // 5 / 8 : 기존 0 ~ 100GB까지의 영역을 채우기 위해 더함(8칸중 5칸), 약분불가
+          // * 100 : 백분율 
+          return ( ((data - 100) / 150) / 8 + 5 / 8 ) * 100;
+
         } else {
           return 0;
         }
