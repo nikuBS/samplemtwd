@@ -118,19 +118,22 @@ export default class RenewProductPlans extends TwViewController {
             if(req.query.theme) {
               params.idxCtgCd = INDEX_CATAGORY.THEME;
               params.opClCd = OPCLCD.TOTAL;
-            } else if(this._getSeries(req.query.filters) === '') {
-              params.idxCtgCd = networkInfoFilter[0];
-              params.opClCd = OPCLCD.SEP;
             } else {
-              params.opClCd = OPCLCD.SEP;
+              params.grpSearchProdCount = '20'; // 그룹상품 조회 건수
+              params.sepSearchProdCount = '20'; // 개별상품 조회 건수
+              if(this._getSeries(req.query.filters) === '') {
+                params.idxCtgCd = networkInfoFilter[0];
+                params.opClCd = OPCLCD.SEP;
+              } else {
+                params.opClCd = OPCLCD.SEP;
+              }
             }
             if(typeof(compareData) == 'string') {
               isCompare = 'N';
             } else {
               isCompare = 'Y';
             }
-            params.grpSearchProdCount = '20'; // 그룹상품 조회 건수
-            params.sepSearchProdCount = '20'; // 개별상품 조회 건수
+ 
           Observable.combineLatest(
             this._getSeriesPlans(params),
           ).subscribe(([
