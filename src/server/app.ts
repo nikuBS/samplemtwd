@@ -43,7 +43,7 @@ import LoggerService from './services/logger.service';
 import VERSION from './config/version.config';
 import ErrorService from './services/error.service';
 import Axios from 'axios';
-import { timer } from '../../node_modules/rxjs/observable/timer';
+import { timer } from 'rxjs/Observable/timer';
 
 //영문추가
 
@@ -61,12 +61,7 @@ import NativeRouter_en from './common_en/route/native.router';
 import StoreRouter_en from './common_en/route/store.router';
 
 import RedisService_en from './services_en/redis.service';
-import LoggerService_en from './services_en/logger.service';
-import VERSION_en from './config_en/version.config';
 import ErrorService_en from './services_en/error.service';
-import { Observable } from 'rxjs';
-import { REDIS_KEY } from './types/redis.type';
-import FormatHelper from './utils/format.helper';
 
 
 module.exports = require('../../nodejs-exporter');
@@ -78,7 +73,6 @@ class App {
   public redisService: RedisService;
   public redisService_en: RedisService_en;
   private logger = new LoggerService();
-  private logger_en = new LoggerService_en();
   private errorService: ErrorService;
   private errorService_en: ErrorService_en;
 
@@ -104,15 +98,15 @@ class App {
         } else {
           return string;
         }
-      }
+      };
       const queryKeys = Object.keys(req.query);
       const paramKeys = Object.keys(req.params);
       queryKeys.forEach(key => {
-        req.query[key] = sanitize(req.query[key])
-      })
+        req.query[key] = sanitize(req.query[key]);
+      });
       paramKeys.forEach(key => {
-        req.params[key] = sanitize(req.query[key])
-      })
+        req.params[key] = sanitize(req.query[key]);
+      });
       // res.setHeader("Content-Security-Policy", "script-src 'self' 'sha256-/R8iLbj/zzRkKsN1Dh/be9dTImUnl6khUlY3lP0rwTk=' 'unsafe-inline';");
       next();
     });
