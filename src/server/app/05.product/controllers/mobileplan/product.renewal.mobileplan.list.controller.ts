@@ -14,6 +14,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 import { SVC_CDGROUP, PRODUCT_CODE, _5GX_PROD_ID } from '../../../../types/bff.type';
+import Product from './product.mobileplan.controller';
 
   enum SERIES_CLASS { // 기기 별 모듈 클래스
     '5G' = 'prod-5g',
@@ -128,6 +129,8 @@ export default class RenewProductPlans extends TwViewController {
             } else {
               isCompare = 'Y';
             }
+            params.grpSearchProdCount = '20'; // 그룹상품 조회 건수
+            params.sepSearchProdCount = '20'; // 개별상품 조회 건수
           Observable.combineLatest(
             this._getSeriesPlans(params),
           ).subscribe(([
@@ -273,9 +276,15 @@ export default class RenewProductPlans extends TwViewController {
         }
         plans.isCompare = isCompare;
         plans.products = this._getCompareYN(plans.products, networkInfoFilter[0], isCompare);
+
         if(plans.productCount === 0) { // 요금제 항목 없음
           res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.nolist.html' , { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn, tabList, compareData } );
         } else if(series.noSeries == false) { // 탭 선택 후 필터 적용
+          if((series.seriesClass != SERIES_CLASS['5G']) && (series.seriesClass != SERIES_CLASS.LTE)) { // 5G LTE탭에서만 비교하기 출력
+            for(let i in plans.products) {
+              plans.products[i].compareYN = false;
+            }
+          }
           res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterlist.html', { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn, tabList, compareData } );
         } 
       });

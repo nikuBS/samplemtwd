@@ -23,7 +23,6 @@ Tw.MyTFareBillPrepayAccount = function (rootEl, title) {
   this._historyService = new Tw.HistoryService(rootEl);
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay')); // validation check
   this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay')); // 키패드 이동 클릭 시 다음 input으로 이동
-
   this._init();
 };
 
@@ -281,9 +280,15 @@ Tw.MyTFareBillPrepayAccount.prototype = {
    */
   _checkPay: function (e) {
     if (this._validationService.isAllValid()) {
-      this._goCheck(e);
+      var self = this, data = this._getData();
+      this._validationService.checkFinancial()
+        .bank() // 은행상태 체크
+        .validation(data.bankCd, function () {
+          self._goCheck(e);
+        });
     }
   },
+
   /**
    * @function
    * @desc 요청 파라미터 생성

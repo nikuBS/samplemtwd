@@ -57,10 +57,12 @@
                     <li class="hash-item"><!-- disabled -->
                         <a href="#" class="hash fe-change-limit" data-unusual-state="<%-unusualYn%>" data-make-eid="changeLimit">#한도 변경</a>
                     </li>
+                    <%_if(usedInfo.isAdult){_%>
                     <li class="hash-item">
                         <a href="#" class="hash fe-auto-prepay" data-unusual-state="<%-unusualYn%>"
                            data-state="{{autoChrgStCd}}" data-make-eid="autoPrepay-{{stateCd}}">#자동 선결제 {{stateTxt}}</a>
                     </li>
+                    <%_}_%>
                     <%_}_%>
                     {{#ifCond title '===' 'small'}}
                         <%_ if (usedInfo.isPassword && passwordInfo.result) {

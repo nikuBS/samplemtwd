@@ -474,6 +474,8 @@ Tw.ProductRenewalList.prototype = {
       
       viewMoreParam.idxCtgCd = this._networkInfo[this._curNetworkCount];
       viewMoreParam.opClCd = '02';
+      viewMoreParam.grpSearchProdCount = '20';// 그룹상품 조회 건수
+      viewMoreParam.sepSearchProdCount = '20';// 개별상품 조회 건수
       
       if(this._remainGroupData != 0 && this._curRemainGroupData != 0) {
         this._drawRemainGroup();
@@ -490,6 +492,13 @@ Tw.ProductRenewalList.prototype = {
   
       var items = _.map(resp.result.products, $.proxy(this._mapProperData, this)); // 가져온 데이터 파싱
       $('.tod-cont-section').data('lastproduct',items[items.length - 1].prodId);
+      if(this._series.seriesClass != 'prod-5g' && this._series.seriesClass != 'prod-lte') { // 5G, LTE탭에서만 비교하기 출력
+        if(items.length > 0){
+          for(var i in items) {
+            items[i].compareBtn = false;
+          }
+        }
+      }
       $('.' + this._series.seriesClass).eq(-1).after(this._listTmpl({ items: items, seriesClass : this._series.seriesClass, cdn : this._cdn })); // 핸들바로 html 만들어서 붙임
       if(!resp.result.hasNext) { // 추가 로딩할 부분이 있는지 확인
         this._hasNext = 'false';
