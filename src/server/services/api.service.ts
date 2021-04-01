@@ -98,7 +98,8 @@ class ApiService {
       url: apiUrl + this.makePath(command.path, command.method, params, args, version),
       method: command.method,
       headers: this.makeHeader(command, header, params, req),
-      timeout: this.getTimeout() || 30000,
+      timeout: this.getTimeout() || 15000,
+      // timeout: this.getTimeout() || 30000,
       data: params
     };
 
