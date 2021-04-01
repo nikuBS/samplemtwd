@@ -20,16 +20,27 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if ( pageInfo.advancement ) {
-      // local 테스트틀 하기 위해 추가
-      if ( (process.env.NODE_ENV === pageInfo.advancement.env && pageInfo.advancement.visible)
-        || process.env.NODE_ENV === 'local' ) {
-        this._render(req, res, next, svcInfo, allSvc, childInfo, pageInfo);
-        return false;
-      }
-    }
-    // 기존 약정할인 화면
-    super._render(req, res, next, svcInfo, allSvc, childInfo, pageInfo);
+    /**
+     * 특정페이지 환경에 맞춰서 페이지 오픈 정보처리하기 위한 방법
+     */
+    /**
+    this.getAdvancementPageVisibleCheck({ menuId: pageInfo.menuId, host: req.hostname })
+      .subscribe((advancement) => {
+        if ( advancement ) {
+          // local 테스트틀 하기 위해 추가
+          if ( (process.env.NODE_ENV === advancement.env && advancement.visible)
+            || process.env.NODE_ENV === 'local' ) {
+            this._render(req, res, next, svcInfo, allSvc, childInfo, pageInfo);
+            return false;
+          }
+        }
+        // 기존 약정할인 화면
+        super._render(req, res, next, svcInfo, allSvc, childInfo, pageInfo);
+      }, (error) => {
+        throw error;
+      });
+     **/
+    this._render(req, res, next, svcInfo, allSvc, childInfo, pageInfo);
   }
 
   _render(req, res, next, svcInfo, allSvc, child, pageInfo) {

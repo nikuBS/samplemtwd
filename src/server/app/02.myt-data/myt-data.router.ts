@@ -1,5 +1,5 @@
 import TwRouter from '../../common/route/tw.router';
-import MyTDataSubMain from './myt-data.submain.controller';
+import MyTDataSubMain from './myt-data.submain.adv.controller';
 import MyTDataHotdata from './controllers/usage/myt-data.hotdata.controller';
 import MyTDataUsageChild from './controllers/usage/myt-data.usage.child.controller';
 import MyTDataUsageChildRecharge from './controllers/usage/myt-data.usage.child.recharge.controller';
