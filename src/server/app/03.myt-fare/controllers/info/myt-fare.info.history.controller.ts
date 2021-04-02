@@ -515,7 +515,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.sortDt = o.opDt; // 날짜 , 리스트 합칠 때 정렬기준이 됨
         o.innerIndex = index; // 상세정보 조회시 사용할 값
         o.dataPayMethodCode = MYT_FARE_PAYMENT_TYPE.PAUTO; // 포인트자동납부
-        o.noLink = this.isNoLink(o.reqSt); // === MYT_FARE_POINT_PAYMENT_STATUS.CLOSE); // 납부해지단계에서는 링크를 걸지 않음
+        o.noLink = this.isNoLink(o.reqSt); 
         o.listTitle = o.pointNm; // 리스트 제목
         o.isPoint = true; // 포인트 여부
         o.dataAmt = FormatHelper.addComma(o.point); // 금액
@@ -593,8 +593,12 @@ class MyTFareInfoHistory extends TwViewController {
    * @return {boolean}
    */
   private isNoLink(o: string): boolean {
-    return (MYT_FARE_POINT_PAYMENT_STATUS.OPEN === o || MYT_FARE_POINT_PAYMENT_STATUS.OPEN2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CHANGE === o ||
-       MYT_FARE_POINT_PAYMENT_STATUS.CHANGE2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE2 === o);
+    // OP002-12850 : [myT] (W-2101-073-01) 무약정플랜 포인트 사용 관련 T world App 반영요청 
+    // 납부완료 일때만 상세이동 가능, 
+    // 납부신청, 납부해지, 납부대기 상세이동 불가 
+    return MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE !== o; 
+    // return (MYT_FARE_POINT_PAYMENT_STATUS.OPEN === o || MYT_FARE_POINT_PAYMENT_STATUS.OPEN2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CHANGE === o ||
+    //    MYT_FARE_POINT_PAYMENT_STATUS.CHANGE2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE2 === o);
   }
 
   /**
