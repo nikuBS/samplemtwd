@@ -365,6 +365,12 @@ Tw.ProductCommonCallplan.prototype = {
     if (this._isPreview) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.PREVIEW);
     }
+    
+    //소리샘일 경우 sms 인증찾 오픈 웹이면 인증창
+    if (this._prodId === 'NA00000262') {   
+     return this._certConfirmMsg();
+    }
+
     // 설정 버튼이 2개 이상일 경우 액션시트 실행
     if (this._settingBtnList.length > 1) {
       this._openSettingPop();
@@ -390,6 +396,65 @@ Tw.ProductCommonCallplan.prototype = {
       }
       // 설정 페이지 이동
       this._historyService.goLoad(this._settingBtnList[0].url + '?prod_id=' + this._prodId);
+    }
+  },
+  
+  //소리샘 비밀번호 초기화 msg 시작,  _openCertification 
+  /**
+   * @function
+   * @desc 소리샘 부가서비스 설정 버튼 클릭시 alert
+   * @returns {*|void|void|*}
+   */
+  _certConfirmMsg: function() { 
+      var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A26;
+      this._popupService.openConfirmButton('비밀번호는 이동전화 뒷번호 4자리로 설정됩니다.','설정된 비밀번호를 초기화 하시겠습니까?', $.proxy(this._openCertification, this, ''), null, Tw.BUTTON_LABEL.CANCEL, '비밀번호 초기화', '');
+  },
+   /**
+   * @function
+   * @desc 소리샘 비밀번호 초기화 휴대폰 인증 모듈 오픈 BFF_10_0067
+   * @returns
+   */
+  _openCertification:function(e){    
+    
+    this._popupService.close();
+
+    if(this._requestYn){
+      return;
+    }
+    this._requestYn = true;
+    var self = this; 
+    setTimeout(function(){
+      self._requestYn = false;
+    },500);
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0067, {})
+    .done($.proxy(this._sorisamSmsAuth, this))     
+  },
+
+   /**
+   * @function
+   * @desc 인증성공시 후 소리샘 비밀번호 초기화 API 호출.. BFF_10_0206
+   * @returns
+   */
+  _sorisamSmsAuth : function(resp){
+    if (resp.code === Tw.API_CODE.CODE_00) {
+      this._apiService.request(Tw.API_CMD.BFF_10_0206, {})
+          .done($.proxy(this._succesMsg, this))  
+          .fail(function(err){ 
+            Tw.Error(err.code, err.clientDebugMessage).pop();
+          })
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+},
+   /**
+   * @function
+   * @desc 소리샘 비밀번호 초기화 완료 msg
+   * @returns
+   */
+  _succesMsg:function(res){
+    if (res.code === Tw.API_CODE.CODE_00 || res.result==='SC') {
+      this._popupService.openAlert('비밀번호 초가화 완료되었습니다.');
     }
   },
 
