@@ -43,7 +43,7 @@ import LoggerService from './services/logger.service';
 import VERSION from './config/version.config';
 import ErrorService from './services/error.service';
 import Axios from 'axios';
-import { timer } from 'rxjs/Observable/timer';
+import { timer } from '../../node_modules/rxjs/observable/timer';
 
 //영문추가
 
