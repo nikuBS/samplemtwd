@@ -35387,6 +35387,8 @@ body.tod-white{background:#fff}
 .tod-submain .report-list .report-item .report-define .report-cont.basics13-larger .unit{font-size:0.625rem; font-weight:500; margin-right:0.125rem}
 .tod-submain .report-list.item-no-border .report-item{border-bottom:none; }
 .tod-submain .report-list.item-no-border .report-item > .d-wrap{padding:0.25rem 0}
+.tod-submain .section-inner .box-group-cont .gray-box .report-list .report-item .report-define .report-cont{font-weight:500 }
+.tod-submain .section-inner .box-group-cont .gray-box.claim-box .report-list .report-item .report-define .report-cont{font-weight:400 }
 
 /* 내역 리스트 - 사이즈 작은것  */
 .tod-submain .report-list.small .report-item{font-size:0.8125rem}
