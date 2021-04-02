@@ -23,16 +23,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-    if ( pageInfo.advancement ) {
-      // local 테스트틀 하기 위해 추가
-      if ( (process.env.NODE_ENV === pageInfo.advancement.env && pageInfo.advancement.visible)
-        || process.env.NODE_ENV === 'local' ) {
-        this._render(req, res, next, svcInfo, allSvc, child, pageInfo);
-        return false;
-      }
-    }
-    // 기존 가입정보 화면
-    super._render(req, res, next, svcInfo, allSvc, child, pageInfo);
+    this._render(req, res, next, svcInfo, allSvc, child, pageInfo);
   }
 
   _render(req, res, next, svcInfo, allSvc, child, pageInfo) {

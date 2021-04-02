@@ -78,8 +78,8 @@ class MainHome extends TwViewController {
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
-    if (svcInfo) {
-      if (svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE) {
+    if ( svcInfo ) {
+      if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
         // 모바일 - 휴대폰 회선
         Observable.combineLatest(
           this.getUsageData(svcInfo),
@@ -88,19 +88,21 @@ class MainHome extends TwViewController {
           this.getRecommendProds(req, svcInfo.prodId),
           this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
           this.getProductGroup(),
-          this.getPersonData(svcInfo, req)
-        ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList, personData]) => {
+          this.getPersonData(svcInfo, req),
+          this.getPersonSmsDisableTimeCheck()
+        ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList, personData, personSmsData]) => {
           // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
-          if (usageData.data) {
+          if ( usageData.data ) {
             usageData.data['isTplanProd'] = prodList && prodList.findIndex(item => item.prodId === svcInfo.prodId) > -1;
           }
           homeData.usageData = usageData;
           homeData.membershipData = membershipData;
           recommendProdsData = recommendProdsResult;
+          svcInfo.personSmsDisableTimeCheck = personSmsData; // 무료문자 노출조건
           svcInfo.personTimeChk = personData.personDisableTimeCheck; // 아이콘 비노출 시간 체크
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck; // 아이콘 비노출 서비스 타입 체크
           svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
-          res.render(`main.home-${flag}.html`, {
+          res.render(`main.home-${ flag }.html`, {
             svcInfo,
             homeData,
             redisData,
@@ -110,19 +112,21 @@ class MainHome extends TwViewController {
             isAdRcvAgreeBannerShown
           });
         });
-      } else if (['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1) {
+      } else if ( ['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1 ) {
         // IPTV, 인터넷 , 전화 회선
         Observable.combineLatest(
           this.getBillData(svcInfo),
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
           this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
-          this.getPersonData(svcInfo, req)
-        ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown, personData]) => {
+          this.getPersonData(svcInfo, req),
+          this.getPersonSmsDisableTimeCheck()
+        ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown, personData, personSmsData]) => {
           homeData.billData = billData;
+          svcInfo.personSmsDisableTimeCheck = personSmsData; // 무료문자 노출조건
           svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
           svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
-          res.render(`main.home-${flag}.html`, {
+          res.render(`main.home-${ flag }.html`, {
             svcInfo,
             homeData,
             redisData,
@@ -139,17 +143,19 @@ class MainHome extends TwViewController {
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
           this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
           this.getProductGroup(),
-          this.getPersonData(svcInfo, req)
-        ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList, personData]) => {
+          this.getPersonData(svcInfo, req),
+          this.getPersonSmsDisableTimeCheck()
+        ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList, personData, personSmsData]) => {
           // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
-          if (usageData.data) {
+          if ( usageData.data ) {
             usageData.data['isTplanProd'] = prodList && prodList.findIndex(item => item.prodId === svcInfo.prodId) > -1;
           }
           homeData.usageData = usageData;
+          svcInfo.personSmsDisableTimeCheck = personSmsData; // 무료문자 노출조건
           svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
           svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
-          res.render(`main.home-${flag}.html`, {
+          res.render(`main.home-${ flag }.html`, {
             svcInfo,
             homeData,
             redisData,
@@ -169,11 +175,11 @@ class MainHome extends TwViewController {
       // [feature/OP002-8022] 미 로그인 시 해더 아이콘 노출/비노출에 필요한 redis 데이터 요청
       Observable.combineLatest(
         this.getRedisData(noticeCode, ''),
-        this.getPersonDataNoLogin(req)
+        this.getPersonDataNoLogin(req),
       ).subscribe(([redisData, personDataNoLogin]) => {
         personDataNoLoginMap.personTimeChk = personDataNoLogin.personDisableTimeCheck; // 아이콘 비노출 시간 체크
         personDataNoLoginMap.personAgentTypeChk = personDataNoLogin.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
-        res.render(`main.home-${flag}.html`, {
+        res.render(`main.home-${ flag }.html`, {
           svcInfo,
           homeData,
           redisData,
@@ -192,12 +198,12 @@ class MainHome extends TwViewController {
    * @return {Observable}
    */
   private getSmartCardOrder(svcMgmtNum: string): Observable<any> {
-    if (FormatHelper.isEmpty(svcMgmtNum)) {
+    if ( FormatHelper.isEmpty(svcMgmtNum) ) {
       return Observable.of([]);
     }
     return this.redisService.getStringTos(REDIS_TOS_KEY.SMART_CARD + svcMgmtNum)  // 1004483007
       .switchMap((resp) => {
-        if (resp.code === API_CODE.CODE_00) {
+        if ( resp.code === API_CODE.CODE_00 ) {
           return Observable.of(resp);
         } else {
           return this.redisService.getStringTos(REDIS_TOS_KEY.SMART_CARD_DEFAULT);
@@ -205,8 +211,8 @@ class MainHome extends TwViewController {
       }).map((resp) => {
         this.logger.info(this, '[Smart Card]', resp);
         // let order = ['00001', '00002', '00003', '00004', '00005'];
-        let order:string[] = [];
-        if (resp.code === API_CODE.CODE_00) {
+        let order: string[] = [];
+        if ( resp.code === API_CODE.CODE_00 ) {
           order = resp.result.split(',');
         } else {
           order.push('00001');
@@ -239,7 +245,7 @@ class MainHome extends TwViewController {
     ).map(([noti, notice, help, smartCard]) => {
       let mainNotice = null;
       let emrNotice = null;
-      if (!FormatHelper.isEmpty(notice)) {
+      if ( !FormatHelper.isEmpty(notice) ) {
         mainNotice = notice.mainNotice;
         emrNotice = notice.emrNotice;
       }
@@ -284,7 +290,7 @@ class MainHome extends TwViewController {
     let result = null;
     return this.redisService.getData(REDIS_KEY.HOME_HELP)
       .map((resp) => {
-        if (resp.code === API_CODE.REDIS_SUCCESS) {
+        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           result = this.parseHelpData(resp.result.cicntsList);
         }
         return result;
@@ -301,14 +307,14 @@ class MainHome extends TwViewController {
     const scrnTypCd = cicntsList[0].scrnTypCd || 'F';
 
     cicntsList.sort((prev, next) => {
-      if (scrnTypCd === 'R') {
+      if ( scrnTypCd === 'R' ) {
         return Math.floor(Math.random() * 3) - 1;
       } else {
         return prev.mainExpsSeq - next.mainExpsSeq;
       }
     });
     cicntsList[0].rollYn = cicntsList[0].rollYn || 'Y';
-    for (let i = 0; i < cicntsList.length; i += 3) {
+    for ( let i = 0; i < cicntsList.length; i += 3 ) {
       resultArr.push(cicntsList.slice(i, i + 3));
     }
     return resultArr;
@@ -323,13 +329,13 @@ class MainHome extends TwViewController {
     let membershipData = {
       code: ''
     };
-    if (svcInfo.loginType === LOGIN_TYPE.EASY) {
+    if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
       membershipData.code = 'EASY_LOGIN';
       return Observable.of(membershipData);
     } else {
       return this.apiService.requestStore(SESSION_CMD.BFF_04_0001, {}).map((resp) => {
         membershipData.code = resp.code;
-        if (resp.code === API_CODE.CODE_00) {
+        if ( resp.code === API_CODE.CODE_00 ) {
           membershipData = Object.assign(membershipData, this.parseMembershipData(resp.result));
         }
         return membershipData;
@@ -377,7 +383,7 @@ class MainHome extends TwViewController {
    */
   private getCharge(): any {
     return this.apiService.request(API_CMD.BFF_05_0036, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
+      if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       }
     });
@@ -390,7 +396,7 @@ class MainHome extends TwViewController {
    */
   private getUsed(): any {
     return this.apiService.request(API_CMD.BFF_05_0047, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
+      if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       }
       return null;
@@ -403,8 +409,8 @@ class MainHome extends TwViewController {
    * @return {object}
    */
   private parseBillData(billData: any): any {
-    if (!FormatHelper.isEmpty(billData.charge) && !FormatHelper.isEmpty(billData.used)) {
-      if (billData.charge.coClCd === MYT_FARE_BILL_CO_TYPE.BROADBAND) {
+    if ( !FormatHelper.isEmpty(billData.charge) && !FormatHelper.isEmpty(billData.used) ) {
+      if ( billData.charge.coClCd === MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
         return {
           showBill: true,
           isBroadband: true
@@ -417,7 +423,7 @@ class MainHome extends TwViewController {
 
       const invMonth = +DateHelper.getCurrentMonth(billData[billName].invDt);
       let billMonth = +invMonth + 1;
-      if (invMonth === 12) {
+      if ( invMonth === 12 ) {
         billMonth = 1;
       }
 
@@ -451,15 +457,15 @@ class MainHome extends TwViewController {
       showSvcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
     };
     return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
+      if ( resp.code === API_CODE.CODE_00 ) {
         usageData = Object.assign(usageData, this.parseUsageData(resp.result, svcInfo));
-      } else if (resp.code === API_CODE.BFF_0006) {
+      } else if ( resp.code === API_CODE.BFF_0006 ) {
         usageData['fromDate'] = DateHelper.getShortDateAnd24Time(resp.result.fromDtm);
         usageData['toDate'] = DateHelper.getShortDateAnd24Time(resp.result.toDtm);
         usageData['fallbackClCd'] = resp.result.fallbackClCd;
         usageData['fallbackUrl'] = resp.result.fallbackUrl;
         usageData['fallbackMsg'] = resp.result.fallbackMsg;
-      } else if (resp.code === API_CODE.BFF_0011) {
+      } else if ( resp.code === API_CODE.BFF_0011 ) {
         usageData['fallbackClCd'] = resp.result.fallbackClCd;
         usageData['fallbackUrl'] = resp.result.fallbackUrl;
         usageData['fallbackMsg'] = resp.result.fallbackMsg;
@@ -487,7 +493,7 @@ class MainHome extends TwViewController {
       fivegxTicketTime: { isShow: false }
     };
 
-    if (!FormatHelper.isEmpty(usageData.gnrlData)) {
+    if ( !FormatHelper.isEmpty(usageData.gnrlData) ) {
       this.mergeData(usageData.gnrlData, result.data);
       // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
       // result.data['isTplanProd'] = TPLAN_PROD_ID.indexOf(svcInfo.prodId) !== -1;
@@ -498,10 +504,10 @@ class MainHome extends TwViewController {
         return !FormatHelper.isEmpty(usage) && PRODUCT_5GX_TICKET_TIME_SKIP_ID.indexOf(usage.skipId) === -1
           && (UNLIMIT_CODE.indexOf(usage.unlimit) !== -1 || (UNLIMIT_CODE.indexOf(usage.unlimit) === -1 && +usage.remained > 0));
       });
-      if (!FormatHelper.isEmpty(findData)) {
+      if ( !FormatHelper.isEmpty(findData) ) {
         result[kind] = findData;
         this.convShowData(result[kind]);
-      } else if (!FormatHelper.isEmpty(usageData[kind][0])) {
+      } else if ( !FormatHelper.isEmpty(usageData[kind][0]) ) {
         result[kind] = usageData[kind][0];
         this.convShowData(result[kind]);
       }
@@ -511,7 +517,7 @@ class MainHome extends TwViewController {
         return PRODUCT_5GX_TICKET_TIME_SKIP_ID.indexOf(usage.skipId) !== -1;
       });
 
-      if (!FormatHelper.isEmpty(fivegxTicketTime)) {
+      if ( !FormatHelper.isEmpty(fivegxTicketTime) ) {
         this.convShowData(fivegxTicketTime);
         result.fivegxTicketTime = fivegxTicketTime;
       }
@@ -537,19 +543,19 @@ class MainHome extends TwViewController {
     let includeFeeCnt = 0;
 
     list.map((target) => {
-      if (UNLIMIT_CODE.indexOf(target.unlimit) !== -1) {
+      if ( UNLIMIT_CODE.indexOf(target.unlimit) !== -1 ) {
         data.isUnlimit = true;
         data.showMyRemained = SKIP_NAME.UNLIMIT;
         data.showAddRemained = SKIP_NAME.UNLIMIT;
       }
-      if (TPLAN_SHARE_LIST.indexOf(target.skipId) !== -1) {
+      if ( TPLAN_SHARE_LIST.indexOf(target.skipId) !== -1 ) {
         data.shareTotal += +target.total;
         data.shareRemained += +target.remained;
         data.isTplanUse = true;
       }
 
       // 5GX 데이터 시간권 사용중
-      if (PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(target.skipId) !== -1) {
+      if ( PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(target.skipId) !== -1 ) {
         data.showUsingFiveGxTicketTimeRemainedText = DateHelper.getKoreanTime(target.exprDtm);
         // API 5분 cache를 사용하고 있어서, 실시간으로 데이터를 출력할 수 없음.
         // 일단, 해당 기능 노출 안 함.
@@ -557,23 +563,23 @@ class MainHome extends TwViewController {
       }
     });
     data.showShareRemained = this.convFormat(data.shareRemained, UNIT_E.DATA);
-    if (!data.isUnlimit) {
+    if ( !data.isUnlimit ) {
       data.myTotal = 0;
       data.myRemained = 0;
       list.map((target) => {
-        if (TPLAN_SHARE_LIST.indexOf(target.skipId) === -1 && target.unit !== UNIT_E.FEE) {
+        if ( TPLAN_SHARE_LIST.indexOf(target.skipId) === -1 && target.unit !== UNIT_E.FEE ) {
           data.myTotal += +target.total;
           data.myRemained += +target.remained;
         }
 
-        if (target.unit === UNIT_E.FEE) {
+        if ( target.unit === UNIT_E.FEE ) {
           includeFee = true;
           includeFeeCnt++;
         }
       });
 
       // gnrlData에 원단위만 존재하는 경우, 실시간 데이터 잔여량을 보여주지 않는다.
-      if (includeFeeCnt === list.length && includeFee) {
+      if ( includeFeeCnt === list.length && includeFee ) {
         data.isShow = false;
       }
 
@@ -586,7 +592,7 @@ class MainHome extends TwViewController {
       data.shareRemainedRatio = Math.round(data.addRemained / data.addTotal * 100);
     }
 
-    if (data.usingFivegxTicketTime) {
+    if ( data.usingFivegxTicketTime ) {
       data.linkUrl = '/myt-data/5g-setting';
     } else {
       // data.linkUrl = '/myt-data/hotdata';
@@ -604,7 +610,7 @@ class MainHome extends TwViewController {
     data.isUnlimit = UNLIMIT_CODE.indexOf(data.unlimit) !== -1;
     data.remainedRatio = 100;
     // data.showUsed = this.convFormat(data.used, data.unit);
-    if (!data.isUnlimit) {
+    if ( !data.isUnlimit ) {
       // data.showTotal = this.convFormat(data.total, data.unit);
       data.showRemained = this.convFormat(data.remained, data.unit);
       data.showRemainedText = data.showRemained + ' ' + UNLIMIT_NAME.REMAIN;
@@ -622,23 +628,23 @@ class MainHome extends TwViewController {
    * @return {object}
    */
   private convFormat(data: string, unit: string): any {
-    switch (unit) {
+    switch ( unit ) {
       case UNIT_E.DATA:
         const resultData = FormatHelper.convDataFormat(data, UNIT[unit]);
         return resultData.data + resultData.unit;
       case UNIT_E.VOICE:
         const resultVoice = FormatHelper.convVoiceFormat(data);
         let resp = '';
-        if (resultVoice.hours !== 0) {
+        if ( resultVoice.hours !== 0 ) {
           resp += resultVoice.hours + TIME_UNIT.HOURS;
         }
-        if (resultVoice.min !== 0) {
-          if (!FormatHelper.isEmpty(resp)) {
+        if ( resultVoice.min !== 0 ) {
+          if ( !FormatHelper.isEmpty(resp) ) {
             resp += ' ';
           }
           resp += resultVoice.min + TIME_UNIT.MINUTE;
         }
-        if (FormatHelper.isEmpty(resp)) {
+        if ( FormatHelper.isEmpty(resp) ) {
           resp = '0' + TIME_UNIT.MINUTE;
         }
         return resp;
@@ -663,7 +669,7 @@ class MainHome extends TwViewController {
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
-    if (BrowserHelper.isApp(req)) {
+    if ( BrowserHelper.isApp(req) ) {
       // const channelIds = [EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS];
       // return this.apiService.request(API_CMD.BFF_10_0187, {channelIds: channelIds}).map((resp) => {
 
@@ -692,12 +698,12 @@ class MainHome extends TwViewController {
    */
   private getIsAdRcvAgreeBannerShown(loginType): Observable<any> {
 
-    if (FormatHelper.isEmpty(loginType) || loginType !== 'T') {
+    if ( FormatHelper.isEmpty(loginType) || loginType !== 'T' ) {
       return Observable.of(false);
     }
 
     return this.apiService.request(API_CMD.BFF_03_0034, null).map((resp) => {
-      if (resp.code !== API_CODE.CODE_00) {
+      if ( resp.code !== API_CODE.CODE_00 ) {
         return false;
       }
       return resp.result.twdAdRcvAgreeYn !== 'Y';
@@ -713,7 +719,7 @@ class MainHome extends TwViewController {
     // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
     return this.apiService.request(API_CMD.BFF_10_0188, {}, {}, ['NA6031_PRC_PLN', 1])
       .map(resp => {
-        if (resp.code === API_CODE.CODE_00) {
+        if ( resp.code === API_CODE.CODE_00 ) {
           return resp.result.prodList;
         } else {
           return null;
@@ -766,7 +772,7 @@ class MainHome extends TwViewController {
       property: REDIS_KEY.PERSON_DISABLE_TIME
     };
     return this.apiService.request(API_CMD.BFF_01_0069, DEFAULT_PARAM).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
+      if ( resp.code === API_CODE.CODE_00 ) {
         const today = new Date().getTime();
         const resTime = resp.result.split('~');
         const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
@@ -827,30 +833,29 @@ class MainHome extends TwViewController {
    */
   public getUserAgent(req): string {
     const request = req; // || this.request;
-    if (!FormatHelper.isEmpty(request)) {
+    if ( !FormatHelper.isEmpty(request) ) {
       return request.headers['user-agent'];
     }
     return '';
   }
 
-  public compareVer (a, b): boolean {
-    let x=a.split('.').map(e=> parseInt(e));
-    let y=b.split('.').map(e=> parseInt(e));
+  public compareVer(a, b): boolean {
+    let x = a.split('.').map(e => parseInt(e));
+    let y = b.split('.').map(e => parseInt(e));
     let z = '';
 
-    for(let i=0;i<x.length;i++) {
-        if(x[i] === y[i]) {
-            z+='e';
-        } else
-        if(x[i] > y[i]) {
-            z+='m';
-        } else {
-            z+='l';
-        }
+    for ( let i = 0; i < x.length; i++ ) {
+      if ( x[i] === y[i] ) {
+        z += 'e';
+      } else if ( x[i] > y[i] ) {
+        z += 'm';
+      } else {
+        z += 'l';
+      }
     }
-    if (!z.match(/[l|m]/g)) {
+    if ( !z.match(/[l|m]/g) ) {
       return true;
-    } else if (z.split('e').join('')[0] == "m") {
+    } else if ( z.split('e').join('')[0] == 'm' ) {
       return true;
     } else {
       return false;
@@ -862,16 +867,16 @@ class MainHome extends TwViewController {
       let agentString = this.getUserAgent(req);
       // console.log("[10650-DEBUG-UserAgent] ", agentString);
       let os = agentString.indexOf('iPhone') > -1 ? 'ios' : 'aos';
-      if (os === 'aos') {
-        if (agentString.indexOf('Mac') > -1) {
+      if ( os === 'aos' ) {
+        if ( agentString.indexOf('Mac') > -1 ) {
           os = 'ios';
-        } else if (agentString.indexOf('iPad') > -1) {
+        } else if ( agentString.indexOf('iPad') > -1 ) {
           os = 'ios';
-        } else if (agentString.indexOf('iPod') > -1) {
+        } else if ( agentString.indexOf('iPod') > -1 ) {
           os = 'ios';
         }
       }
-      if (os === 'ios') {
+      if ( os === 'ios' ) {
         const mac_check_version = '12.4.8';
         let reg = new RegExp('OS [0-9]{0,3}_[0-9]{0,3}_[0-9]{0,3}');
         let reg2 = new RegExp('OS [0-9]{0,3}_[0-9]{0,3}');
@@ -880,21 +885,21 @@ class MainHome extends TwViewController {
         ios_text = agentString;
         // version output
         let mac_version_temp = reg.exec(ios_text);
-        if (mac_version_temp === null) {
+        if ( mac_version_temp === null ) {
           mac_version_temp = reg2.exec(ios_text);
         }
-        if (mac_version_temp === null) {
+        if ( mac_version_temp === null ) {
           mac_version_temp = reg3.exec(ios_text);
         }
         let mac_version: string = '';
-        if (mac_version_temp) {
+        if ( mac_version_temp ) {
           mac_version = mac_version_temp[0].split(' ')[1];
         }
         // version length check
         let mac_version_len = mac_version.split('_').length;
-        if (mac_version_len === 1) {
+        if ( mac_version_len === 1 ) {
           mac_version = mac_version + '_0_0';
-        } else if (mac_version_len === 2) {
+        } else if ( mac_version_len === 2 ) {
           mac_version = mac_version + '_0';
         }
 
@@ -912,26 +917,26 @@ class MainHome extends TwViewController {
         aos_text = agentString;
         // version output
         let mac_version_temp = reg.exec(aos_text);
-        if (mac_version_temp === null) {
+        if ( mac_version_temp === null ) {
           mac_version_temp = reg2.exec(aos_text);
         }
-        if (mac_version_temp === null) {
+        if ( mac_version_temp === null ) {
           mac_version_temp = reg3.exec(aos_text);
         }
         let mac_version: string = '';
-        if (mac_version_temp) {
-          mac_version = mac_version_temp[0].split(' ')[1]
+        if ( mac_version_temp ) {
+          mac_version = mac_version_temp[0].split(' ')[1];
         }
         // version length check
         let mac_version_len = mac_version.split('.').length;
-        if (mac_version_len === 1) {
+        if ( mac_version_len === 1 ) {
           mac_version = mac_version + '.0.0';
-        } else if (mac_version_len === 2) {
+        } else if ( mac_version_len === 2 ) {
           mac_version = mac_version + '.0';
         }
         return this.compareVer(mac_version, mac_check_version);
       }
-    } catch (e) {
+    } catch ( e ) {
       console.error(e);
     }
 

@@ -675,6 +675,10 @@ class MyTJoinSubmainController extends TwViewController {
       if (resp.code === API_CODE.CODE_00) {
         let data;
         const result = resp.result;
+        if (FormatHelper.isEmpty(result) || FormatHelper.isEmpty(result.feePlanProd)) {
+          // data 가 없는 경우
+          return {};
+        }
         if (isWireless) {
           const {linkProdId: prodId, prodNm, prodLinkYn: linkYn} = result.feePlanProd;
           data = {

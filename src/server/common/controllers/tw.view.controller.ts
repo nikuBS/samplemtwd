@@ -317,49 +317,41 @@ abstract class TwViewController {
             return;
           }
           if ( isLogin ) {
-            Observable.combineLatest(
-                this.getPersonSmsDisableTimeCheck(),
-                this.getAdvancementPageVisibleCheck({ menuId: urlMeta.menuId, host: req.hostname })
-            ).subscribe(([personResp, advancementResp]) => {
-              svcInfo.personSmsDisableTimeCheck = personResp;
-              urlMeta.advancement = advancementResp;
-              // console.log(">>[TEST] tw.View.Controller.svcInfo ", svcInfo); - 주석처리
-              urlMeta.masking = this.loginService.getMaskingCert(req, svcInfo.svcMgmtNum);
-              if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
-                const urlAuth = urlMeta.auth.grades;
-                const svcGr = svcInfo.svcGr;
-                // admin 정보 입력 오류 (접근권한이 입력되지 않음)
-                if ( urlAuth === '' ) {
-                  res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
-                  return;
-                }
-                if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
-                  if ( urlAuth.indexOf('N') !== -1 ) {
-                    // 준회원 접근 가능한 화면
-                    this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-                  } else {
-                    // 등록된 회선 없음 + 준회원 접근 안되는 화면
-                    this.errorNoRegister(req, res, next);
-                  }
-                } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
+            // console.log(">>[TEST] tw.View.Controller.svcInfo ", svcInfo); - 주석처리
+            urlMeta.masking = this.loginService.getMaskingCert(req, svcInfo.svcMgmtNum);
+            if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
+              const urlAuth = urlMeta.auth.grades;
+              const svcGr = svcInfo.svcGr;
+              // admin 정보 입력 오류 (접근권한이 입력되지 않음)
+              if ( urlAuth === '' ) {
+                res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+                return;
+              }
+              if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
+                if ( urlAuth.indexOf('N') !== -1 ) {
+                  // 준회원 접근 가능한 화면
                   this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
                 } else {
-                  // 접근권한 없음
-                  this.errorAuth(req, res, next);
+                  // 등록된 회선 없음 + 준회원 접근 안되는 화면
+                  this.errorNoRegister(req, res, next);
                 }
-              } else if ( loginType.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+              } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
                 this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
               } else {
-                // 현재 로그인 방법으론 이용할 수 없음
-                if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-                  res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
-                } else {
-                  // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
-                  this.errorAuth(req, res, next);
-                }
+                // 접근권한 없음
+                this.errorAuth(req, res, next);
               }
-            });
-
+            } else if ( loginType.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+            } else {
+              // 현재 로그인 방법으론 이용할 수 없음
+              if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+                res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
+              } else {
+                // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
+                this.errorAuth(req, res, next);
+              }
+            }
           } else {
             if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
               if (urlMeta.menuId && urlMeta.menuId === 'M000020') {
