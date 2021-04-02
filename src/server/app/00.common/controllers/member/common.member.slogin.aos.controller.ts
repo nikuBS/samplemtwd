@@ -28,29 +28,36 @@ class CommonMemberSloginAos extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-    if (pageInfo && pageInfo.advancement) {
-      // local 테스트틀 하기 위해 추가
-      if ((process.env.NODE_ENV === pageInfo.advancement.env && pageInfo.advancement.visible)
-        || process.env.NODE_ENV === 'local') {
-        const advInst = new CommonMemberSloginIos();
-        advInst.initPage(req, res, next);
-        return false;
-      }
-    }
-    const mdnQuery = req.query.mdn;
-    const target = req.query.target !== 'undefined' ? decodeURIComponent(req.query.target) : '';
+    /**
+     * 특정페이지 환경에 맞춰서 페이지 오픈 정보처리하기 위한 방법
+     */
+    this.getAdvancementPageVisibleCheck({ menuId: pageInfo.menuId, host: req.hostname })
+      .subscribe((advancement) => {
+        if ( advancement ) {
+          // local 테스트틀 하기 위해 추가
+          if ( (process.env.NODE_ENV === advancement.env && advancement.visible)
+            || process.env.NODE_ENV === 'local' ) {
+            new CommonMemberSloginIos().initPage(req, res, next);
+            return false;
+          }
+        }
+        const mdnQuery = req.query.mdn;
+        const target = req.query.target !== 'undefined' ? decodeURIComponent(req.query.target) : '';
 
-    if ( FormatHelper.isEmpty(mdnQuery) ) {
-      res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn: null, target });
-      // res.redirect('/common/member/slogin/fail');
-    } else {
-      const mdn = {
-        original: mdnQuery,
-        show: FormatHelper.conTelFormatWithDash(mdnQuery)
-      };
+        if ( FormatHelper.isEmpty(mdnQuery) ) {
+          res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn: null, target });
+          // res.redirect('/common/member/slogin/fail');
+        } else {
+          const mdn = {
+            original: mdnQuery,
+            show: FormatHelper.conTelFormatWithDash(mdnQuery)
+          };
 
-      res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn, target });
-    }
+          res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn, target });
+        }
+      }, (error) => {
+        throw error;
+      });
   }
 }
 
