@@ -1007,7 +1007,7 @@ export const API_CMD = {
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },  
   BFF_10_0206: {
-    path: '/core-product/v1/mobiles/additions/passwordReset',
+    path: '/core-product/:version/mobiles/additions/passwordReset',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
   
