@@ -1005,7 +1005,12 @@ export const API_CMD = {
   BFF_10_0191: {
     path: '/core-product/:version/mobiles/additions/:args0/prodFstScrbInfo',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },  
+  BFF_10_0206: {
+    path: '/core-product/v1/mobiles/additions/passwordReset',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
+  
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
