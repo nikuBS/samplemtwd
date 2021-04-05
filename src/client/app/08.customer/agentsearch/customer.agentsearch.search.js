@@ -103,12 +103,12 @@ Tw.CustomerAgentsearch.prototype = {
     this.customerAgentsearchFilter = new Tw.CustomerAgentsearchFilter(args);
     // 쿼리 확인. 키워드 검색인 경우
     if (this._query.searchText) {
+      this._searchText = this._query.searchText;
       var param = $.extend({
         storeType: 0,
         currentPage: 1
       }, this._query);
       if (this._getType() !== 'tube') {
-        this.$keyword.val(param.searchText);
         param.searchText = encodeURIComponent(param.searchText);
       } else {
         var area = param.searchAreaNm.split(',');
@@ -124,6 +124,7 @@ Tw.CustomerAgentsearch.prototype = {
 
         this._getTubeNameList();
       }
+      this.$keyword.val(this._searchText);
       this.filterSearchRequest(param);
     }
   },
@@ -327,9 +328,11 @@ Tw.CustomerAgentsearch.prototype = {
       }
       keyword = String(keyword).trim();
       if (keyword === '') {
+        this._searchText = '';
         return;
       }
       saveParam.searchText = encodeURIComponent(keyword);
+      this._searchText = saveParam.searchText;
       isSendOk = true;
     } else {
       $.extend(saveParam, {
@@ -538,6 +541,11 @@ Tw.CustomerAgentsearch.prototype = {
     param = $.extend( {
       currentPage: 1
     }, param);
+    // 검색어로 검색 후 상세 아이템 진입 후 뒤로 이동 후 필터로 검색 시 화면은 표시되어있지만
+    // 기존 검색어 정보가 없는 상태로 검색되는 문제가 발생하여 수정함
+    if (!param.searchText) {
+      param.searchText = this._searchText || '';
+    }
     // "더보기" 버튼 data 속성 "param" 비어 있으면 더보기 이벤트 바인딩
     if (Tw.FormatHelper.isEmpty(this.$btnMore.data('param'))) {
       this.$btnMore.off('click').on('click', $.proxy(this._onMoreView, this));
