@@ -52,7 +52,7 @@ Tw.MyTFareSubMainAdv.prototype = {
       prd: getEidOfLineType('50', '96')
     };
     // 미납요금 있을때
-    if (this.data.unPaidTotSum) {
+    if ($('[data-make-eid="unPaid"]').length) {
       miriEid.stg = '33';
       miriEid.prd = getEidOfLineType('51', '97');
     }
