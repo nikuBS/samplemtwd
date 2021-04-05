@@ -49,7 +49,8 @@ class MyTFareBillSmallHistory extends TwViewController {
       data: {
         ...this._getCurMonth(), 
         ...this._getPrev6Month(),
-        noticeInfo: this.getTipInfo(), // 꼭 확인해 주세요 팁 리스트,        
+        isBubin: ['R', 'D'].indexOf(svcInfo.svcGr) > -1 // 법인 C, D (회선등급 C의 경우 정책서 상에는 svcGr 값이 C이고 시스템 상에는 svcGr 값이 R)
+        // noticeInfo: this.getTipInfo(), // 꼭 확인해 주세요 팁 리스트,
       }
     });
   }
