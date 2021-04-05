@@ -264,7 +264,7 @@ class ApiService {
   private handleError(observer, command, req, res, options, err) {
     if ( !err.response && err.stack ) {
       this.logger.error(this, '[Programming error] Stack :: ', err.stack);
-      this.logger.error(this, '[Programming error] SvcInfo :: ', req.session && req.session.svcInfo )
+      this.logger.error(this, '[Programming error] SvcInfo :: ', req.session && req.session.svcInfo);
       // page controller 에서 error 가 발생하여 무한로딩이 발생 시 error 페이지 노출 하도록 추가
       return res.status(500).render('error.page-not-found.html', {
         svcInfo: req.session ? req.session.svcInfo : null,
@@ -413,7 +413,6 @@ class ApiService {
             // this.loginService.setNoticeType(this.req, '05')
           ]);
         } else {
-          // console.log(resp);
           throw resp;
         }
       })
@@ -543,7 +542,7 @@ class ApiService {
               mbrChlId: resp.result.mbrChlId,
               svcMgmtNum: resp.result.svcMgmtNum
             })
-          )
+          );
         } else {
           // return this.loginService.setSvcInfo(this.req, this.res, null);
           throw resp;
@@ -731,19 +730,33 @@ class ApiService {
    */
   public requestUpdateSvcInfo(command, params): Observable<any> {
     let result = null;
+    let allSvcInfos: any = [];
     return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          return this.request(API_CMD.BFF_01_0005, {});
+          return this.request(API_CMD.BFF_01_0002, {});
         } else {
           throw resp;
         }
       })
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
+          try {
+            allSvcInfos = resp.result.m.concat(resp.result.s);
+            return this.request(API_CMD.BFF_01_0005, {});
+          } catch ( err ) {
+            throw err;
+          }
+        } else {
+          throw resp;
+        }
+      })
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const curSvcInfo = Object.assign(resp.result, allSvcInfos.find((item) => item.svcMgmtNum === resp.result.svcMgmtNum));
           return Observable.combineLatest(
-            this.loginService.setSvcInfo(this.req, this.res, resp.result),
+            this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
             this.request(API_CMD.BFF_08_0080, {
               mbrChlId: resp.result.mbrChlId,
               svcMgmtNum: resp.result.svcMgmtNum
@@ -879,7 +892,7 @@ class ApiService {
           age: 0,
           isAdult: false
         };
-        if (ageResp) {
+        if ( ageResp ) {
           if ( ageResp.code === API_CODE.CODE_00 ) {
             curSvcInfo.age = ageResp.result.age ? parseInt(ageResp.result.age, 10) : 0;
             curSvcInfo.isAdult = ageResp.result.age && parseInt(ageResp.result.age, 10) >= 19;
@@ -960,15 +973,15 @@ class ApiService {
    */
   private redirectInvalidSession(req, res, resp) {
     // expire 요청이 여러번 요청 되는 문제 오류 수정
-    const matchingInfo = resp.result.target.match( /\/common\/member\/logout\/expire/ig);
-    if (!matchingInfo || matchingInfo.length < 1) {
+    const matchingInfo = resp.result.target.match(/\/common\/member\/logout\/expire/ig);
+    if ( !matchingInfo || matchingInfo.length < 1 ) {
       const params = 'sess_invalid=Y'
-                  + '&pre_server_se=' + resp.result.preServerSession
-                  + '&cur_server_se=' + resp.result.curServerSession
-                  + '&url=' + resp.result.url
-                  + '&command_path=' + resp.result.commandPath
-                  + '&point=' + resp.result.point
-                  + '&target=' + resp.result.target;
+        + '&pre_server_se=' + resp.result.preServerSession
+        + '&cur_server_se=' + resp.result.curServerSession
+        + '&url=' + resp.result.url
+        + '&command_path=' + resp.result.commandPath
+        + '&point=' + resp.result.point
+        + '&target=' + resp.result.target;
 
       return res.redirect('/common/member/logout/expire?' + params);
     }
@@ -985,7 +998,7 @@ class ApiService {
       let referer = '';
 
       if ( !FormatHelper.isEmpty(req.baseUrl)
-          && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
+        && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
         referer = this.loginService.getReferer(req);
       }
 
