@@ -36733,3 +36733,8 @@ body.apphome .section-box {
     .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item.have-child .child-link-wrap .child-link-list .child-link a{padding:0 0.4375rem}
 }
 .dim[data-id^='line-dim']{position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(00, 00, 00, .3); z-index:1; display:none}
+
+/* 210330 [OP002-14012] [고도화 잔여 업무] 휴대폰 결제/콘텐츠 이용료 이용내역 조회 인증 통합 */
+.tab-area.new01.tod-large .tab-linker ul li a{width: 100%; height: 3.625rem; line-height: 3.625rem;}
+.ti-caption-gray.tod-border{background:none;}
+.ti-caption-gray.tod-border .bt-select{font-weight: 500; border-bottom: 0.0625rem solid #000}
