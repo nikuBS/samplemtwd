@@ -102,7 +102,7 @@ export const MYT_DATA_USAGE = {
         + '\nYou may access these services on the\nKorean version of T World.'
     },
     LINE_NOT_EXIST: { // 회선이 없을 시
-      title: 'This service is available\nonly for an SK Telecom\nregistered number',
+      title: 'This service is available\nonly for SK Telecom\nregistered numbers',
       contents: 'If you have an SK Telecom registered number,\nplease register your line by tapping on the\n“Register Line” button below'
     }
   }
@@ -118,7 +118,7 @@ export const MYT_JOIN_SUBMAIN = {
         + '\nYou may access these services on the\nKorean version of T World'
     },
     LINE_NOT_EXIST : { // 회선이 없을 시
-      title: 'This service is available\nonly for an SK Telecom\nregistered number',
+      title: 'This service is available\nonly for SK Telecom\nregistered numbers',
       contents: 'If you have an SK Telecom registered number,\nplease register your line by tapping on the\n“Register Line” button below'
     },
     COMPANY_LINE: { // 법인 회선 진입 시
