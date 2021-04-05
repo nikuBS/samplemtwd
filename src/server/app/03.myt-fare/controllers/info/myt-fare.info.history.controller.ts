@@ -596,7 +596,7 @@ class MyTFareInfoHistory extends TwViewController {
     // OP002-12850 : [myT] (W-2101-073-01) 무약정플랜 포인트 사용 관련 T world App 반영요청 
     // 납부완료 일때만 상세이동 가능, 
     // 납부신청, 납부해지, 납부대기 상세이동 불가 
-    return MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE === o; 
+    return MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE !== o; 
     // return (MYT_FARE_POINT_PAYMENT_STATUS.OPEN === o || MYT_FARE_POINT_PAYMENT_STATUS.OPEN2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CHANGE === o ||
     //    MYT_FARE_POINT_PAYMENT_STATUS.CHANGE2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE2 === o);
   }
