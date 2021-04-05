@@ -413,7 +413,6 @@ class ApiService {
             // this.loginService.setNoticeType(this.req, '05')
           ]);
         } else {
-          // console.log(resp);
           throw resp;
         }
       })
@@ -731,10 +730,19 @@ class ApiService {
    */
   public requestUpdateSvcInfo(command, params): Observable<any> {
     let result = null;
+    let allSvcInfos: any = [];
     return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
+          return this.request(API_CMD.BFF_01_0002, {});
+        } else {
+          throw resp;
+        }
+      })
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          allSvcInfos = resp.result.m.concat(resp.result.s);
           return this.request(API_CMD.BFF_01_0005, {});
         } else {
           throw resp;
@@ -742,8 +750,9 @@ class ApiService {
       })
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
+          const curSvcInfo = Object.assign(resp.result, allSvcInfos.find((item) => item.svcMgmtNum === resp.result.svcMgmtNum));
           return Observable.combineLatest(
-            this.loginService.setSvcInfo(this.req, this.res, resp.result),
+            this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
             this.request(API_CMD.BFF_08_0080, {
               mbrChlId: resp.result.mbrChlId,
               svcMgmtNum: resp.result.svcMgmtNum
