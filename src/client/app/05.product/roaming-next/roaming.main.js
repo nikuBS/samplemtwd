@@ -11,13 +11,15 @@
  * @param rootEl Root Element
  * @param popularNations 인기여행지 목록
  * @param nations 대륙별 전체 국가 목록
- * @param banners 배너 목록
+//  * @param banners 배너 목록
  * @constructor
  */
-Tw.RoamingMain = function (rootEl, popularNations, nations, banners) {
+Tw.RoamingMain = function (rootEl, popularNations, nations/* , banners */, menuId) {
   this.$container = rootEl;
+  this._apiService = Tw.Api;
   this.$popularNations = popularNations;
-  this.$banners = banners;
+  this._menuId = menuId;
+  // this.$banners = banners;
   var baseDiv = '#roamingMain';
 
   if (!Tw.Environment.init) {
@@ -142,10 +144,109 @@ Tw.RoamingMain.prototype = {
    * 어드민 배너 준비
    */
   setupBanners: function() {
-    if ($('#fe-banner-t').length) {
+    // if ($('#fe-banner-t').length) {
       // FIXME: priority M 이면 admin > tos 인데, 정말로 tos 배너를 미표시해도 되는지 확인
       // FIXME: this.$banners의 chnlClCd를 지정해줘야하는게 아닐지. 모바일 전용 요청이 필요한가?
-      new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, this.$banners, 'T', 'M');
+      // new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, this.$banners, 'T', 'M');
+    // }
+
+
+
+    this._apiService.requestArray([
+      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0022' } },
+      { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
+    ]).done($.proxy(this._successTosAdminRoamingBanner, this))
+        .fail($.proxy(this._errorRequest, this));
+        // .fail($.proxy(this._failTosBanner, this));
+
+  }, // end of setupBanners
+
+  
+  /**
+   * @function
+   * @desc 토스 배너 처리
+   * @param resp
+   * @private
+   */
+  _successTosAdminRoamingBanner: function (resp, admBanner) {
+    // console.log('resp ===== ', resp);
+    // console.log('admBanner ===== ', admBanner);
+
+    var result = [{ target: 'T', banner: resp }/* , { target: 'C' } */];
+
+    result.forEach(function(row){
+      if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
+        if(!row.banner.result.summary){
+          row.banner.result.summary = {target: row.target};
+        }
+        row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
+        row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
+      }else{
+        row.banner = { result: {summary : { target: row.target }, imgList : [] } };
+      }
+
+      if(admBanner.code === Tw.API_CODE.CODE_00){
+        row.banner.result.imgList = row.banner.result.imgList.concat(
+            admBanner.result.banners.filter(function(admbnr){
+              return admbnr.bnnrLocCd === row.target;
+            }).map(function(admbnr){
+              admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
+              admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+              return admbnr;
+            })
+        );
+      }
+    })
+    this._drawTosAdminRoamingBanner(result);
+  },
+
+
+  /**
+   * @function
+   * @desc 토스 배너 렌더링
+   * @param banners
+   * @private
+   */
+  _drawTosAdminRoamingBanner: function (banners) {
+    _.map(banners, $.proxy(function (bnr) {
+      // 배너구좌 한해서 bltnYn(게시여부)가 N인경우 영역을 없앰
+      if ( bnr.banner.result.bltnYn === 'N') {
+        this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
+      }
+
+      // if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
+      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0 ) {
+          new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this));
+      }
+    }, this));
+
+    new Tw.XtractorService(this.$container);
+
+  },
+
+
+
+
+  // 배너 ui 처리
+  _successDrawBanner: function () {
+    // this.$bannerList = this.$container.find('[data-id=banner-list]');
+    // if ( Tw.BrowserHelper.isApp() ) {
+    //   Tw.CommonHelper.resetHeight(this.$bannerList[0]);
+    // }
+  },
+
+
+
+  _errorRequest: function (resp) {
+    if ( !resp ) {
+      resp = {
+        code: '',
+        msg: Tw.ALERT_MSG_COMMON.SERVER_ERROR
+      };
     }
-  }
+    Tw.Error(resp.code, resp.msg).pop();
+  },
+
+
+
 };
