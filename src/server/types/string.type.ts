@@ -828,7 +828,8 @@ export const CUSTOMER_AGENT_SEARCH = {
       nameTheft: '명의도용접수',
       callHistSearch: '통화내역조회',
       rentYn: '임대폰',
-      safeDealKiosk: '안심거래 키오스크'
+      safeDealKiosk: '안심거래 키오스크',
+      skMagicRent: 'SK매직'
     }
   },
 
@@ -839,14 +840,14 @@ export const CUSTOMER_AGENT_SEARCH = {
     }
   },
 
-  PROGRAM: {
-    TITLE: '프로그램',
-    BODY: {
-      speedYn: '스마트폰 기초 과정',
-      applEduYn: '스마트폰 응용 과정',
-      codingEduYn: '코딩 교실'
-    }
-  },
+  // PROGRAM: {
+  //   TITLE: '프로그램',
+  //   BODY: {
+  //     speedYn: '스마트폰 기초 과정',
+  //     applEduYn: '스마트폰 응용 과정',
+  //     codingEduYn: '코딩 교실'
+  //   }
+  // },
 
   EXP_ZONE: {
     TITLE: '체험존',
