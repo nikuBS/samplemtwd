@@ -49,8 +49,7 @@ Tw.MyTFareSubMainRecentBill.prototype = {
       self = this,
       eDate = data.claimDt,
       sDate = Tw.DateHelper.getEndOfMonSubtractDate(eDate, 2, 'YYYYMMDD'),
-      isRep = data.type !== 'UF', // 대표청구 여부
-      claimList = isRep ? data.claim.billInvAmtList : data.usage.usedAmtList;
+      claimList = data.amtList;
     if (Tw.FormatHelper.isEmptyArray(claimList)) {
       return claimList;
     }

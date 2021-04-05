@@ -152,11 +152,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       nowDate = new Date();
     const prevDate = DateHelper.getEndOfMonSubtractDate(nowDate, '1', 'YYYYMMDD');
 
-    // data.claimDt = date;
-    // data.month = this._mytFareSubmainGuideService.getMonth(date, 'M');
     data.claimFirstDay = DateHelper.getShortFirstDate(date);
-    // data.claimLastDay = DateHelper.getShortLastDate(date);
-    // data.claimPay = '0';
     data.totalClaim = '0';
     data.latestDates = [];
 
@@ -207,10 +203,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
    */
   private _requestClaim(data: any): Observable<any> {
     const {svcInfo} = data;
-    let isRep = svcInfo.actRepYn === 'Y'; // 대표청구 여부
+    const isRep = data.isBroadBand ? false : svcInfo.actRepYn === 'Y'; // 대표청구 여부
 
-    const request = (isNormal?: boolean) => {
-      isRep = isNormal !== undefined ? !isNormal : isRep;
+    const request = () => {
       let reqs = new Array<Observable<any>>();
       const commonReqs = new Array<Observable<any>>();
       commonReqs.push(this._getPaymentInfo());
@@ -218,7 +213,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       commonReqs.push(this._miriService.getMiriBalance());
       // 대표청구일 때
       if (isRep) {
-        reqs.push(this._getNonPayment());
+        reqs.push(this._getLast6Bill());
         reqs.push(this._getAutoPayment());
       } else {
         data.type = 'UF';
@@ -239,11 +234,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
 
         // 대표청구일 때
         if (isRep) {
-          const [nonpayment, autoPayment] = responses;
-          if ( nonpayment ) {
-            const unPaidTotSum = nonpayment.unPaidTotSum || '0';
-            data.nonpayment = nonpayment;
-            data.unPaidTotSum = unPaidTotSum !== '0' ? FormatHelper.addComma(unPaidTotSum) : null;
+          const [last6Bill, autoPayment] = responses;
+          if ( last6Bill ) {
+            data.last6Bill = last6Bill;
           }
 
           // 자동납부 정보
@@ -278,33 +271,6 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       });
     };
 
-    // 대표청구일 때
-    if (isRep) {
-      return this.apiService.request(API_CMD.BFF_05_0203, {}).switchMap((resp) => {
-        if ( resp.code !== API_CODE.CODE_00 ) {
-          // SKB(청구대표회선)인 경우
-          if ( resp.code === 'BIL0011' ) {
-            data.isBroadBand = true;
-            return request(true);
-          }
-          // 오류code 처리
-          return Observable.of({
-            code: resp.code,
-            msg: resp.msg
-          });
-        }
-
-        // OP002-2986. 통합청구에서 해지할경우(개별청구) 청구번호가 바뀐다고함. 그럼 성공이지만 결과를 안준다고 함.
-        if (FormatHelper.isEmpty((resp.result || {}).invDt)) {
-          return Observable.of({
-            code: API_CODE.CODE_500,
-            msg: MYT_FARE_SUBMAIN_TITLE.ERROR.NO_DATA
-          });
-        }
-        data.claim = resp.result;
-        return request();
-      });
-    }
     return request();
   }
 
@@ -316,9 +282,17 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     const date = this.info.req.query.date, svcInfo = this.info.svcInfo;
     let isRep = svcInfo.actRepYn === 'Y'; // 대표청구 여부
     isRep = data.isBroadBand ? false : isRep;
-    const claim = isRep ? data.claim : data.usage;
+    const claim = (isRep ? data.last6Bill : data.usage) || {};
+    if (FormatHelper.isEmpty(claim)) {
+      return Observable.of({
+        code: API_CODE.CODE_500,
+        msg: MYT_FARE_SUBMAIN_TITLE.ERROR.NO_DATA
+      });
+    }
+
     const latestDates = new Array<string>();  // 최근 청구월(최대 6개월이며, 내역이 2개만 있다면 2개만 생성됨)
-    const amtList = (isRep ? claim.billInvAmtList : claim.usedAmtList) || [];
+    const amtList = (isRep ? claim.recentUsageList : claim.usedAmtList) || [];
+    data.amtList = amtList;
     const toDate = new Date();
     const eDate = DateHelper.getEndOfMonSubtractDate(toDate, '1', 'YYYYMMDD');
     const sDate = DateHelper.getEndOfMonSubtractDate(eDate, '5', 'YYYYMMDD');
@@ -326,9 +300,16 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       return this._mytFareSubmainGuideService.getMonth(_date, _format);
     };
 
+    // 당월 납부해야할 금액(남은 요금)
+    let remainPayment = 0;
+    // 미납금액: 조회월의 이전 미납금액들의 sum
+    let unpaid = 0;
+    let prepay = 0; // 선택월의 부분납부한 금액
+    let isPaid = false; // 선택월 요금납부 여부
+
     const setClaimData = (item) => {
       data.claimPay = item.invAmt || '0';
-      data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(item.dcAmt))).toString() );
+      data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(item.dcAmt))).toString() ); // 할인 금액
       data.claimDt = item.invDt;
       data.month = getMonth(item.invDt, 'M');
       data.claimLastDay = DateHelper.getShortDate(item.invDt);
@@ -338,6 +319,18 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       // 선택월의 청구금액
       if (!data.claimPay && item.invDt === date) {
         setClaimData(item);
+        // 대표청구일때
+        if (isRep) {
+          // 부분납부 금액
+          prepay = item.payComYn !== 'Y' && item.payAmtYn === 'Y' ? this.getInt(item.payAmt) : 0;
+          remainPayment = this.getInt(item.invAmt) - prepay;
+          isPaid = item.payComYn === 'Y';
+        }
+      }
+
+      // 선택월보다 이전 미납액들의 총 합계
+      if (isRep && DateHelper.isBefore(item.invDt, date)) {
+        unpaid += this.getInt(item.colBamt);
       }
 
       /*
@@ -359,8 +352,14 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       }
     }
 
+    Object.assign(data, {
+      totalClaim: this.addComma(this.getInt(data.claimPay) + unpaid), // 총 납부금액 ( 청구금액 + 미납금액 )
+      prepay: this.addComma(prepay), // 부분납부한 금액
+      remainPayment: this.addComma(remainPayment), // 납부해야할 금액
+      unpaid: this.addComma(unpaid) // 미납금액(선택월의 이전 미납금액의 합계)
+    });
+
     // 청구 월 리스트에 '이번달' 넣기
-    // const prevLastDate = DateHelper.getEndOfMonSubtractDate(toDate, '1', 'YYYYMMDD');
     if (latestDates.length > 0 && !latestDates.some( month => getMonth(month, 'M') === DateHelper.getCurrentMonth(toDate))) {
       latestDates.splice(0, 0, eDate);
     }
@@ -374,42 +373,6 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     // 최근 6개월 청구내역이 없는경우, 당월 가입자인지 확인한다.
     return this.checkNewMember(data).map( resp => {
       data = resp;
-      /*
-          해당월 청구요금, 부분납부한 요금, 잔여납부 금액, 미납
-       */
-      // 청구금액
-      const claimPay = this.getInt(data.claimPay) || 0;
-      // 당월 납부해야할 금액
-      // let remainPayment = this.getInt(data.claimPay);
-      let remainPayment = 0;
-      // 미납금액: 조회월의 이전 미납금액들의 sum
-      let unpaid = 0;
-      ((data.nonpayment || {}).unPaidAmtMonthInfoList || []).map( unpay => {
-        const unPaidAmt = this.getInt(unpay.unPaidAmt);
-        /*
-            # 선택월 납부해야할 금액
-            당월 청구금액 납부일자가 도래하지 않아 아직 납부를 안한경우 또는, 당월 청구금액 중 일부만 납부 후 남은 잔액을
-            미납금액 리스트에 당월 날짜로 포함하여 주고있다.
-         */
-        if (unpay.unPaidInvDt === date) {
-          remainPayment = unPaidAmt;
-        }
-        // 선택월보다 이전 미납액들의 총 합계
-        // if (DateHelper.getDiffByUnit(unpay.unPaidInvDt, date, 'days') < 1) {
-        if (DateHelper.isBefore(unpay.unPaidInvDt, date)) {
-          unpaid += unPaidAmt;
-        }
-      });
-      // 부분 납부한 금액: 청구금액 - 선택월 납부해야하는 금액
-      const prepay = remainPayment > 0 ? this.getInt(claimPay) - remainPayment : 0;
-
-      Object.assign(data, {
-        totalClaim: this.addComma(claimPay + unpaid), // 총 납부금액 ( 청구금액 + 미납금액 )
-        prepay: this.addComma(prepay), // 부분납부한 금액
-        remainPayment: this.addComma(remainPayment), // 납부해야할 금액
-        unpaid: this.addComma(unpaid) // 미납금액(선택월의 이전 미납금액의 합계)
-      });
-
       const {autoPayment = {}} = data,
         payCode = autoPayment.payMthdCd,
         dateOfPayType = {
@@ -424,8 +387,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       }
       // 납부 정보
       data.autoPayment = {
-        isPaid: remainPayment.toString() === '0', // 선택월 요금 납부 여부(예정(or 미납), 완료)
-        // payCode,
+        isPaid: isPaid, // 선택월 요금 납부 여부(예정(or 미납), 완료)
         payDate,
         isThisMonth: getMonth(eDate, 'M') === getMonth(date, 'M') // 이번달 유무
       };
@@ -619,9 +581,23 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   }
 
   // 미납요금조회
-  private _getNonPayment() {
+  /*private _getNonPayment() {
     return this.apiService.request(API_CMD.BFF_05_0030, {}).map((resp) => {
       return resp.code !== API_CODE.CODE_00 || resp.result.unPaidTotSum === '0' ? null : resp.result;
+    });
+  }*/
+
+  // 최근 6개월 청구요금 조회
+ private _getLast6Bill() {
+    return this.apiService.request(API_CMD.BFF_05_0020, {}).map((resp) => {
+      if (resp.code !== API_CODE.CODE_00 || resp.result.avgInvAmt === '0') {
+        return null;
+      }
+      ((resp.result || {}).recentUsageList || []).map( item => {
+        item.dcAmt = item.deduckInvAmt;
+      });
+
+      return resp.result;
     });
   }
 
