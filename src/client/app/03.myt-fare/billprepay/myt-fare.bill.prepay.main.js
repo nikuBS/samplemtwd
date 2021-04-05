@@ -116,6 +116,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this.$container.on('click', '[data-unusual-state]', $.proxy(this._unusualBlock, this));
     this.$container.on('click', '#fe-tab1', $.proxy(this._checkAble, this));
     this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));
+    this.$container.on('click', '.fe-history', $.proxy(this._goHistory, this));
     $('.fe-faq').on('click', $.proxy(this._increaseViews, this));
   },
 
@@ -141,10 +142,10 @@ Tw.MyTFareBillPrepayMain.prototype = {
    */
   _checkAble: function (e){
     if (this._isBubin) {
-      return this._popupService.openAlert('법인 실사용자 비회선, SKT법인 고객님은 휴대폰 결제를 이용하실 수 없습니다.', Tw.POPUP_TITLE.NOTIFY, null, null, null, $(e.currentTarget));
+      return this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOW_BUBIN, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(e.currentTarget));
     }
     if (!this._isAdult) {
-      return this._popupService.openAlert('미성년 고객님은 휴대폰 결제를 이용하실 수 없습니다.', null, null, null, null, $(e.currentTarget));
+      return this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOW_MINOR, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(e.currentTarget));
     }
   },
 
@@ -325,7 +326,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
         autoChrgStCd: result.autoChrgStCd, // 자동선결제 신청상태(U: 사용중, 그 외는 미신청)
         stateCd: result.autoChrgStCd === 'U' ? 'U' : 'D', // 자동 선결제 신청상태 (U: 사용중, D:미사용)
         stateTxt: result.autoChrgStCd === 'U' ? Tw.MYT_FARE_PAYMENT_NAME.CHANGE : Tw.MYT_FARE_PAYMENT_NAME.REQUEST,
-        historyUrl: '/myt-fare/bill/'+ item.title +'/history',
+        // historyUrl: '/myt-fare/bill/'+ item.title +'/history',
         tmthUseAmtOri: result.tmthUseAmt,
         tmthUseAmt: addComma(result.tmthUseAmt),  // 당월 사용금액
         payLimitAmt: addComma(result[isContents ? 'useContentsLimitAmt' : 'microPayLimitAmt']), // 총한도(월한도)
@@ -732,6 +733,21 @@ Tw.MyTFareBillPrepayMain.prototype = {
       build: build
     };
 
+  },
+
+  /**
+   * @desc 인증 후 이용내역 페이지로 이동
+   * @private
+   */
+  _goHistory: function (e) {
+    e.preventDefault();
+    this._apiService.request(Tw.API_CMD.BFF_05_0206, {})
+      .done($.proxy(function (resp) {
+        if (resp.code === Tw.API_CODE.CODE_00) {
+          this._historyService.goLoad('/myt-fare/bill/small/history' + $(e.currentTarget).attr('href'));
+        }
+      }, this))
+      .fail(this._remainFail);
   },
 
   /**

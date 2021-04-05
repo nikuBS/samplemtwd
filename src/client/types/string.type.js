@@ -742,7 +742,9 @@ Tw.ALERT_MSG_MYT_FARE = {
       TITLE: '알림',
       MSG: '자동납부 {0} 중복으로 요청되었습니다.</br> 다시 시도해 주시기 바랍니다.'
     }
-  }
+  },
+  NOT_ALLOW_MINOR: '미성년 고객님은 휴대폰 결제를 이용하실 수 없습니다.',
+  NOT_ALLOW_BUBIN: '법인 실사용자 비회선, SKT법인 고객님은 휴대폰 결제를 이용하실 수 없습니다.'
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {

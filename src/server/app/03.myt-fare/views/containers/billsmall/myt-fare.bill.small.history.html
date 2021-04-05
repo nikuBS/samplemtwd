@@ -15,44 +15,54 @@
     <!--// #skip_navigation -->
 
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-        <%- include('../../../../../common/views/components/header.component.html', { title: '휴대폰 결제 이용내역'}); %>
+        <%- include('../../../../../common/views/components/header.component.html', { title: '휴대폰 결제/콘텐츠 이용내역'}); %>
 
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
-            <div class="container">
-                <div class='fe-list-wrap'>
-                    <hr class="cont-sp type1" aria-hidden="true" />
-                    <div class="cont-box">
-						<div class="clause-cont-view">
-							<em class="tit">휴대폰 결제 이용내역 서비스 안내</em>
-							<ul class="round-dot-list">
-								<li>온/오프라인의 사용처(콘텐츠 제공사)에서 휴대폰으로 결제하신 <span class="validation-txt">휴대폰 결제 이용내역</span>을 조회하실 수 있습니다.</li>
-								<li>SMS 인증 또는 공동인증서 (구 공인인증서) 인증 후 조회하실 수 있습니다.</li>
-							</ul>
-                        </div>
-                        <div class="mt30 btn-al-center">
-                            <button type="button" class="fe-show-list btn-round2 btn-style4">조회하기</button>                        
-                        </div>
-                    </div>                  
-                </div>
 
-                <!--//-->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="container" data-temp="<%=data%>">
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list02">
-                        <% data.noticeInfo.forEach(function(info){ %>
-                            <li data-list-id="<%=info.link%>">
-                                <button aria-haspopup="true" class="tip-view-btn" id="<%=info.link%>" title="정보보기"><%=info.title%><span class="tip-view"><%=info.title%> tip</span></button>
-                            </li>
-                        <% }); %>
-                    </ul>
+                <div class="cont-box nogaps">
+                    <!-- .component -->
+                    <div class="component">
+                        <div class="component-box tabs">
+                            <div class="tab-area new01 tod-large"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-linker">
+                                    <ul role="tablist" style="width: 352px;">
+                                        <%_
+                                            const allow = !data.isBubin && svcInfo.isAdult;
+                                            const disabledCls = allow ? undefined : 'disabled';
+                                        _%>
+                                        <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"
+                                        data-is-adult="<%-svcInfo.isAdult%>" data-is-bubin="<%-data.isBubin%>" data-hash="small">
+                                            <a href="#" class="<%-disabledCls%>">휴대폰 결제</a>
+                                        </li>
+                                        <li role="tab" aria-selected="<%-!allow%>" aria-controls="tab2-tab" id="tab2" data-hash="contents">
+                                            <a href="#">콘텐츠 이용료</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-contents">
+                                    <ul>
+                                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="false">
+                                        </li>
+                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .component -->
                 </div>
                 <!--// .cont-box -->
 
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02 fe-tip-contents">
+                    </ul>
+                </div>
             </div>
 
         </div>
@@ -61,28 +71,21 @@
     </div>
 
     <% include ../../components/javascript.component.html %>
-    <script>
-      $(document).ready(function () {
-          new Tw.MyTFareBillSmallHistory($(document), '<%- JSON.stringify(data)%>');
-      });
-    </script>
     <script id="fe-list-wrap" type="text/x-handlebars-template">
-        <div class="fe-list-wrap">
-            <div class="ti-caption-gray">
+        <div class="cont-box nogaps fe-list-wrap">
+            <div class="ti-caption-gray tod-border">
                 <button class="bt-select fe-month-selector" title="월 선택">{{curMonth}}</button>
                 <span class="num">총 <em>{{totalCnt}}</em>건</span>
             </div>
 
             <!-- .cont-box -->
             {{#if list.length}}
-            <div class="cont-box nogaps" id="fe-list-wrapper">
-                <div class="cont-use-detail">
-                    <ul class="list-inner fe-lists">
-                        {{>list list=list}}
-                    </ul>
-                    <div class="bt-more">
-                        <button class="fe-more-btn none" aria-hidden="true">더 보기</button>
-                    </div>
+            <div class="cont-use-detail">
+                <ul class="fe-lists">
+                    {{>list list=list}}
+                </ul>
+                <div class="btn-more ml16 mr16 fe-more-btn none">
+                    <button>더 보기</button>
                 </div>
             </div>
             {{else}}
@@ -93,12 +96,14 @@
     </script>
     <script id="list-default" type="text/x-handlebars-template">
         {{#each list}}
-        <li class="fe-yet-evented">
+        <li>
             <button title="상세내역 보기" class="fe-detail-link" data-list-date="{{plainTime}}" data-list-id="{{listId}}">
                 <dl>
                     <dt>
                         <p class="sv-name"><span class="blind">서비스명</span>{{serviceNm}}</p>
-                        <span class="sv-case"><span class="blind">결제구분</span>{{payMethodNm}}</span>
+                        {{#if isMobile}}
+                            <span class="sv-case"><span class="blind">결제구분</span>{{payMethodNm}}</span>
+                        {{/if}}
                         <span class="sv-time"><span class="blind">결제일</span>{{FullDate}}</span>
                     </dt>
                     <dd><span class="blind">결제금액</span><span class="str">{{useAmt}}</span>원</dd>
@@ -109,9 +114,24 @@
     </script>
 
     <script id="list-empty" type="text/x-handlebars-template">
-        <div class="cont-box nogaps-hoz">
-            <div class="result-none type2">이용 내역이 없습니다.</div>
+        <div class="cont-box nogaps">
+            <p class="addree-no-result result-nolist no-sch">
+                <span class="ico"></span>
+                <span class="msg-no-sch"><span class="txt">이용 내역이 없습니다.</span></span>
+            </p>
         </div>
+    </script>
+
+    <script id="fe-tip-templ" type="text/x-handlebars-template">
+        <li><button class="btn-tip" id="{{id}}"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        var data = '<%- escape(JSON.stringify(data || {})) %>';
+        data = JSON.parse(window.unescape(data));
+        new Tw.MyTFareBillSmallHistory($('.wrap'), data);
+      });
     </script>
 </body>
 <% include ../../components/end.component.html %>
