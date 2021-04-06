@@ -565,8 +565,13 @@ class MyTFareInfoHistory extends TwViewController {
       return prev;
     }, {});
 
-    /* 날짜별 정렬 */
-    FormatHelper.sortObjArrDesc(data.mergedListData, 'sortDt');
+    /** "포인트 자동납부" 카테고리만 BE에서 주는 정렬대로 처리하는걸로 협의함. */
+    if (data.mergedListData.length > 0) {
+      if (data.mergedListData[0].reqNm !== "포인트 자동납부") {
+          /* 날짜별 정렬 */
+          FormatHelper.sortObjArrDesc(data.mergedListData, 'sortDt');
+      }
+    }
 
     data.mergedListData = data.mergedListData.reduce((prev: any[], cur: any, index: number): any[] => {
       cur.listId = index;
