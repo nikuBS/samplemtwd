@@ -741,10 +741,12 @@ Tw.MyTFareBillPrepayMain.prototype = {
    */
   _goHistory: function (e) {
     e.preventDefault();
-    this._apiService.request(Tw.API_CMD.BFF_05_0206, {})
+    this._apiService.request(Tw.API_CMD.BFF_05_0205, {})
       .done($.proxy(function (resp) {
         if (resp.code === Tw.API_CODE.CODE_00) {
           this._historyService.goLoad('/myt-fare/bill/small/history' + $(e.currentTarget).attr('href'));
+        } else {
+          this._remainFail(resp);
         }
       }, this))
       .fail(this._remainFail);
