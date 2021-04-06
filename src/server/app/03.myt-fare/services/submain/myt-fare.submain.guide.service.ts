@@ -477,7 +477,7 @@ export class MytFareSubmainGuideService extends MytFareSubmainCommonService {
       let intBillLineInfo = [];
       let typeChk: string;
       const existBill = (listName) => {
-        const obj = billpayInfo;
+        const obj = billpayInfo || {};
         return obj.useAmtTot !== 0 || (obj[listName] || []).length > 0;
       };
 
@@ -519,7 +519,10 @@ export class MytFareSubmainGuideService extends MytFareSubmainCommonService {
       } else {
         // OP002-2986 로 청구 데이터 안들어올 수 있으므로 디폴트 세팅 해준다.
         useFeeInfo = Object.assign({
+          invDt: '',
           repSvcNm: '',
+          totInvAmt: '',
+          dcAmt: '',
           invAmtList: [],
           unPayAmtList: [],
           unPaidTotSum: []
@@ -528,12 +531,17 @@ export class MytFareSubmainGuideService extends MytFareSubmainCommonService {
         // 현재는 param이 없지만 추후 추가를 위해 넣어둠
         if ( invAmtList.length > 0) {
           // 사용 요금 데이터(조회한 날짜로 찾음)
-          billpayInfo = invAmtList.find(item => item['invDt'] === reqQuery.date) || invAmtList[0];
-          // 사용 날짜 목록
-          billpayInfo['invDtArr'] = invAmtList.map(item => item['invDt']);
+          const invAmtData = invAmtList.find(item => {
+            if (item['invDt'] === reqQuery.date) {
+              // 사용 날짜 목록
+              item['invDtArr'] = invAmtList.map(_item => _item['invDt']);
+              return true;
+            }
+          });
+          billpayInfo = invAmtData || useFeeInfo;
         }
         commDataInfo.repSvcNm = FormatHelper.conTelFormatWithDash(useFeeInfo.repSvcNm);  // 통합청구대표 이름
-        commDataInfo.svcType = this.getSvcType(billpayInfo.usedAmountDetailList[0].svcNm);  // 서비스 타입(한글)
+        commDataInfo.svcType = this.getSvcType((billpayInfo.usedAmountDetailList || [{}])[0].svcNm || '');  // 서비스 타입(한글)
 
         typeChk = 'A6';
         // 사용요금/청구요금이 존재하는지

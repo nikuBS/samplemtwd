@@ -346,7 +346,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
 
     // 선택월의 청구금액이 없는경우 선택월과 같은 해당 데이터를 세팅한다.
     if (!data.claimPay) {
-      const currClaimData = amtList.find( item => getMonth(item.invDt, 'M') === getMonth(date, 'M'));
+      const currClaimData = amtList.find( item => getMonth(item.invDt, 'YYYYMM') === getMonth(date, 'YYYYMM'));
       if (currClaimData) {
         setClaimData(currClaimData);
       }
