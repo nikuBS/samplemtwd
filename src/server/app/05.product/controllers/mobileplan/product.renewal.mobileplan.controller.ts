@@ -19,6 +19,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import { flatMap } from 'rxjs/operators';
+import CommonCertResult from '../../../00.common/controllers/cert/common.cert.result.controller';
 
 // section sort 정보가 없을 때 기본값을 아래로 세팅하기 위해 (기본값: 테마배너, 테마리스트 순)
 const DEFAULT_SORT_SECTION = 'THEME_LIST,THEME_BANNER';
@@ -107,14 +108,14 @@ export default class RenewProduct extends TwViewController {
 
           Observable.combineLatest(
             this.getMyPayment(svcInfo) // 사용중인 요금제 조회
-            , this.isPiAgree(svcInfo) // 개인정보 동의 조회
+            , this.getPiAgree(svcInfo) // 개인정보 동의 조회
             , this.getSortSection(line) // 섹션 순서 데이터를 조회
             , this.getThemeListData(svcInfo, line) // 리스트 형 테마 데이터를 조회
             , this.getMyAge(svcInfo) // 나의 나이를 리턴받음
             , this.isCompareButton(line, svcInfo) // 비교하기 버튼 출력 여부
           ).subscribe(([
             payment // 사용중인 요금제 데이터 결과 값
-            , isPiAgree // 개인정보 동의 여부
+            , piAgree // 개인정보 동의 여부
             , sortSection // 섹션 순서 데이터 결과 값
             , themeListData // 테마 리스트 데이터 조회
             , myAge // 내 회선에 대한 나의 만 나이
@@ -122,7 +123,7 @@ export default class RenewProduct extends TwViewController {
           ]) => {
             const isWireless = svcInfo ? !(SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) : false; // 무선 회선인지 체크
             const data = {
-              line, payment, isPiAgree, isWireless, sortSection, themeListData, myAge, isCompareButton, cdn: this.getCDN()
+              line, payment, piAgree, isWireless, sortSection, themeListData, myAge, isCompareButton, cdn: this.getCDN()
             }
 
             res.render('mobileplan/renewal/submain/product.renewal.mobileplan.html', { svcInfo, pageInfo, data });
@@ -192,22 +193,22 @@ export default class RenewProduct extends TwViewController {
      * 개인정보 동의 여부 (personal information)
      * 로그인이 되어있고 선택된 회선이 있을 때
      */
-    private isPiAgree ( svcInfo: any ): Observable<any> {
+    private getPiAgree ( svcInfo: any ): Observable<any> {
       if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) { // 로그인이 되어있지 않거나 선택된 회선이 없다면 현재 사용중인 요금제를 표현할 필요가 없음.
-        return Observable.of(false);
+        return Observable.of(null);
       }
 
       if ( SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0 ) { // 지금 나의 회선이 유선 회선일 경우 요금제를 표현하지 않음.
-        return Observable.of(false);
+        return Observable.of(null);
       }
 
-      return this.apiService.request(API_CMD.BFF_03_0021, {}).map((resp) => {
+      return this.apiService.request(API_CMD.BFF_03_0014, {}, {}, [svcInfo.svcMgmtNum] ).map((resp) => {
+        console.log('API_CMD.BFF_03_0014::: ', resp);
+        
         if (resp.code === API_CODE.CODE_00) {
-          if (resp.result.twdInfoRcvAgreeYn === 'N') { // 개인정보 동의가 N 일 때
-            return true;
-          }
+          return resp.result;
         }
-        return false;
+        return null;
       });
     }
 

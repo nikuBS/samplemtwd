@@ -12,25 +12,24 @@
  * @param {string} target location code
  * @param {string} priority M (admin banner 선노출) or T (tos banner 선노출)
  */
-
-Tw.BannerProductService = function (rootEl, type, banners, target, priority, cdn) {
+ Tw.BannerProductService = function (rootEl, type, banners, target, priority, callback, errorCallback) {
   this.$container = rootEl;
-  this._cdn = cdn;
+  this.errorCallback = errorCallback;
   if ( !banners || banners.length <= 0 ) {
     if ( target ) {
-      this.$container.find('#fe-banner-t').parents('div.nogaps').addClass('none');
+      this.$container.find('ul.slider[data-location=' + target + ']').parents('div.nogaps').addClass('none');
     }
     return;
   }
 
-  this._cachedElement();
-  this._bindEvent();
-
   if ( !Tw.Environment.init ) {
-    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this, type, banners, priority, target));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this, type, banners, priority, target, callback));
   } else {
-    this._init(type, banners, target, priority);
+    this._init(type, banners, target, priority, callback);
   }
+
+  this._cachedElement(target);
+  this._bindEvent();
 };
 
 Tw.BannerProductService.prototype = {
@@ -39,34 +38,56 @@ Tw.BannerProductService.prototype = {
    * @param {string} type Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
    * @param {Array<object>} banners banner list
    * @param {string} target location code
+   * @param {function} callback excutable code after load banners
    * @private
    */
-  _init: function (type, banners, target, priority) {
-    console.log('[banner.product.service.js] [_init] target / priority : ', target + ' / ' + priority);
+  _init: function (type, banners, target, priority, callback) {
+    console.log('[banner.service.js] [_init] target / priority : ', target + ' / ' + priority);
     this._type = type;
     this._banners = this._getProperBanners(type, banners, priority);
-    this._renderBanners(target);
+
+    this._renderBanners(type, target, callback);
+    // 기존 기능에 영향도 없이 배너항목이 없는 경우에 처리를 위해 errorCallback 추가.
+    try {
+      if (this.errorCallback) {
+        this.errorCallback(this._banners);
+      }
+    } catch (e) {
+      Tw.logger.warn('[banner.service.js] ::: errorCallback failed');
+    }
   },
 
   /**
    * @desc cached jquery object
+   * @param {string} target Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
    */
-  _cachedElement: function () {
-    this.$banners = this.$container.find('#fe-banner-t');
+  _cachedElement: function (target) {
+    this.$banners = this.$container.find('ul.slider[data-location=' + target + ']');
   },
 
   /**
-   * @desc get banner_product_renewal.hbs
+   * @desc get banner.hbs
    * @param {string} target Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
+   * @param {function} callback excutable code after load banners
    * @private
    */
-  _renderBanners: function (target) {
+  _renderBanners: function (type, target, callback) {
     var CDN = Tw.Environment.cdn;
-    if ( (CDN === 'http://localhost:3001' || CDN === 'http://172.23.69.117:3001') && this._cdn ) {
-      CDN = this._cdn;
-    }
 
-    var hbs = Tw.RENEWAL_PRODUCT_SUBMAIN_TOP_BANNER;
+    $.ajax(CDN + '/hbs/banner_product.hbs', {})
+      .done($.proxy(this._handleSuccessBanners, this, type, target, callback))
+      .fail($.proxy(this._renderBanners, this, type, target, callback));
+  },
+
+  /**
+   * @desc after get hbs
+   * @param {string} target Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
+   * @param {function} callback excutable code after load banners
+   * @param {string} hbs
+   * @private
+   */
+  _handleSuccessBanners: function (type, target, callback, hbs) {
+    var CDN = Tw.Environment.cdn;
     this._bannerTmpl = Handlebars.compile(hbs);
 
     this.$banners.on({
@@ -92,14 +113,14 @@ Tw.BannerProductService.prototype = {
         //$(slick.$slides[index]).find('button').focus();
       }
     });
-    
+
     if ( this.$banners ) {  // if banner exist
       if ( !this._banners || this._banners.length === 0 ) { // if banner list is empty
         this.$banners.parents('div.nogaps').addClass('none');
       } else {
-        this.$banners.append(this._bannerTmpl({ banners: this._banners, location: target, CDN: CDN })); // render banners
-
         var _this = this.$banners;
+        this.$banners.append(this._bannerTmpl({ banners: this._banners, location: target, CDN: CDN })); // render banners
+        
         _this.slick({
           dots: this._banners.length !== 1,
           infinite: false,
@@ -110,10 +131,12 @@ Tw.BannerProductService.prototype = {
           arrows: false,
           customPaging: function (slider, i) {
             if ( i === 0 ) {
-              return $('<button />').attr({
-                text: Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1),
-                'aria-label': Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1)
-              });
+              return $('<button />').attr(
+                {
+                  text: Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1),
+                  'aria-label': Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1)
+                }
+              );
             } else {
               return $('<button />').attr({
                 text: i + 1,
@@ -123,6 +146,7 @@ Tw.BannerProductService.prototype = {
           }
         });
 
+        // new Tw.XtractorService(this.$banners, true);
         new Tw.XtractorService(this.$banners);
       }
     }

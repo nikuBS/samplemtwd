@@ -1426,26 +1426,39 @@ Tw.HOME_DIRECT_BANNER =
   '{{/each}}';
 
 Tw.RENEWAL_PRODUCT_SUBMAIN_TOP_BANNER =
-'{{#each banners}}' + 
-  '<div class="slider-item"' + 
-    '{{#if isTos}}' + 
-      'data-xt_action="BN" data-xt_cmpgn_num="{{tosCmpgnNum}}" data-xt_schd_num="{{tosExecSchNum}}" data-xt_cell_num="{{tosCellNum}}" data-xt_msg_ser_num="{{tosMsgSerNum}}"' + 
-    '{{else}}' + 
-      'data-xt_eid="{{oferStcCd}}" data-xt_action="BV" data-xt_action2="BC" data-xt_csid="NO"' + 
-    '{{/if}}' + 
-    '>' + 
-  '{{#if isHTML}}' + 
-    '<button style="width:100%" tabindex="{{#if @index}}-1{{else}}0{{/if}}">' + 
-      '{{{bnnrHtmlCtt}}}' + 
-    '</button>' + 
-    '{{else}}' + 
-      '<a tabindex="{{#if @index}}-1{{else}}0{{/if}}" {{#unless isInternalLink}}title="새 창"{{/unless}} role="link">' + 
-        // '<img style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="https://cdnm-dev.tworld.co.kr{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">' + 
-        '<img class="fe-banner slick-loading" style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="{{../CDN}}{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">' +  
-      '</a>' + 
-    '{{/if}}' + 
+'<div class="key-visual-area nogaps">' + 
+  '<div class="section-swiper-box">' + 
+    '<div class="widget">' + 
+      '<div class="widget-box">' + 
+        '<div class="slider-box">' + 
+          '<div class="slider" id="fe-banner-t" data-location="T">' + 
+            '{{#each banners}}' + 
+            '<div class="slider-item"' + 
+              '{{#if isTos}}' + 
+                'data-xt_action="BN" data-xt_cmpgn_num="{{tosCmpgnNum}}" data-xt_schd_num="{{tosExecSchNum}}" data-xt_cell_num="{{tosCellNum}}" data-xt_msg_ser_num="{{tosMsgSerNum}}"' + 
+              '{{else}}' + 
+                'data-xt_eid="{{oferStcCd}}" data-xt_action="BV" data-xt_action2="BC" data-xt_csid="NO"' + 
+              '{{/if}}' + 
+              '>' + 
+            '{{#if isHTML}}' + 
+              '<button style="width:100%" tabindex="{{#if @index}}-1{{else}}0{{/if}}">' + 
+                '{{{bnnrHtmlCtt}}}' + 
+              '</button>' + 
+              '{{else}}' + 
+                '<a tabindex="{{#if @index}}-1{{else}}0{{/if}}" {{#unless isInternalLink}}title="새 창"{{/unless}} role="link">' + 
+                  // '<img style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="https://cdnm-dev.tworld.co.kr{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">' + 
+                  '<img class="fe-banner slick-loading" style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="{{../CDN}}{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">' +  
+                '</a>' + 
+              '{{/if}}' + 
+            '</div>' + 
+          '{{/each}}'
+          '</div>' + 
+        '</div>' + 
+      '</div>' + 
+    '</div>' + 
   '</div>' + 
-'{{/each}}';
+'</div>'
+;
 
 Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
 '{{#each items}}' +
