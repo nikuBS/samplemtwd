@@ -13,7 +13,8 @@ const SVC_ATTR = {
 %>
 <%_
   if (svcInfo.loginType === 'T') {
-    const {svcMgmtNum, lineNickNm, svcAttrCd, add, selectableExpsSvcCnt} = svcInfo;
+    const {svcMgmtNum, nickNm, oriRmk, oriEqpMdlNm, svcAttrCd, add, selectableExpsSvcCnt} = svcInfo;
+    const title = nickNm || oriRmk || SVC_ATTR[svcAttrCd];
     const svcCnt = parseInt(selectableExpsSvcCnt, 10);
     const eid = svcCnt > 1 ? xtEid.multiple : xtEid.single;
 _%>
@@ -23,7 +24,7 @@ _%>
     <div class="sel-show">
       <div class="line-info">
         <i class="type-ico"><img src="<%= CDN %>/img/myt/<%= svcInfo.ico %>" alt=""></i>
-        <span class="type"><%= !lineNickNm ? SVC_ATTR[svcAttrCd] : lineNickNm %></span>
+        <span class="type"><%= title.length > 7 ? title.substring(0, 7) + '...' : title %></span>
         <span class="type-info"><%= add %></span>
       </div>
       <span class="sel-line-btn">

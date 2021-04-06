@@ -681,9 +681,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       switch ( this._memberType ) {
         case 0:
           this.$container.find('.fe-when-login-type0').removeClass('none');
-          var nick = userInfo.nickNm;
-          if ( Tw.FormatHelper.isEmpty(nick) ) {
-            nick = Tw.SVC_ATTR[userInfo.svcAttrCd];
+          var nick = userInfo.nickNm || userInfo.oriRmk || Tw.SVC_ATTR[userInfo.svcAttrCd];
+          if ( nick && nick.length > 7 ) {
+            nick = nick.substring(0, 7) + '...';
           }
           this.$nickName.text(nick);
           if (userInfo.svcAttrCd.indexOf('S3') !== -1) {
