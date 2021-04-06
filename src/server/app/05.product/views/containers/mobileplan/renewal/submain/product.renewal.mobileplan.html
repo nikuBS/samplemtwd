@@ -23,18 +23,18 @@
         <div id="contents" class="container-wrap">
 			<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
             <div class="container">
-                <div class="key-visual-area">
+				
+                <div class="key-visual-area nogaps">
                     <div class="section-swiper-box">
-                        <!-- widget -->
                         <div class="widget">
-                            <div class="widget-box" data-slider-auto="false">
+                            <div class="widget-box">
                                 <div class="slider-box">
-                                    <div id="fe-banner-t" class="slider"></div>
+                                    <ul class="slider" id="fe-banner-t" data-location="N"></ul>
                                 </div> 
                             </div>
-                        </div><!-- //widget -->
+                        </div>
                     </div>
-                </div><!-- //key-visual-area -->
+                </div>
                 <div class="pro-cont">
                     <section class="product-sec">
                         <p class="wel-comment">고객님의 스타일에 맞는<br><strong>요금제를</strong> 찾아보세요.</p>
@@ -106,74 +106,42 @@
                                 </div>
 							<%_ } _%>
 
-							<%_ if ( data.isWireless && data.isPiAgree ) { _%>
-								<%# 무선 사용자이면서 개인정보 동의가 N (data.isPiAgree => true)  일 때 %>
+							<%_ if ( data.isWireless && data.piAgree ) { _%>
+								<%# 무선 사용자이면서 개인정보 동의가 있는경우 %>
 								
-								<div class="pro-article pro-recmd-article">
-									<!-- <div class="article-tit">추천 요금제</div> -->
-									<div class="article-cont agree-info-box">
-										<p class="agr-txt">고객님께 맞는 상품을 추천받으시려면<br>개인정보 수집·이용에 동의해 주세요</p>
-										<div class="agr-area">
-											<div class="agr-left">
-												<p class="a-txt"><label>개인정보 수집·이용 동의(선택)</label></p>
-												<a class="bt-detail" data-xt_eid="CMMA_A4_B84-55" data-xt_csid="NO" data-xt_action="BC">자세히 보기</a>
-											</div>
-											<div class="agr-left">
-												<ul class="on-off-list new">
-													<li>
-														<!-- widget -->
-														<span class="widget">
-															<span class="widget-box switch">
-																<span class="btn-switch type1"><!-- 체크 상태일 경우 .on 클래스 추가 -->
-																	<span class="switch-style">
-																		<span class="off-tx">꺼짐</span>
-																		<input class="bt-switch" type="checkbox" id="pro-ch1" title="이번 달 차단" data-xt_eid="CMMA_A4_B84-54" data-xt_csid="NO" data-xt_action="BC"><!-- 체크 상태일 경우 checked -->
-																		<span class="on-tx">켜짐</span>
+								<%_ if ( data.piAgree.agr203Yn == 'N' ) { _%>
+									<div class="pro-article pro-recmd-article">
+										<!-- <div class="article-tit">추천 요금제</div> -->
+										<div class="article-cont agree-info-box">
+											<p class="agr-txt">고객님께 맞는 상품을 추천받으시려면<br>개인정보 수집·이용에 동의해 주세요</p>
+											<div class="agr-area">
+												<div class="agr-left">
+													<p class="a-txt"><label>개인정보 수집·이용 동의(선택)</label></p>
+													<a class="bt-detail" data-agr201yn="<%= data.piAgree.agr201Yn %>" data-agr203yn="<%= data.piAgree.agr203Yn %>" data-xt_eid="CMMA_A4_B84-55" data-xt_csid="NO" data-xt_action="BC">자세히 보기</a>
+												</div>
+												<div class="agr-left">
+													<ul class="on-off-list new">
+														<li>
+															<span class="widget">
+																<span class="widget-box switch">
+																	<span class="btn-switch type1"><!-- 체크 상태일 경우 .on 클래스 추가 -->
+																		<span class="switch-style">
+																			<span class="off-tx">꺼짐</span>
+																			<input class="bt-switch" data-agr201yn="<%= data.piAgree.agr201Yn %>" data-agr203yn="<%= data.piAgree.agr203Yn %>" type="checkbox" id="pro-ch1" title="이번 달 차단" data-xt_eid="CMMA_A4_B84-54" data-xt_csid="NO" data-xt_action="BC"><!-- 체크 상태일 경우 checked -->
+																			<span class="on-tx">켜짐</span>
+																		</span>
 																	</span>
 																</span>
 															</span>
-														</span>
-														<!--// widget -->
-													</li>
-												</ul>
+														</li>
+													</ul>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+								<%_ } _%>
 							<%_ } _%>
 							
-							<!--
-                            <%_ if (data.isWireless && data.additions ) { _%>
-                                <%_ if ( data.additions.length != 0 ) { _%>
-                                    <%# 무선 사용자이면서 가입할 부가 서비스가 있을 때 %>
-
-                                    <div class="pro-article free-service">
-                                        <div class="article-tit"><i class="ico-new">N</i>고객님, 아직 신청하지 않은 무료 부가서비스가 있어요</div>
-                                        <div class="article-cont">
-                                            <ul class="go-service add-service-list shadow-box ">
-    
-                                                <%_ for (let i=0, length=data.additions.length; i < length; i += 1) { _%>
-                                                    <li class="service-item">
-                                                        <div class="item-inner">
-                                                            <span class="service-name"><i class="ico"><img src="<%= CDN %><%= data.additions[i].additionIconImg %>" alt=""></i><%= data.additions[i].additionNm %></span>
-                                                            <a href="#none">
-                                                                <span class="service-detail join-additions" data-addition-id="<%= data.additions[i].targetAddition %>" data-addition-type="<%= data.additions[i].additionType %>" data-addition-action="<%= data.additions[i].targetAdditionAction %>">가입하기</span>
-                                                            </a>
-                                                        </div>
-                                                    </li>    
-                                                <%_ } _%>
-                                            </ul>
-
-                                            <%_ if ( data.additions.length > 5 ) { _%>
-                                                <div class="more-link-area">
-                                                    <button type="button" class="more btn-benefit"><span class="more-txt">혜택 더보기</span></button>
-                                                </div>
-                                            <%_ } _%>
-                                        </div>
-                                    </div>
-                                <%_ } _%>
-                            <%_ } _%>
-							-->
                         <%_ } _%>
                     </section>
 
@@ -569,10 +537,8 @@
 
 <script>
     $(document).ready(function () {
-		new Tw.ProductRenewalSubmain($('.wrap'), '<%= data.sortSection ? data.sortSection : "" %>', '<%- JSON.stringify(data.line) %>', '<%= data.myAge %>', '<%= data.cdn %>', 'M000367');
+		new Tw.ProductRenewalSubmain($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'), '<%= data.sortSection ? data.sortSection : "" %>', '<%- JSON.stringify(data.line) %>', '<%= data.myAge %>', '<%= data.cdn %>', 'M000367');
 		new Tw.ProductCompare( $('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'), '<%= data.line.quickFilterCode %>', JSON.parse('<%- JSON.stringify( data.payment ? data.payment.product.feePlanProd : "") %>'), '<%= data.cdn %>');
-
-		
     });
 </script>
 
