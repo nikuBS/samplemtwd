@@ -11,7 +11,7 @@ Tw.ProductRenewalSubmain = function(rootEl, svcInfo, sectionSort, line, myAge, c
   this._line = JSON.parse(line) || {'deviceCode': 'F', 'quickFilterCode': 'F01713'}; // 기본값 세팅
   this._myAge = myAge;
   this._cdn = cdn;
-  this._svcMgmtNum = svcInfo.svcMgmtNum;
+  this._svcMgmtNum = svcInfo ? svcInfo.svcMgmtNum : '';
   
   console.log('[ProductRenewalSubmain]: ' + myAge + " / " + this._line.deviceCode);
 
