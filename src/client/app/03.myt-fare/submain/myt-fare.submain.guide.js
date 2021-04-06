@@ -238,9 +238,7 @@ Tw.MyTFareSubMainGuide.prototype = {
 
   // 요금에 콤마 추가
   _comComma: function (str) {
-    // str = String(str);
-    // 숫자만 추출 (앞에 마이너스 '-' 도 제거한다. 기획 유지현님 요청)
-    str = (str || '0').toString().replace(/[^0-9]/g, '');
+    str = String(str);
     return Tw.FormatHelper.addComma(str);
   }
 };
