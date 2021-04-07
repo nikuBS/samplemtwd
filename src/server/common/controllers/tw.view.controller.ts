@@ -204,25 +204,26 @@ abstract class TwViewController {
    * @return {Observable}
    */
   protected getPersonSmsDisableTimeCheck(): Observable<any> {
-    const DEFAULT_PARAM = {
-      property: REDIS_KEY.PERSON_SMS_DISABLE_TIME
-    };
-    return this._apiService.request(API_CMD.BFF_01_0069, DEFAULT_PARAM).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        const today = new Date().getTime();
-        const resTime = resp.result.split('~');
-        const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
-        const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
-        this.logger.info(this, '[Person sms startTime // endTime]', startTime, endTime);
-        /**
-         * 버튼 비노출 시점에 포함되지 않으면 버튼 노출
-         * true: 노출, false: 비노출
-         */
-        return !(today >= startTime && today <= endTime);
-      } else {
-        return null;
-      }
-    });
+    // const DEFAULT_PARAM = {
+    //   property: REDIS_KEY.PERSON_SMS_DISABLE_TIME
+    // };
+    // return this._apiService.request(API_CMD.BFF_01_0069, DEFAULT_PARAM).map((resp) => {
+    //   if ( resp.code === API_CODE.CODE_00 ) {
+    //     const today = new Date().getTime();
+    //     const resTime = resp.result.split('~');
+    //     const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
+    //     const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
+    //     this.logger.info(this, '[Person sms startTime // endTime]', startTime, endTime);
+    //     /**
+    //      * 버튼 비노출 시점에 포함되지 않으면 버튼 노출
+    //      * true: 노출, false: 비노출
+    //      */
+    //     return !(today >= startTime && today <= endTime);
+    //   } else {
+    //     return null;
+    //   }
+    // });
+    return Observable.of(true);
   }
 
   /**
