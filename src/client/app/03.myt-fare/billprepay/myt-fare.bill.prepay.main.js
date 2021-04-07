@@ -744,6 +744,8 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_05_0205, {})
       .done($.proxy(function (resp) {
         if (resp.code === Tw.API_CODE.CODE_00) {
+          // 인증완료 후 세션 스토리지에 인증여부 넣는다.
+          Tw.CommonHelper.setSessionStorage('historyAuth', 'Y');
           this._historyService.goLoad('/myt-fare/bill/small/history' + $(e.currentTarget).attr('href'));
         } else {
           this._remainFail(resp);
