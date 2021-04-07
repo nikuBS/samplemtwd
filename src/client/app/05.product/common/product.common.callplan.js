@@ -425,7 +425,7 @@ Tw.ProductCommonCallplan.prototype = {
    */
   _sorisamSmsAuth : function(resp){
       if (resp.code === Tw.API_CODE.CODE_00 && resp.result.csmsResultCode==='SC') {
-        this._popupService.openAlert('비밀번호 초가화 완료되었습니다.');
+        this._popupService.openAlert('비밀번호 초기화 완료되었습니다.');
       } else {
         Tw.Error(resp.code, resp.clientDebugMessage).pop();
       }
