@@ -744,7 +744,8 @@ Tw.ALERT_MSG_MYT_FARE = {
     }
   },
   NOT_ALLOW_MINOR: '미성년 고객님은 휴대폰 결제를 이용하실 수 없습니다.',
-  NOT_ALLOW_BUBIN: '법인 실사용자 비회선, SKT법인 고객님은 휴대폰 결제를 이용하실 수 없습니다.'
+  NOT_ALLOW_BUBIN: '법인 실사용자 비회선, SKT법인 고객님은 휴대폰 결제를 이용하실 수 없습니다.',
+  NOT_SMS_AUTH: '휴대폰 인증이 필요합니다'
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {

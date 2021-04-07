@@ -76,6 +76,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
     this.selectedYear = this._params.year || this.data.curYear;
     this.selectedMonth = this._params.month || this.data.curMonth;
     $.extend(this, this._getQueryFromTo(this.data.beforeYear, this.data.beforeMonth, this.data.curYear, this.data.curMonth)); // get fromDt, toDt,
+    this.authKey = 'historyAuth';
   },
 
   /**
@@ -86,6 +87,13 @@ Tw.MyTFareBillSmallHistory.prototype = {
     var hash = (this._historyService.getHash() || 'small').replace('#', '');
     this.$container.find('[data-hash="'+ hash +'"]').attr('aria-selected', true).siblings().attr('aria-selected', false);
     this._renderTip();
+    // 인증여부 확인
+    if (!Tw.CommonHelper.getSessionStorage(this.authKey)) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_SMS_AUTH, Tw.POPUP_TITLE.NOTIFY, null, function () {
+        this._historyService.replaceURL('/myt-fare/bill/small');
+      }.bind(this));
+      return;
+    }
     this._getHistory();
   },
 
@@ -113,6 +121,15 @@ Tw.MyTFareBillSmallHistory.prototype = {
     this.$container.on('click', '.fe-more-btn', $.proxy(this._showMoreList, this));
     this.$container.on('click', '.fe-month-selector', $.proxy(this._showSelectMonth, this));
     this.$container.on('click', '.fe-detail-link', $.proxy(this._moveDetailPage, this));
+    $(window).on('beforeunload', $.proxy(this._onLeaveDeleteAuth, this));
+  },
+
+  /**
+   * @desc 페이지 전환시 세션에 저장한 인증여부 삭제처리
+   * @private
+   */
+  _onLeaveDeleteAuth: function () {
+    Tw.CommonHelper.removeSessionStorage('historyAuth');
   },
 
   /**
