@@ -414,6 +414,9 @@ Tw.ProductCommonCallplan.prototype = {
    * @returns
    */
   _openCertification:function(e){    
+
+    Tw.Error('99', 'ㅁㅁㅁㅁㅁ').pop();
+    return;
     this._popupService.close(); 
     this._apiService.request(Tw.API_CMD.BFF_10_0206, {})
     .done($.proxy(this._sorisamSmsAuth, this))     
