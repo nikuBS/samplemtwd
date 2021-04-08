@@ -1,193 +1,212 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="format-detection" content="telephone=no, address=no, email=no" />
-    <link rel="shortcut icon" href="/img/common/favicon.ico" />
-    <link rel="shortcut icon" href="/img/common/favicon.png" />
-    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
-    <meta name="description" content="페이지설명" />
-    <meta name="keywords" content="서비스키워드" />
-    <meta property="og:title" content="SKT 홈페이지" />
-    <meta property="og:site_name" content="SKT" />
-    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
-    <meta property="og:description" content="SKT framework" />
-    <title>SKT</title>
-    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
-    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
-    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
-    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
-    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
-    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
-    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
-    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
-    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
-    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no, address=no, email=no" />
+	<link rel="shortcut icon" href="/img/common/favicon.ico" />
+	<link rel="shortcut icon" href="/img/common/favicon.png" />
+	<link rel="apple-touch-icon" href="/img/common/favicon.png" />
+	<meta name="description" content="페이지설명" />
+	<meta name="keywords" content="서비스키워드" />
+	<meta property="og:title" content="SKT 홈페이지" />
+	<meta property="og:site_name" content="SKT" />
+	<meta property="og:image" content="/image/common/skt_facebook.jpg" />
+	<meta property="og:description" content="SKT framework" />
+	<title>SKT</title>
+	<link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+	<link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+	<link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+	<link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+	<script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+	<script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+	<script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+	<script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+	<script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+	<script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 </head>
 <body>
-    <!-- Grand open 접근성 수정 -->
-    <!-- #skip_navigation -->
-    <!--<div id="skipNav" class="skip_navi">
-       <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
-        </ul>
-    </div>-->
-    <!--// #skip_navigation -->
-    <!-- Grand open 접근성 수정 -->
-    <div class="wrap">
-        <!-- .popup hbs -->
-        <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-            <!-- #header -->
-            <div class="header-wrap">
-                <div class="page-header">
-                    <div class="header-ti">
-                        <h1>설정</h1>
-                    </div>
-                </div>
-            </div>
-            <!--// #header -->
-            <!-- .container-wrap -->
-            <div class="container-wrap">
-                <h2 class="blind">내용</h2>
-                <div class="container">
-                    <div class="product-select-wrap">
-                        <span class="data-tit">0플랜 옵션 선택 <button class="tip-view" title="0플랜 옵션 선택 정보보기" aria-haspopup="true">TIP</button></span>
-                        <!-- 2019.01.24 title,aria-haspopup 추가 -->
-                    </div>
+	<!-- Grand open 접근성 수정 -->
+	<!-- #skip_navigation -->
+	<!--<div id="skipNav" class="skip_navi">
+	   <ul>
+			<li><a href="#gnb">메뉴 바로가기</a></li>
+			<li><a href="#contents">본문 바로가기</a></li>
+			<li><a href="#footer">푸터 바로가기</a></li>
+		</ul>
+	</div>-->
+	<!--// #skip_navigation -->
+	<!-- Grand open 접근성 수정 -->
+	<div class="wrap">
+		<!-- .popup hbs -->
+		<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+			<!-- #header -->
+			<div class="header-wrap">
+				<div class="page-header">
+					<div class="header-ti">
+						<h1>설정</h1>
+					</div>
+				</div>
+			</div>
+			<!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
+				<h2 class="blind">내용</h2>
+				<div class="container">
+					<div class="product-select-wrap">
+						<span class="data-tit">0플랜 옵션 선택 <button class="tip-view" title="0플랜 옵션 선택 정보보기" aria-haspopup="true">TIP</button></span>
+						<!-- 2019.01.24 title,aria-haspopup 추가 -->
+					</div>
 
-                    <!-- 190715 [OP002-2457] 추가_01 -->
-                    <!-- .cont-box -->
-                    <!-- 기존 옵션 : 0플랜_oksusu포인트 [NA00006166] -->
-                    <!-- 190918 [OP002-3846][브랜드변경] 삭제_01 -->
-                    <!-- <div class="cont-box">
-                        <div class="product-tit-wrap">
-                            <span class="tit-small">이용중인 혜택</span>
-                            <h3 class="tit-big">oksusu 1만2천 포인트</h3>
-                            <p class="tod-txcolor5 mt16">새롭게 변경된 아래 혜택을 이용해보세요. <br>(변경시, 기존 혜택은 재선택하실 수 없습니다.)</p>
-                            <p class="tod-txcolor7 mt6">2019년 8월 31일까지 타 혜택으로 변경하지 않을 경우, <br>9월 1일에 "T멤버십 VIP 혜택" 자동 변경 됩니다.</p>
-                        </div>
-                    </div> -->
-                    <!-- //190918 [OP002-3846][브랜드변경] 삭제_01 -->
-                    <!-- // 기존 옵션 : 0플랜_oksusu포인트 [NA00006166] -->
-                    <!-- // .cont-box -->
+					<!-- 190715 [OP002-2457] 추가_01 -->
+					<!-- .cont-box -->
+					<!-- 기존 옵션 : 0플랜_oksusu포인트 [NA00006166] -->
+					<!-- 190918 [OP002-3846][브랜드변경] 삭제_01 -->
+					<!-- <div class="cont-box">
+						<div class="product-tit-wrap">
+							<span class="tit-small">이용중인 혜택</span>
+							<h3 class="tit-big">oksusu 1만2천 포인트</h3>
+							<p class="tod-txcolor5 mt16">새롭게 변경된 아래 혜택을 이용해보세요. <br>(변경시, 기존 혜택은 재선택하실 수 없습니다.)</p>
+							<p class="tod-txcolor7 mt6">2019년 8월 31일까지 타 혜택으로 변경하지 않을 경우, <br>9월 1일에 "T멤버십 VIP 혜택" 자동 변경 됩니다.</p>
+						</div>
+					</div> -->
+					<!-- //190918 [OP002-3846][브랜드변경] 삭제_01 -->
+					<!-- // 기존 옵션 : 0플랜_oksusu포인트 [NA00006166] -->
+					<!-- // .cont-box -->
 
-                    <!-- .cont-box -->
-                    <!-- 기존 옵션 : 0플랜_FLO(뮤직) [NA00006165] -->
-                    <div class="cont-box">
-                        <div class="product-tit-wrap">
-                            <span class="tit-small">이용중인 혜택</span>
-                            <h3 class="tit-big">FLO 모바일 무제한 듣기</h3>
-                            <p class="tod-txcolor5 mt16">새롭게 변경된 아래 혜택을 이용해보세요. <br>(변경시, 기존 혜택은 재선택하실 수 없습니다.)</p>
-                        </div>
-                    </div>
-                    <!-- // 기존 옵션 : 0플랜_FLO(뮤직) [NA00006165] -->
-                    <!-- // .cont-box -->
+					<!-- .cont-box -->
+					<!-- 기존 옵션 : 0플랜_FLO(뮤직) [NA00006165] -->
+					<div class="cont-box">
+						<div class="product-tit-wrap">
+							<span class="tit-small">이용중인 혜택</span>
+							<h3 class="tit-big">FLO 모바일 무제한 듣기</h3>
+							<p class="tod-txcolor5 mt16">새롭게 변경된 아래 혜택을 이용해보세요. <br>(변경시, 기존 혜택은 재선택하실 수 없습니다.)</p>
+						</div>
+					</div>
+					<!-- // 기존 옵션 : 0플랜_FLO(뮤직) [NA00006165] -->
+					<!-- // .cont-box -->
 
-                    <!-- .cont-box -->
-                    <!-- 옵션 변경시 -->
-                    <div class="cont-box">
-                        <div class="product-tit-wrap">
-                            <p style="font-size:0.75rem">다른 혜택으로 변경 시, FLO 앤 데이터 월정액은 정상 과금됩니다. 원치 않으실 경우 FLO 앤 데이터 상품을 별도 해지해주세요.</p>
-                        </div>
-                    </div>
-                    <!-- // 옵션 변경시 -->
-                    <!-- // .cont-box -->
+					<!-- .cont-box -->
+					<!-- 옵션 변경시 -->
+					<div class="cont-box">
+						<div class="product-tit-wrap">
+							<p style="font-size:0.75rem">T멤버십 VIP 혜택으로 변경 시, wavve 앤 데이터 월정액은 정상 과금됩니다. 원치 않으실 경우 wavve앤 데이터 상품을 별도 해지해주세요.</p><!-- 210401 [OP002-13736] 수정_01 -->
+						</div>
+					</div>
+					<!-- // 옵션 변경시 -->
+					<!-- // .cont-box -->
 
-                    <!-- .cont-box -->
-                    <!-- 옵션 변경시 -->
-                    <div class="cont-box">
-                        <div class="product-tit-wrap">
-                            <p style="font-size:0.75rem">다른 혜택으로 변경 시, wavve 앤 데이터 월정액은 정상 과금됩니다. 원치 않으실 경우 wavve 앤 데이터 상품을 별도 해지해주세요.</p><!-- 190918 [OP002-3846][브랜드변경] 수정_01 -->
-                        </div>
-                    </div>
-                    <!-- // 옵션 변경시 -->
-                    <!-- // .cont-box -->
+					<!-- .cont-box -->
+					<!-- 옵션 변경시 -->
+					<div class="cont-box">
+						<div class="product-tit-wrap">
+							<p style="font-size:0.75rem">T멤버십 VIP 혜택으로 변경 시, FLO 앤 데이터 월정액은 정상 과금됩니다. 원치 않으실 경우 FLO 앤 데이터 상품을 별도 해지해주세요. </p><!-- 210401 [OP002-13736] 수정_02 -->
+						</div>
+					</div>
+					<!-- // 옵션 변경시 -->
+					<!-- // .cont-box -->
 
-                    <hr class="cont-sp type1" aria-hidden="true">
-                    <!-- // 190715 [OP002-2457] 추가_01 -->
+					<!-- .cont-box -->
+					<!-- 옵션 변경시 -->
+					<div class="cont-box">
+						<div class="product-tit-wrap">
+							<p style="font-size:0.75rem">다른 혜택으로 변경 시, wavve 앤 데이터 및 FLO 앤 데이터 월정액은 정상 과금됩니다. 원치 않으실 경우 해당 상품을 별도 해지해주세요. </p><!-- 210401 [OP002-13736] 추가_01 -->
+						</div>
+					</div>
+					<!-- // 옵션 변경시 -->
+					<!-- // .cont-box -->
+				
 
-                    <!-- .cont-box -->
-                    <!-- 2019.01.07  aria-hidden="true" 삭제 sblee -->
-                    <div class="cont-box nogaps">
-                        <div class="list-comp-input tod-type2"><!-- 190715 [OP002-2457] 수정_01 -->
-                            <div class="widget">
-                                <div class="widget-box radio">
-                                    <!-- 2019.01.22  title 수정 sblee -->
-                                    <ul class="select-list" role="group">
-                                        <li class="radiobox type01" role="radio" aria-checked="false">
-                                            <input type="radio" name="radio" value="" title="0플랜 옵션 선택" aria-labelledby="aria-comp-radio1">
-                                            <div class="comp-list-layout" id="aria-comp-radio1">
-                                                <!-- 190715 [OP002-2457] 수정_02 -->
-                                                <p class="layout-text">
-                                                    <span class="mtext">T멤버십 VIP 혜택</span>
-                                                    <span class="stext">지난 달 유지조건에 따라 VIP멤버십 혜택 제공</span>
-                                                </p>
-                                                <!-- // 190715 [OP002-2457] 수정_02 -->
-                                            </div>
-                                        </li>
-                                        <li class="radiobox type01" role="radio" aria-checked="false">
-                                            <input type="radio" name="radio" value="" title="0플랜 옵션 선택" aria-labelledby="aria-comp-radio2">
-                                            <div class="comp-list-layout" id="aria-comp-radio2">
-                                                <span class="ico ico-movie"></span>
-                                                <!-- 190715 [OP002-2457] 수정_03 -->
-                                                <p class="layout-text">
-                                                    <span class="mtext">FLO 앤 데이터 월정액 무료</span>
-                                                    <span class="stext">전용데이터 매월 3GB로 최신 음악 무제한 듣기</span>
-                                                </p>
-                                                <!-- // 190715 [OP002-2457] 수정_03 -->
-                                            </div>
-                                        </li>
-                                        <li class="radiobox type01" role="radio" aria-checked="false">
-                                            <input type="radio" name="radio" value="" title="0플랜 옵션 선택" aria-labelledby="aria-comp-radio3">
-                                            <div class="comp-list-layout" id="aria-comp-radio3">
-                                                <span class="ico ico-watch"></span>
-                                                <!-- 190715 [OP002-2457] 수정_04 -->
-                                                <!-- 190918 [OP002-3846][브랜드변경] 수정_02 -->
-                                                <p class="layout-text">
-                                                    <span class="mtext">wavve 앤 데이터 월정액 무료</span>
-                                                    <span class="stext">전용데이터 매일 1GB로 80개 채널, 22만개 드라마, 예능 즐기기</span>
-                                                </p>
-                                                <!-- //190918 [OP002-3846][브랜드변경] 수정_02 -->
-                                                <!-- // 190715 [OP002-2457] 수정_04 -->
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <!--// 2019.01.22  title 수정 sblee -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--// 2019.01.07  aria-hidden="true" 삭제 sblee -->
-                    <!--// .cont-box -->
+					<hr class="cont-sp type1" aria-hidden="true">
+					<!-- // 190715 [OP002-2457] 추가_01 -->
 
-                    <!-- .cont-box -->
-                    <div class="cont-box noborder bgnone">
-                        <div class="announcement-box">
-                            <div class="announcement-bullet type02">3개의 옵션 중 1가지를 선택할 수 있으며, 변경일을 기준으로 30일 이내에는 다른 옵션으로 변경하실 수 없습니다.</div>
-                        </div>
-                    </div>
-                    <!--// .cont-box -->
+					<!-- .cont-box -->
+					<!-- 2019.01.07  aria-hidden="true" 삭제 sblee -->
+					<div class="cont-box nogaps">
+						<div class="list-comp-input tod-type2"><!-- 190715 [OP002-2457] 수정_01 -->
+							<div class="widget">
+								<div class="widget-box radio">
+									<!-- 2019.01.22  title 수정 sblee -->
+									<ul class="select-list" role="group">
+										<li class="radiobox type01" role="radio" aria-checked="false">
+											<input type="radio" name="radio" value="" title="0플랜 옵션 선택" aria-labelledby="aria-comp-radio1">
+											<div class="comp-list-layout" id="aria-comp-radio1">
+												<!-- 190715 [OP002-2457] 수정_02 -->
+												<p class="layout-text">
+													<span class="mtext">T멤버십 VIP 혜택</span>
+													<span class="stext">지난 달 유지조건에 따라 VIP멤버십 혜택 제공</span>
+												</p>
+												<!-- // 190715 [OP002-2457] 수정_02 -->
+											</div>
+										</li>
+										<li class="radiobox type01" role="radio" aria-checked="false">
+											<input type="radio" name="radio" value="" title="0플랜 옵션 선택" aria-labelledby="aria-comp-radio2">
+											<div class="comp-list-layout" id="aria-comp-radio2">
+												<span class="ico ico-movie"></span>
+												<!-- 210401 [OP002-13736] 수정_03 -->
+												<p class="layout-text">
+													<span class="mtext">FLO 앤 데이터 , wavve 앤 데이터 월정액 70% 할인</span>
+													<span class="stext">
+														1. FLO 앤 데이터<br>
+														전용데이터 매월 3GB로 최신 음악 무제한 듣기<br>
+														2. wavve 앤 데이터<br>
+														전용데이터 매일 1GB로 80개 채널, 22만개 드라마, 예능 즐기기
+													</span>
+												</p>
+												<!-- //210401 [OP002-13736] 수정_03 -->
+											</div>
+										</li>
+										<!--  210401 [OP002-13736] 삭제_01
+										<li class="radiobox type01" role="radio" aria-checked="false">
+											<input type="radio" name="radio" value="" title="0플랜 옵션 선택" aria-labelledby="aria-comp-radio3">
+											<div class="comp-list-layout" id="aria-comp-radio3">
+												<span class="ico ico-watch"></span>
+												<p class="layout-text">
+													<span class="mtext">wavve 앤 데이터 월정액 무료</span>
+													<span class="stext">전용데이터 매일 1GB로 80개 채널, 22만개 드라마, 예능 즐기기</span>
+												</p>
+											</div>
+										</li>
+										-->
+									</ul>
+									<!--// 2019.01.22  title 수정 sblee -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--// 2019.01.07  aria-hidden="true" 삭제 sblee -->
+					<!--// .cont-box -->
 
-                    <div class="bt-fixed-area">
-                        <ul class="bt-slice full">
-                            <li class="bt-red1">
-                                <button>변경 완료</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- // .container-wrap -->
-            <!-- .popup-closeBtn -->
-            <button class="prev-step">취소</button>
-            <!--// .popup-closeBtn -->
-        </div>
-        <!-- // .popup hbs -->
-    </div>
+					<!-- .cont-box -->
+					<div class="cont-box noborder bgnone">
+						<div class="announcement-box">
+							<!-- 210401 [OP002-13736] 수정_04 -->
+							<div class="announcement-bullet type02">2개의 옵션 중 1가지를 선택할 수 있으며, 변경일을 기준으로 30일 이내에는 다른 옵션으로 변경하실 수 없습니다.</div>
+							<div class="announcement-bullet type02">FLO 앤 데이터, wavve 앤 데이터 월정액 70% 할인을 선택하더라도 FLO 앤 데이터와 wavve 앤 데이터 상품을 가입하지 않을 경우 과금되지 않습니다.<br>
+								wavve 앤 데이터는 wavve 앤 데이터 플러스 상품으로 변경 가능합니다.
+							</div>
+							<!-- 210401 [OP002-13736] 수정_04 -->
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<div class="bt-fixed-area">
+						<ul class="bt-slice full">
+							<li class="bt-red1">
+								<button>변경 완료</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- // .container-wrap -->
+			<!-- .popup-closeBtn -->
+			<button class="prev-step">취소</button>
+			<!--// .popup-closeBtn -->
+		</div>
+		<!-- // .popup hbs -->
+	</div>
 </body>
 </html>
