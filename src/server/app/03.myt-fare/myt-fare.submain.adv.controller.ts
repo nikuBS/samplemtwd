@@ -130,7 +130,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       const error = submain.code ? submain : guide.code ? guide : null;
       if (error) {
         data.billError = {
-          code: error.code,
+          code: error.code !== 'NO_DATA' ? error.code : '',
           msg: error.msg
         };
       }
@@ -285,7 +285,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     const claim = (isRep ? data.last6Bill : data.usage) || {};
     if (FormatHelper.isEmpty(claim)) {
       return Observable.of({
-        code: API_CODE.CODE_500,
+        code: 'NO_DATA',
         msg: MYT_FARE_SUBMAIN_TITLE.ERROR.NO_DATA
       });
     }
@@ -590,7 +590,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   // 최근 6개월 청구요금 조회
  private _getLast6Bill() {
     return this.apiService.request(API_CMD.BFF_05_0020, {}).map((resp) => {
-      if (resp.code !== API_CODE.CODE_00 || resp.result.avgInvAmt === '0') {
+      if (resp.code !== API_CODE.CODE_00) {
         return null;
       }
       ((resp.result || {}).recentUsageList || []).map( item => {
