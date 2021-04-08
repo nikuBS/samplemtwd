@@ -3,7 +3,7 @@
  * @author Kinam Kim
  * @since 2020. 12. 18
  */
-Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, myAge, cdn, menuId) {
+Tw.ProductRenewalSubmain = function(rootEl, svcInfo, sectionSort, line, myAge, cdn, menuId) {
   // 전체 레이어 선택 및 생성자 파라미터값 세팅
   this.$container = rootEl;
   this._sectionSort = sectionSort;
@@ -11,6 +11,7 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, myAge, cdn, menuI
   this._line = JSON.parse(line) || {'deviceCode': 'F', 'quickFilterCode': 'F01713'}; // 기본값 세팅
   this._myAge = myAge;
   this._cdn = cdn;
+  this._svcMgmtNum = svcInfo ? svcInfo.svcMgmtNum : '';
   
   console.log('[ProductRenewalSubmain]: ' + myAge + " / " + this._line.deviceCode);
 
@@ -54,7 +55,7 @@ Tw.ProductRenewalSubmain.prototype = {
   _bindEvent: function() {
     this.$container.on('click', '.login-btn', $.proxy(this._onClickLogin, this)); // 로그인 하기 버튼 이벤트
     
-    this.$container.on('click', '.bt-switch', $.proxy(this._onClickPiAgree, this)); // 개인정보 수집이용 동의 시 클릭 이벤트
+    this.$container.on('click', '.bt-switch', $.proxy(this._onPiAgree, this)); // 개인정보 수집이용 동의 시 클릭 이벤트
     this.$container.on('click', '.bt-detail', $.proxy(this._onClickPiDetail, this)); // 개인정보 수집이용 동의 상세보기 (원문) 클릭 이벤트
 
     this.$container.on('click', '.btn-benefit', $.proxy(this._onClickMore, this)); // 손실보전 혜택 더보기 이벤트
@@ -78,10 +79,7 @@ Tw.ProductRenewalSubmain.prototype = {
    * @private
    */
   _successTosAdminProductBanner: function (banner, admBanner) {
-    var result = [
-      { target: 'T', banner: banner },
-      { target: 'N' } // 2021.03.02 BE 내용 추가
-    ];
+    var result = [ { target: 'N', banner: banner } ];
 
     result.forEach(function(row) {
       if( row.banner && row.banner.code === Tw.API_CODE.CODE_00 ) {
@@ -91,25 +89,16 @@ Tw.ProductRenewalSubmain.prototype = {
         row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
         row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
       } else {
-        row.banner = { 
-          result: {
-            summary : { 
-              target: row.target 
-            }, 
-            imgList : [] 
-          } 
-        };
+        row.banner = { result: {summary : { target: row.target }, imgList : [] } };
       }
 
       if( admBanner.code === Tw.API_CODE.CODE_00 ) {
         row.banner.result.imgList = row.banner.result.imgList.concat( 
           admBanner.result.banners.filter(function(admbnr) {
-            return admbnr.bnnrLocCd === row.target && admbnr.bnnrLocCd !== 'T';
+            return admbnr.bnnrLocCd === row.target;
           }).map( function(admbnr) {
             admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
-            if ( admbnr.bnnrImgAltCtt ) {
-              admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
-            }
+            admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
             return admbnr;
           })
         );
@@ -125,18 +114,15 @@ Tw.ProductRenewalSubmain.prototype = {
    * @private
    */
   _drawTosAdminProductBanner: function (banners) {
-    banners.forEach($.proxy(function (bnr) {
-      if (bnr.banner.result.bltnYn === 'N') {
-        this.$container.find('#fe-banner-t').parents('div.nogaps').addClass('none');
+    _.map(banners, $.proxy(function (bnr) {
+      if ( bnr.banner.result.bltnYn === 'N' ) {
+        this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
       }
 
-      if (!Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0) {
-        new Tw.BannerProductService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp, this._cdn);
-      } 
+      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
+        new Tw.BannerProductService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this));
+      }
     }, this));
-    
-    new Tw.XtractorService(this.$container);
-
   },
 
   /**
@@ -499,7 +485,7 @@ Tw.ProductRenewalSubmain.prototype = {
    * @return {void} 
    */
   _onClickPiAgree: function(element) {
-    this._onPiAgree();  
+    $.proxy(this._onPiAgree, this);
   },
 
   /**
@@ -515,6 +501,7 @@ Tw.ProductRenewalSubmain.prototype = {
 
           this._popupService.open({
             hbs: 'actionsheet_product_pi',
+            data: { 'agr201yn': $target.data('agr201yn'), 'agr203yn': $target.data('agr203yn')},
             layer: true,
           }
           , $.proxy(this._onOpenPiPopup, this, $target, content)
@@ -553,8 +540,14 @@ Tw.ProductRenewalSubmain.prototype = {
    * @desc AD 광고 중 동의 버튼 이벤트
    * @private
    */
-  _onPiAgree: function(target) {
-    this._apiService.request(Tw.API_CMD.BFF_03_0022, { 'twdInfoRcvAgreeYn': 'Y' })
+  _onPiAgree: function(element) {
+    var $target = $(element.currentTarget);
+    var params = {
+      agr201Yn: $target.data('agr201yn'), // 광고성정보수신동의
+      agr203Yn: 'Y' // 개인정보수집이용동의
+    };
+
+    this._apiService.request(Tw.API_CMD.BFF_03_0015, params, {}, [this._svcMgmtNum])
       .done($.proxy(function(resp) {
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
           $('.pro-recmd-article').addClass('none');

@@ -104,15 +104,15 @@ class App {
         } else {
           return string;
         }
-      }
+      };
       const queryKeys = Object.keys(req.query);
       const paramKeys = Object.keys(req.params);
       queryKeys.forEach(key => {
-        req.query[key] = sanitize(req.query[key])
-      })
+        req.query[key] = sanitize(req.query[key]);
+      });
       paramKeys.forEach(key => {
-        req.params[key] = sanitize(req.query[key])
-      })
+        req.params[key] = sanitize(req.query[key]);
+      });
       // res.setHeader("Content-Security-Policy", "script-src 'self' 'sha256-/R8iLbj/zzRkKsN1Dh/be9dTImUnl6khUlY3lP0rwTk=' 'unsafe-inline';");
       next();
     });

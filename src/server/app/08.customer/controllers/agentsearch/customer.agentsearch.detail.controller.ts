@@ -239,6 +239,10 @@ class CustomerAgentsearchDetail extends TwViewController {
       respData.shopTypeNm.push('무인매장');
     }
 
+    if (regionInfo.skMagicRent && regionInfo.skMagicRent === 'Y') {
+      respData.shopTypeNm.push(CUSTOMER_AGENT_SEARCH.POSSIBLE_TASK.BODY.skMagicRent);
+    }
+
     // 매장소개. "#^" 문자를 줄내림 문자로 치환.
     if (!!respData.prPhrs) {
       respData.prPhrs = respData.prPhrs.replace(/\#\^/g, '<br>');
@@ -252,6 +256,8 @@ class CustomerAgentsearchDetail extends TwViewController {
             // tSharpYn(T# 예약가능) 인경우는. [휴대폰일반, 유선/인터넷/TV, ADT캡스보안] 항목을 각각 넣어준다.
             if (item === 'tSharpYn') {
               acc = acc.concat(BODY[item].split(','));
+            } else if (item === 'skMagicRent' && regionInfo.skMagicRent && regionInfo.skMagicRent === 'Y') {
+              acc.push(BODY[item]);
             } else {
               acc.push(BODY[item]);
             }

@@ -5680,6 +5680,9 @@ body.apphome .main-membershop-box {
 .welcome-wrap .welcome-box.product-combine {background:#f0f0f0;}
 .welcome-wrap .welcome-box.product-combine .section-box {margin:1.5rem 0 0 0; padding:0;}
 
+/* 210208 [OP002-13114] [요금팀] 요금제 선택약정 반영금액 표기 */
+.charge-product.tod-charge-product .bt-cont-box .tod-choice{display:block; margin-bottom:1.062rem; text-align:right}
+
 /* 210215 [OP002-13113] TDS 퀵메뉴 위치/영역확대 및 로고 변경 요청 */
 .quick-menu-list.tod-quick-menu-list-v2 .tod-i-global {background-size:24px 24px; background-position: 50% 50%;}
 .tod-tds-link {position:relative; display:block; padding:1.25rem 1.5rem}

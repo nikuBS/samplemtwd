@@ -252,9 +252,14 @@ Tw.ChatbotMainService.prototype = {
 
         // chatbot 차단 여부 확인을 위한 API 호출 (환경설정데이터)
         var isAllowedChatbot = false;   // 챗봇 서비스 허용여부 - true일 경우 동작
-        var propertyId = { //chatbot 차단 여부 확인 API 호출 param
-            property: Tw.REDIS_KEY.CHATBOT_MAIN_DISABLE_TIME
+
+        // chatbot 차단 여부 확인 API 호출 param
+        var propertyId = {
+            property: Tw.REDIS_KEY.CHATBOT_DISABLE_TIME
         };
+        /* var propertyId = {
+            property: Tw.REDIS_KEY.CHATBOT_MAIN_DISABLE_TIME
+        }; */
 
         this._apiService.requestArray([
             { command: Tw.API_CMD.BFF_01_0069, params: propertyId } // chatbot 차단 여부 확인 API

@@ -503,11 +503,21 @@
                             <span class="tit">신청 포인트</span>
                             <span class="val">{{dataAmt}} P 
                             {{#if payComplete}}
-                            ({{dataAmt}} P 차감완료)
+                            ({{resultPoint}})
                             {{/if}}
                             </span>
                         </div>
                     </li>
+                    {{#ifCond pointNm '===' '무약정플랜 포인트' }}
+                        {{#ifCond reqSt '===' '납부완료' }}
+                        <li>
+                            <div class="head-text">
+                                <span class="tit">잔여 포인트</span>
+                                <span class="val">{{remPoint}}P</span>
+                            </div>
+                        </li>
+                        {{/ifCond}}
+                    {{/ifCond}}
                     <li>
                         <div class="head-text">
                             <span class="tit">요청 내용</span>

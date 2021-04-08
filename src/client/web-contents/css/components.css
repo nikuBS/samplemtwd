@@ -36666,7 +36666,7 @@ body.apphome .section-box {
 .tod-line-sel-wrap .symbol.ico12{background-image:url('/img/myt/sel-tel-ico-black.svg');} /* 전화 */
 
 /* 회선리스트 */
-.tod-line-sel-wrap {position:relative; z-index:10; min-height:3.25rem;}
+.tod-line-sel-wrap {position:relative; z-index:26; min-height:3.25rem;} /* 210406 [OP002-13933] z-index 수정 */
 .tod-line-sel-wrap *{line-height:1}
 .tod-line-sel-wrap .sel-show-btn{display:inline-block; position:fixed; width:100%; left:0;/*  top:3.25rem */ -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important; text-align:left}
 .tod-line-sel-wrap .sel-show{display:-webkit-box; display:flex; height:3.25rem; background:#f65252; padding:15px 16px 13px; box-sizing:border-box;-webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center; }
@@ -36733,3 +36733,8 @@ body.apphome .section-box {
     .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item.have-child .child-link-wrap .child-link-list .child-link a{padding:0 0.4375rem}
 }
 .dim[data-id^='line-dim']{position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(00, 00, 00, .3); z-index:1; display:none}
+
+/* 210330 [OP002-14012] [고도화 잔여 업무] 휴대폰 결제/콘텐츠 이용료 이용내역 조회 인증 통합 */
+.tab-area.new01.tod-large .tab-linker ul li a{width: 100%; height: 3.625rem; line-height: 3.625rem;}
+.ti-caption-gray.tod-border{background:none;}
+.ti-caption-gray.tod-border .bt-select{font-weight: 500; border-bottom: 0.0625rem solid #000}

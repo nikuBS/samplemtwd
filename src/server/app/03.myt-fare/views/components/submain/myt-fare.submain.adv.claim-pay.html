@@ -59,7 +59,7 @@ _%>
             </div>
             <%_
                 // 통합청구 대표일때
-                if( data.type !== 'UF' && data.autoPayment && !data.autoPayment.isThisMonth){
+                if( data.type !== 'UF' && data.autoPayment){
                     const {isThisMonth = false} = data.autoPayment;
                     const {paymentInfo = {}} = data;
                     const {isPaid, payDate} = data.autoPayment;

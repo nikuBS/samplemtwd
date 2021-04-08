@@ -1255,7 +1255,6 @@
 .tod-result-box{background:#ecf0f6; color:#57637f; text-align:center; padding:1.6875rem 0; font-size:1.25rem }
 .idpt-benefit .inside-box.tod-no-border{border:none}
 
-
 /* 2020401 [OP002-7581] T쿠폰 상품원장 박스 높이 수정 */
 .idpt-benefit .idpt-coupon-list.t-coupon.t-c-row3 > li { height:8.125rem; padding:0.625rem 0.625rem; }
 .idpt-benefit .idpt-coupon-list.t-coupon.t-c-row3 > li:nth-child(5), .idpt-benefit .idpt-coupon-list.t-coupon.t-c-row3 > li:nth-child(6) {margin-bottom:0.625rem;}
@@ -1276,6 +1275,10 @@
 .idpt-benefit .tod-care-list-wrap{padding:2.3125rem 1rem 0; }
 .idpt-benefit .tod-care-list-wrap .idpt-bg-list{margin-top:0}
 .idpt-benefit .tod-care-solution .tod-care-solution-list img{width:100%; vertical-align:top}
+
+/* 210208 [OP002-13114] [요금팀] 요금제 선택약정 반영금액 표기 */
+.idpt-product-detail .idpt-product-detail-ledgercase .tod-choice{display:block; color:#fff; font-size:0.75rem}
+.idpt-product-detail .idpt-product-detail-ledgercase .button-ledger.tod-middle{margin-top: 0.85rem}
 
 /* 210308 [OP002-13603] 온라인 T-World BTV 채널수 현행화 요청 */
 .idpt-benefit .idpt-charge-wrap .charge-box-list.col3 > li {width: 33.33333333333333%;}

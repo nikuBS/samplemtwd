@@ -42,8 +42,9 @@ class MyTFareBillContentsHistory extends TwViewController {
   }
 
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-
-    return res.render('billcontents/myt-fare.bill.contents.history.html', {
+    // OP002-14017 : 휴대폰 결제 이용내역 화면통합으로, 휴대폰 결제 이용내역 화면으로 리다이렉트 시킴
+    res.redirect('/myt-fare/bill/small/history');
+    /*return res.render('billcontents/myt-fare.bill.contents.history.html', {
       svcInfo: svcInfo, 
       pageInfo: pageInfo, 
       data: {
@@ -51,7 +52,7 @@ class MyTFareBillContentsHistory extends TwViewController {
         ...this._getPrev6Month(),
         noticeInfo: this.getTipInfo(), // 꼭 확인해 주세요 팁 리스트,   
       }
-    });
+    });*/
   }
 
   /**

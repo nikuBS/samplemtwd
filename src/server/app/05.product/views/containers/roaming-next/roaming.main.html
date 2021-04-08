@@ -104,7 +104,9 @@
             </div>
             -->
         </div>
-        <% } else if (banners && banners.length > 0) { %>
+        <% } %> <!-- end of 최근 이용한 요금제 -->
+        <!-- mass + tos 배너 노출을 최근 이용한 로밍 요금제와 관계없이 항상 노출 되도록 변경 OP002-13923 -->
+        <%# if (banners && banners.length > 0) { %>
         <!-- 스와이프 -->
         <div class="cont-box nogaps noborder">
             <div class="main-slide-banner slide-pagingtype">
@@ -121,7 +123,7 @@
             </div>
         </div>
         <!-- //스와이프 -->
-        <% } %>
+        <%# } %>
         <div class="card pb16 mt16">
             <h3>로밍 요금제 한눈에 보기</h3>
             <div id="groups">
@@ -193,7 +195,7 @@
         'AMC': JSON.parse('<%- JSON.stringify(nations.amc) %>'),
         'MET': JSON.parse('<%- JSON.stringify(nations.met) %>'),
         'OCN': JSON.parse('<%- JSON.stringify(nations.ocn) %>'),
-      }, <%- JSON.stringify(banners) %>);
+      }, '<%= pageInfo.menuId %>');
   });
 </script>
 <script type="text/x-handlebars-template" id="tpl-nation-card">

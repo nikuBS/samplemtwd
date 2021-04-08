@@ -47,11 +47,11 @@ export default class RoamingMainController extends RoamingController {
       RoamingHelper.nationsByContinents(this.redisService),
       this.getCurrentUsingTariff(isLogin),
       this.getRecentUsedTariff(isLogin),
-      this.getBanners(pageInfo),
+      // this.getBanners(pageInfo),
       this.getFirstRoaming(isLogin),
       this.getTariffGroups(),
       this.getHistory(isLogin)
-    ).subscribe(([popularNations, nations, currentUse, recentUse, banners, newbie, groups, history]) => {
+    ).subscribe(([popularNations, nations, currentUse, recentUse, /* banners, */ newbie, groups, history]) => {
       if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo,
         [currentUse, newbie, groups, history])) {
         this.releaseDeadline(res);
@@ -86,7 +86,7 @@ export default class RoamingMainController extends RoamingController {
         /**
          * 어드민 배너
          */
-        banners,
+        // banners,
         /**
          * 로밍 상품 첫 이용 여부. BFF_10_0190 결과값.
          */
@@ -270,29 +270,31 @@ export default class RoamingMainController extends RoamingController {
   }
 
   /**
-   * 배너조회
+   * 배너조회 
+   * todo : (오병소 - 서버에서 전달해 주는 어드민 배너는 추후 배너 관련 서버 공통 구현되면 토스 + 매스 배너 다시 구현
+   * 현재는 주석처리, ts, js - OP002-13923 ) - end of todo
    * REDIS_KEY.BANNER_ADMIN + pageInfo.menuId
    *
-   * @param pageInfo 페이지정보
-   * @returns Redis:$(MENU_ID) 내의 모든 배너 목록
-   */
-  private getBanners(pageInfo): Observable<any> {
-    return this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId).map(resp => {
-      if ( resp.code !== API_CODE.REDIS_SUCCESS ) {
-        // 부분 차단
-        return null;
-      }
+  //  * @param pageInfo 페이지정보
+  //  * @returns Redis:$(MENU_ID) 내의 모든 배너 목록
+  //  */
+  // private getBanners(pageInfo): Observable<any> {
+  //   return this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId).map(resp => {
+  //     if ( resp.code !== API_CODE.REDIS_SUCCESS ) {
+  //       // 부분 차단
+  //       return null;
+  //     }
 
-      if ( FormatHelper.isEmpty(resp.result) ) {
-        return resp.result;
-      }
+  //     if ( FormatHelper.isEmpty(resp.result) ) {
+  //       return resp.result;
+  //     }
 
-      if (resp.result.banners) {
-        return resp.result.banners;
-      }
-      return null;
-    });
-  }
+  //     if (resp.result.banners) {
+  //       return resp.result.banners;
+  //     }
+  //     return null;
+  //   });
+  // }
 
   /**
    * 요금제그룹(5개) 목록 조회

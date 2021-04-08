@@ -267,8 +267,10 @@ Tw.HistoryService.prototype = {
       return false;
     }
 
+    // 환경변수에 등록되어있고 노출이 가능한 url 인 경우에 action이 호출됨
+    // STG 인 경우에는 act-0test로 전달 되도록 처리
     NetFunnel_Action({
-      action_id: findTarget.actionId,
+      action_id: Tw.Environment.environment.indexOf('prd') === -1 ? 'act-0test' : findTarget.actionId,
       skin_id: 'tworld'
     }, {
       success: function() {

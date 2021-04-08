@@ -270,7 +270,7 @@ Tw.LineComponent.prototype = {
           _.map(childLineList, $.proxy(function (childLine) {
             childInfos.push({
               index: this._index++,
-              txt: childLine.eqpMdlNm,
+              txt: childLine.eqpMdlNm || '휴대폰',
               option: this._selectedMgmt.toString() === childLine.svcMgmtNum ? 'checked' : '',
               badge: false,
               showLine: this._index <= Tw.DEFAULT_LIST_COUNT ? '' : 'none',
@@ -308,9 +308,14 @@ Tw.LineComponent.prototype = {
     var result = [];
     Tw.FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     _.map(lineData, $.proxy(function (line) {
+      // 노출 조건 순서 변경  닉네임 > 펜네임(마스킹해제) > 서비스속성(휴대폰, 선불폰, IPTV 등등)
+      var nick = line.nickNm || line.oriRmk || Tw.SVC_ATTR[line.svcAttrCd];
+      if (nick && nick.length > 7) {
+        nick = nick.substring(0, 7) + '...';
+      }
       result.push({
         index: this._index++,
-        txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
+        txt: nick,
         option: this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked' : '',
         badge: line.repSvcYn === 'Y',
         showLine: this._index <= Tw.DEFAULT_LIST_COUNT ? '' : 'none',
@@ -784,9 +789,14 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
       }
 
       _.map(lineData, $.proxy(function (line) {
+        // 노출 조건 순서 변경  닉네임 > 펜네임(마스킹해제) > 서비스속성(휴대폰, 선불폰, IPTV 등등)
+        var nick = line.nickNm || line.oriRmk || Tw.SVC_ATTR[line.svcAttrCd];
+        if (nick && nick.length > 7) {
+          nick = nick.substring(0, 7) + '...';
+        }
         result.push({
           index: this._index++,
-          txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
+          txt: nick,
           option: this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked' : '',
           badge: line.repSvcYn === 'Y',
           showLine: this._index <= Tw.DEFAULT_LIST_COUNT ? '' : 'none',

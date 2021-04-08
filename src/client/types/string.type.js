@@ -742,7 +742,10 @@ Tw.ALERT_MSG_MYT_FARE = {
       TITLE: '알림',
       MSG: '자동납부 {0} 중복으로 요청되었습니다.</br> 다시 시도해 주시기 바랍니다.'
     }
-  }
+  },
+  NOT_ALLOW_MINOR: '미성년 고객님은 휴대폰 결제를 이용하실 수 없습니다.',
+  NOT_ALLOW_BUBIN: '법인 실사용자 비회선, SKT법인 고객님은 휴대폰 결제를 이용하실 수 없습니다.',
+  NOT_SMS_AUTH: '휴대폰 인증이 필요합니다'
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
@@ -1536,6 +1539,7 @@ Tw.CUSTOMER_AGENT_SEARCH = {
     callHistSearch: '통화내역조회',
     rentYn: '임대폰',
     safeDealKiosk: '안심거래 키오스크',
+    skMagicRent: 'SK매직',
 
     // 체험존
     fiveGxYn: '5GX 체험존',

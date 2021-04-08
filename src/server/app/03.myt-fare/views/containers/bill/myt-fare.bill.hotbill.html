@@ -10,6 +10,7 @@
 <% include ../../components/bill/myt-fare.bill.hotbill.billgroup.html %>
 
 <!-- #skip_navigation -->
+<body class="">
 <div id="skipNav" class="skip_navi">
     <ul>
         <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
@@ -25,9 +26,7 @@
         <div class="container">
             <%_ if (!locals.child) { _%>
             <%# 자녀 회선인 경우는, 회선 선택을 표시하지 않도록 _%>
-            <%# OP002-8156: [개선][FE](W-1910-078-01) 회선선택 영역 확대 2차 _%>
-            <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B12_C49-1", multiple : "CMMA_A3_B12_C49-2" } }); _%>
-            <%# // OP002-8156: [개선][FE](W-1910-078-01) 회선선택 영역 확대 2차 _%>
+            <%- include('../../../../../common/views/components/common.select-line.component.v2.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B12_C49-1", multiple : "CMMA_A3_B12_C49-2" } }); _%>
             <%_ } _%>
 
             <%_ if (!isPrev) { _%>
@@ -146,6 +145,7 @@
             <!--// .cont-box -->
             <%_ } _%>
         </div>
+        <div class="dim" data-id="line-dim" style="display: none;"></div>
     </div>
     <!--// #contents -->
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
@@ -157,4 +157,5 @@
     new Tw.MyTFareHotBill($('#fe-myt-fare-hotbill'), <%- JSON.stringify({ lines }) %>);
   });
 </script>
+</body>
 <% include ../../components/end.component.html %>

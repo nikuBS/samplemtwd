@@ -12,16 +12,20 @@
  */
 Tw.MyTFareBillSmallHistory = function (rootEl, data) {
   this.$container = rootEl;
-  this.data = data ? JSON.parse(data) : '';
+  this.data = data;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService(rootEl);
   this._popupService = Tw.Popup;
 
   this._params = Tw.UrlHelper.getQueryParams();
 
-  this._init();
-  this._cachedElement();
-  this._bindEvent();
+  if ( !Tw.Environment.init ) {
+    $(window).on(Tw.INIT_COMPLETE, function () {
+      this._init();
+    }.bind(this));
+  } else {
+    this._init();
+  }
 };
 
 /**
@@ -48,6 +52,17 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * - _getQueryFromTo 를 호출하고 extend로 this.fromDt, this.toDt를 설정한다.
    */
   _init: function () {
+    this._initData();
+    this._cachedElement();
+    this._bindEvent();
+    this._initRequest();
+  },
+
+  /**
+   * @desc 초기 데이타 초기화
+   * @private
+   */
+  _initData: function () {
     this.limitLength = Tw.DEFAULT_LIST_COUNT;
     this.monthActionSheetListData = null; //현재로부터 지난 6개월 구하기 (액션시트 선택)
     /**
@@ -61,7 +76,25 @@ Tw.MyTFareBillSmallHistory.prototype = {
     this.selectedYear = this._params.year || this.data.curYear;
     this.selectedMonth = this._params.month || this.data.curMonth;
     $.extend(this, this._getQueryFromTo(this.data.beforeYear, this.data.beforeMonth, this.data.curYear, this.data.curMonth)); // get fromDt, toDt,
-    this._certShowLists();
+    this.authKey = 'historyAuth';
+  },
+
+  /**
+   * @desc 최초 이용내역 조회 요청
+   * @private
+   */
+  _initRequest: function () {
+    var hash = (this._historyService.getHash() || 'small').replace('#', '');
+    this.$container.find('[data-hash="'+ hash +'"]').attr('aria-selected', true).siblings().attr('aria-selected', false);
+    this._renderTip();
+    // 인증여부 확인
+    if (!Tw.CommonHelper.getSessionStorage(this.authKey)) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_SMS_AUTH, Tw.POPUP_TITLE.NOTIFY, null, function () {
+        this._historyService.replaceURL('/myt-fare/bill/small');
+      }.bind(this));
+      return;
+    }
+    this._getHistory();
   },
 
   /**
@@ -70,9 +103,10 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * - myt-fare.bill.small.history.html 참고
    */
   _cachedElement: function () {
-    this.$btnShowList = this.$container.find('.fe-show-list'); // 조회하기 버튼
+    this.$tipContents = this.$container.find('.fe-tip-contents'); // tip 영역
     this.$tempListWrap = Handlebars.compile($('#fe-list-wrap').html());
     this.$tempList = Handlebars.compile($('#list-default').html());
+    this.$tipTempl = Handlebars.compile($('#fe-tip-templ').html());
     Handlebars.registerPartial('list', $('#list-default').html());
     Handlebars.registerPartial('empty', $('#list-empty').html()); // 내역 없을 시
   },
@@ -83,19 +117,77 @@ Tw.MyTFareBillSmallHistory.prototype = {
    */
   _bindEvent: function () {
     // 인증하기 클릭 이벤트
-    this.$btnShowList.on('click', $.proxy(this._certShowLists, this));
+    this.$container.on('click', '[role="tab"]', $.proxy(this._changeTab, this));
+    this.$container.on('click', '.fe-more-btn', $.proxy(this._showMoreList, this));
+    this.$container.on('click', '.fe-month-selector', $.proxy(this._showSelectMonth, this));
+    this.$container.on('click', '.fe-detail-link', $.proxy(this._moveDetailPage, this));
+    $(window).on('beforeunload', $.proxy(this._onLeaveDeleteAuth, this));
   },
 
   /**
-   * @desc 인증업무 버튼 클릭으로 인증 시작
+   * @desc 페이지 전환시 세션에 저장한 인증여부 삭제처리
+   * @private
    */
-  _certShowLists: function () {
-    this._apiService.request(Tw.API_CMD.BFF_05_0206, {
-      payMethod: 'ALL',
-      fromDt: this.fromDt,
-      toDt: this.toDt
-    }).done($.proxy(this._callbackShowLists, this))
-      .fail($.proxy(this._onError, this, this.$btnShowList));
+  _onLeaveDeleteAuth: function () {
+    Tw.CommonHelper.removeSessionStorage('historyAuth');
+  },
+
+  /**
+   * @desc 미성년자 또는 법인사업자여부 판단
+   * @param e
+   * @return {boolean}
+   * @private
+   */
+  _isAllowed: function (e) {
+    var $target = $(e.currentTarget);
+    // 미성년자 인 경우
+    if ($target.data('is-adult') === false) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOW_MINOR, Tw.POPUP_TITLE.NOTIFY);
+      return false;
+    }
+    if ($target.data('is-bubin')) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOW_BUBIN, Tw.POPUP_TITLE.NOTIFY);
+      return false;
+    }
+    return true;
+  },
+
+  /**
+   * @desc 탭 변경처리
+   * @param e
+   * @private
+   */
+  _changeTab: function (e) {
+    e.preventDefault();
+    if (this._isAllowed(e)) {
+      this._initData();
+      this._getHistory();
+    }
+    this._renderTip();
+  },
+
+  /**
+   * @desc tip 정보 세팅
+   * @private
+   */
+  _renderTip: function () {
+    this.$tipContents.html(this.$tipTempl({
+      id: this._isSelectedMobile() ? 'MF_06_01_tip_01' : 'MF_07_01_tip_01'
+    }));
+    Tw.Tooltip.separateInit(); // 툴팁 동적 생성 init
+  },
+
+  /**
+   * @desc 이용내역 조회
+   */
+  _getHistory: function () {
+    var cmd = this._isSelectedMobile() ? Tw.API_CMD.BFF_05_0079 : Tw.API_CMD.BFF_05_0064;
+      this._apiService.request(cmd, {
+        payMethod: 'ALL',
+        fromDt: this.fromDt,
+        toDt: this.toDt
+      }).done($.proxy(this._callbackShowLists, this))
+        .fail($.proxy(this._onError, this));
   },
 
   /**
@@ -104,9 +196,8 @@ Tw.MyTFareBillSmallHistory.prototype = {
    */
   _callbackShowLists: function (res) {
     if ( res.code !== Tw.API_CODE.CODE_00 ) {
-      return this._onError(this.$btnShowList, res);
+      return this._onError(res);
     }
-
     // this.totalList 확장
     $.extend(this.totalList, this._devData(this._convData(res)));
 
@@ -120,9 +211,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
   _showWholeList: function () {
     // 결과 노출
     this._showLists(this.totalList[this._getStrYearMonth(this.selectedYear, this.selectedMonth)]);
-
-    // 이벤트 바인드
-    this._afterShowListEvent();
 
     // 더보기 버튼 여부
     this._showMoreBtn();
@@ -157,29 +245,47 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * @param {JSON} res
    */
   _convData: function (res) {
-    if ( res && res.result &&
-      res.result.histories !== undefined &&
-      Array.isArray(res.result.histories)
-    ) {
-      return _.map(res.result.histories.reverse(), function (o, index) {
-        //결과값 useDt YYYY-MM-DD hh:mm:ss 형태로 오는 것을 YYYYMMDDhhmmss 로 변환
-        var plainTime = o.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, '');
-        // cpState로 부터 차단여부 결정
-        var blockState = Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState] === undefined ?
-          null : Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState];
-        return $.extend(o, {
-          listId: index,
-          plainTime: plainTime,
-          FullDate: Tw.DateHelper.getFullDateAnd24Time(plainTime),
-          useAmt: Tw.FormatHelper.addComma(o.sumPrice), // 이용금액
-          payMethodNm: Tw.MYT_FARE_HISTORY_MICRO_TYPE[o.payMethod] || '', // 결제구분
-          // 상세 내용 관련 데이터
-          payWay: Tw.MYT_FARE_HISTORY_MICRO_PAY_TYPE[o.wapYn],
-          blockState: blockState || '', // 차단 상태
-          isShowBlockBtn: (o.payMethod === '03' && (blockState === null || !blockState)), // blockState !== null),
-          isBlocked: (o.cpState.indexOf('A') === 0) // 정책변경 : A로 시작되지 않는 상태값은 모두 차단중이 아닌것으로 변경 19.1.3
+    var result = res.result || {},
+      isMobile = this._isSelectedMobile();
+    var list = isMobile ? result.histories : result.useConAmtDetailList;
+    if ( Array.isArray(list) ) {
+      list = list.reverse();
+      // 휴대폰 결제
+      if (this._isSelectedMobile()) {
+        return _.map(list, function (o, index) {
+          //결과값 useDt YYYY-MM-DD hh:mm:ss 형태로 오는 것을 YYYYMMDDhhmmss 로 변환
+          var plainTime = Tw.DateHelper.getShortDateWithFormat(o.useDt, 'YYYYMMDDhhmmss', 'YYYY-MM-DD hh:mm:ss');
+          // var plainTime = o.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, '');
+          // cpState로 부터 차단여부 결정
+          var blockState = Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState] === undefined ?
+            null : Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState];
+          return $.extend(o, {
+            listId: index,
+            plainTime: plainTime,
+            FullDate: Tw.DateHelper.getFullDateAnd24Time(plainTime),
+            useAmt: Tw.FormatHelper.addComma(o.sumPrice), // 이용금액
+            payMethodNm: Tw.MYT_FARE_HISTORY_MICRO_TYPE[o.payMethod] || '', // 결제구분
+            // 상세 내용 관련 데이터
+            payWay: Tw.MYT_FARE_HISTORY_MICRO_PAY_TYPE[o.wapYn],
+            blockState: blockState || '', // 차단 상태
+            isShowBlockBtn: (o.payMethod === '03' && (blockState === null || !blockState)), // blockState !== null),
+            isBlocked: (o.cpState.indexOf('A') === 0), // 정책변경 : A로 시작되지 않는 상태값은 모두 차단중이 아닌것으로 변경 19.1.3
+            isMobile : isMobile
+          });
         });
-      });
+      } else { // 콘텐츠 이용료
+        return _.map(list, function(o, index) {
+          return $.extend(o, {
+            listId: index,
+            plainTime: o.payDt,
+            serviceNm: o.useServiceNm,
+            useServiceNm: o.useServiceNm || o.payFlag,
+            FullDate: Tw.DateHelper.getFullDateAnd24Time(o.payTime),
+            useAmt: Tw.FormatHelper.addComma(o.useCharge), // 이용금액
+            isMobile : isMobile
+          });
+        });
+      }
     } else {
       return [];
     }
@@ -220,16 +326,12 @@ Tw.MyTFareBillSmallHistory.prototype = {
     this.list = [].concat(list);
     this.totalCnt = this.list.length;
 
-    var $el = this.$btnShowList;
-    if ( this.$container.find('.fe-list-wrap').length ) {
-      $el = this.$container.find('.fe-list-wrap');
-    }
-
-    return $el.after(this.$tempListWrap({
+    var $el = this.$container.find('#' + this._selectedTab().attr('aria-controls'));
+    return $el.attr('aria-selected', true).html(this.$tempListWrap({
       list: this.list.splice(0, this.limitLength),
       totalCnt: this.totalCnt,
       curMonth: this.selectedMonth + Tw.PERIOD_UNIT.MONTH // 예 : 3월
-    })).off('click').remove();
+    }));
   },
 
   /**
@@ -243,9 +345,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
       list: this.list.splice(0, this.limitLength)
     }));
 
-    // 이벤트 바인드
-    this._afterShowListEvent();
-
     // 더보기 여부
     this._showMoreBtn();
   },
@@ -257,9 +356,9 @@ Tw.MyTFareBillSmallHistory.prototype = {
    */
   _showMoreBtn: function () {
     if ( this.list.length ) {
-      this.$moreBtn.removeClass('none').attr('aria-hidden', false);
+      $('.fe-more-btn').removeClass('none').attr('aria-hidden', false);
     } else {
-      this.$moreBtn.addClass('none').attr('aria-hidden', true);
+      $('.fe-more-btn').addClass('none').attr('aria-hidden', true);
     }
   },
 
@@ -308,8 +407,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
     $sheet.find('li').filter(function () {
       var $input = $(this).find('input');
       return parseFloat($input.data('year')) === year && parseFloat($input.data('month')) === month;
-    })
-      .attr('aria-selected', true).find('input').prop('checked', true)
+    }).attr('aria-selected', true).find('input').prop('checked', true)
       .end().siblings().attr('aria-selected', false);
 
     // 클릭 이벤트 바인드
@@ -326,7 +424,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
     var year = $input.data('year') || this.data.curYear;
     var month = $input.data('month') || this.data.curMonth;
     // 선택 text
-    this.$selectMonth.text(month + Tw.PERIOD_UNIT.MONTH);
+    $('.fe-month-selector').text(month + Tw.PERIOD_UNIT.MONTH);
 
     // popup close
     this._popupService.close();
@@ -334,11 +432,9 @@ Tw.MyTFareBillSmallHistory.prototype = {
     // 월 교체
     this.selectedYear = year;
     this.selectedMonth = month;
-    this.$moreBtn = null;
-    this.$selectMonth = null;
 
     this._showWholeList();
-    this.$selectMonth.focus(); // 접근성 수정. 팝업 닫힌 후 월선택 버튼 포커스.
+    $('.fe-month-selector').focus(); // 접근성 수정. 팝업 닫힌 후 월선택 버튼 포커스.
   },
 
   /**
@@ -350,13 +446,13 @@ Tw.MyTFareBillSmallHistory.prototype = {
     var thisData = this._getDetailData($target.data('listDate'), $target.data('listId'));
     this._popupService.open(
       $.extend({
-          hbs: 'MF_06_01_01',
+          hbs: this._isSelectedMobile() ?  'MF_06_01_01' : 'MF_07_01_01',
           layer: true
         },
         thisData
       ),
       $.proxy(this._detailPageCallback, this, thisData),
-      $.proxy(this._detailPageCloseCallback, this),
+      null,
       null,
       $target
     );
@@ -390,7 +486,12 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * @param {Element} $template
    */
   _detailPageCallback: function (thisData, $template) {
-    this.detailPage = new Tw.MyTFareBillSmallHitstoryDetail($template, thisData, $.proxy(this._updateData, this));
+    if (this._isSelectedMobile()) {
+      new Tw.MyTFareBillSmallHitstoryDetail($template, thisData, $.proxy(this._updateData, this));
+    } else {
+      // 외부 링크 클릭시 이벤트
+      $template.on('click', '.fe-link-external', $.proxy(this._openConfirmUrl, this));
+    }
   },
 
   /**
@@ -408,11 +509,23 @@ Tw.MyTFareBillSmallHistory.prototype = {
   },
 
   /**
-   * @desc 상세보기 팝업 닫기 callback
    * @function
+   * @desc 외부링크 클릭시 데이터 과금 안내 확인 팝업 호출(앱일 경우)
+   * @param {event} e
    */
-  _detailPageCloseCallback: function () {
-    this.detailPage = null;
+  _openConfirmUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var url = $(e.currentTarget).attr('href');
+
+    if (Tw.BrowserHelper.isApp()) {
+      return Tw.CommonHelper.showDataCharge(function () {
+        Tw.CommonHelper.openUrlExternal(url);
+      });
+    } else {
+      return Tw.CommonHelper.openUrlExternal(url);
+    }
   },
 
   /**
@@ -485,15 +598,31 @@ Tw.MyTFareBillSmallHistory.prototype = {
   },
 
   /**
+   * @desc 현재 선택된 탭 리턴
+   * @private
+   */
+  _selectedTab: function () {
+    return this.$container.find('[role="tab"][aria-selected="true"]');
+  },
+
+  /**
+   * @desc 현재 선택된 탭이 "휴대폰 결제" 인지 유무
+   * @private
+   */
+  _isSelectedMobile: function () {
+    return this._selectedTab().attr('id') === 'tab1';
+  },
+
+  /**
    * @desc API 호출 반환값이 에러일경우 에러 팝업 노출되도록 처리
-   * @param {Element} $target 팝업닫은후 포커스 이동될 DOM 객체
    * @param {JSON} res 반환값
    */
-  _onError: function ($target, res) {
+  _onError: function (res) {
     /**
      * @param {function} 팝업 닫힌 후 실행될 callback function
      * @param {element} 팝업 닫힌 후 포커스 이동할 DOM 객체 (웹접근성 반영)
      */
+    var $target = this._selectedTab();
     Tw.Error(res.code, res.msg).pop(null, $target);
   }
 };
