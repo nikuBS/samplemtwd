@@ -2004,6 +2004,7 @@ class ApiRouter {
         }
         /**
          * 'data-xt_action="BN" data-xt_cmpgn_num="{{tosCmpgnNum}}" data-xt_schd_num="{{tosExecSchNum}}" data-xt_cell_num="{{tosCellNum}}" data-xt_msg_ser_num="{{tosMsgSerNum}}"'
+         *  data-xt_action="BC"  => data-xt_action="BN" 변경 [OP002-13906] [FE][TOS] 텍스트배너 통계코드 삽입 - 코드변경
          */
         const bannerHtml = `
           <div class="tos_inner">
