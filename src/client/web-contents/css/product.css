@@ -28,6 +28,7 @@
 /* ========== 공통 ========== */
 .nmp-fc-orange {color:#f76252 !important}
 .nmp-fc-222 {color:#222222 !important}
+.nmp-fc-gray {color:#767778 !important}
 
 .tod-nmp-dotlist > li {position:relative; padding-left:0.5rem; font-size:0.875rem; color: #222222;}
 .tod-nmp-dotlist > li::before {position:absolute; left:0; top:7px; content:""; display:inline-block; width:3px; height:3px; border-radius: 100%; background-color:#f76252;}
@@ -152,7 +153,7 @@
 .tod-nmp-item.plan-type3 .rn-prod-info {margin-top:0.5rem; border-top:1px solid #d8d8d8;} 
 .tod-nmp-item.plan-type3 .rn-prod-info > ul {display:block}
 .tod-nmp-item.plan-type3 .rn-prod-info > ul > li {display:inline-block; margin-right:0.375rem}
-.tod-nmp-item.plan-type3 .rn-prod-info > ul > li.v-data {display:block; width:100%; margin-bottom:4px; font-size: 0.8125rem; font-weight: 500; letter-spacing: -0.5px; color: #f76252;}
+.tod-nmp-item.plan-type3 .rn-prod-info > ul > li.v-data {display:block; width:100%; margin-bottom:4px; font-size: 0.8125rem; font-weight: 500; letter-spacing: -0.5px;}
 .tod-nmp-item.plan-type3 .rn-prod-info > ul > li.v-data > i {all:unset; margin-right:0.25rem; background:none}
 .tod-nmp-item.plan-type3 .rn-prod-info > ul > li.v-data > i .blind {all:unset; position:relative !important; color:inherit}
 
@@ -255,8 +256,8 @@
 
 /* 요금제별 section */
 .tod-cont-section {position:relative; padding:1.25rem 1.25rem 1.875rem; border-bottom:1px solid #dbdbdb; background-color:#f1f1f3; background-image: linear-gradient(to bottom, #dbdbdb 8%, #f1f1f3);}
-.tod-cont-section .rn-banner-img {position:absolute; top:0; right:0; z-index:0; width:100%; max-width:360px;}
-.tod-cont-section .rn-banner-img img {width:100%}
+.tod-cont-section .rn-banner-img {position:absolute; top:0; right:0; z-index:0; width:100%; max-width:360px; vertical-align:middle}
+.tod-cont-section .rn-banner-img img {width:100%; vertical-align:middle}
 .tod-cont-section:nth-of-type(n+2) {border-top:1px solid #fff;}
 .tod-cont-section:last-child {border-bottom:0;}
 
