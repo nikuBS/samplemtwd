@@ -59,6 +59,7 @@ Tw.ProductRenewalSubmain.prototype = {
     this.$container.on('click', '.bt-detail', $.proxy(this._onClickPiDetail, this)); // 개인정보 수집이용 동의 상세보기 (원문) 클릭 이벤트
 
     this.$container.on('click', '.btn-benefit', $.proxy(this._onClickMore, this)); // 손실보전 혜택 더보기 이벤트
+    this.$container.on('click', '.join-additions', $.proxy(this._onClickJoinAdditions, this)) // 부가서비스 가입하기
   },
 
   /**
@@ -580,6 +581,152 @@ Tw.ProductRenewalSubmain.prototype = {
   _onClickMore: function() {
     $('.add-service-list li').css('display', 'block');
     $('.btn-benefit').css('display', 'none');
+  },
+
+  /**
+   * @desc 부가서비스 가입하기 클릭 이벤트
+   * @return {void}
+   */
+  _onClickJoinAdditions: function(element) {
+    var $target = $(element.currentTarget);
+
+    this._additionId = $target.data('addition-id');
+    this._additionType = $target.data('addition-type');
+    this._additionAction = $target.data('addition-action');
+
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {}) // 로그인 세션 정보를 얻어온다.
+      .done($.proxy(this._getSvcInfoRes, this))
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
+
+  },   
+
+  /**
+   * @desc 사용자 정보 값 확인
+   * @param resp - 사용자 정보 응답 값
+   * @returns {*|*|void}
+   */
+  _getSvcInfoRes: function(resp) {
+    Tw.CommonHelper.endLoading('.container');
+
+    switch( this._additionType ) {
+      case 'DEFAULT_LINK':
+        return this._goDefaultLink(resp);
+
+      case 'CUSTOM_LINK': 
+        return this._goCustomLink();
+
+      case 'ACTION_SHEET':
+        return this._goActionSheet();
+      default: 
+        return Tw.Error('', '관리자에게 문의바랍니다.').pop();
+    }
+
+  }, 
+
+  /**
+   * @desc 가입 화면으로 이동
+   * @returns {*}
+   */
+  _goDefaultLink: function(resp) {
+    
+    // ID값 없거나, action값이 없으면 에러 출력
+    if ( (!this._additionId || Tw.FormatHelper.isEmpty(this._additionId)) || (!this._additionAction || Tw.FormatHelper.isEmpty(this._additionAction) ) ) {
+      return Tw.Error('', '이동해야 할 URL이 없습니다.').pop();
+    }
+
+    // 로그인한 세션이 없다면 원장으로 이동한다.
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      var targetUrl = '/product/callplan?prod_id=' + this._additionId;
+      this._historyService.goLoad(targetUrl);
+      return;
+    }
+
+    // 사전체크 API 요청
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    this._apiService.request(Tw.API_CMD.BFF_10_0007, {}, null, [this._additionId])
+      .done($.proxy(this._procAdvanceCheck, this))
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
+  },
+
+  /**
+   * @desc 사전체크 API 응답값 처리
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
+  _procAdvanceCheck: function(resp) {
+    Tw.CommonHelper.endLoading('.container');
+    
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    this._historyService.goLoad(this._additionAction + '?prod_id=' + this._additionId);
+  }, 
+
+  /**
+   * @desc 가입 화면이 아닌, custom한 URL로 이동한다.
+   * @returns {*}
+   */
+  _goCustomLink: function() {
+
+    // 액션값이 없으면 에러 페이지를 출력
+    if ( !this._additionAction || Tw.FormatHelper.isEmpty(this._additionAction)) {
+      return Tw.Error('', '이동해야 할 URL이 없습니다.').pop();
+    }
+
+    this._historyService.goLoad(this._additionAction);
+  },
+
+  /**
+   * @desc 액션시트를 출력
+   * @returns {*}
+   */
+  _goActionSheet: function() {
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(function (resp) {
+        if (resp.code === Tw.API_CODE.CODE_00) {
+          var name = resp.result.mbrNm;
+          var phone = Tw.FormatHelper.getDashedCellPhoneNumber(resp.result.svcNum);
+
+          this._popupService.open({
+            hbs: 'actionsheet_product_exemption',
+            layer: true,
+            name: name,
+            phone: phone
+          }
+          , $.proxy(this._onOpenExemptionPopup, this)
+          , null
+          , 'exemption-layer');
+
+        } else {
+          Tw.Error(resp.code, resp.msg).pop();
+        }
+      }, this));
+  },
+
+  /**
+   * 단말기 할부금 정보 초기화
+   * @param {*} target 
+   * @param {*} layer 
+   */
+  _onOpenExemptionPopup: function(layer) {
+    Tw.CommonHelper.focusOnActionSheet(layer);
+    this._slidePopupClose(); // 슬라이딩 팝업 닫을 때
+
+    layer.on('click', '.pro-a-btn', $.proxy(this._onFindNewPhone, this)); // 신규 휴대폰 보러가기 버튼 클릭 시 
+  },
+
+  /**
+   * @desc 신규 휴대폰 보러가기 버튼 클릭 시 
+   * @returns {*} 
+   */
+  _onFindNewPhone: function(element) {
+    var target = $(element.currentTarget);
+
+    var url = target.data('url');
+    Tw.CommonHelper.openUrlExternal(url);
   },
   
   /**
