@@ -79,6 +79,7 @@ Tw.CommonSearch.prototype = {
                 this.$container.on('click', '#btn_08_0072', $.proxy(this._openAlert, this, Tw.ALERT_MSG_SEARCH.ALERT_4_A40, this._improveInvest));
             }
         }, this)).fail($.proxy(function (err) {
+          Tw.Logger.info('[common.search] [_nextInit] BFF_08_0070 : ', err);
         }, this));
     }, this), 1);
 
@@ -150,7 +151,7 @@ Tw.CommonSearch.prototype = {
           }
         }
         if ( keyName === 'smart' ) {
-          this._showSmart(this._searchInfo.search[i][keyName].data[0]);
+          this._showSmart(this._searchInfo.search[i][keyName].data[0], this.$container);
         }
         if ( keyName === 'lastevent' ) {
           // 노출요건이 없음
@@ -185,7 +186,7 @@ Tw.CommonSearch.prototype = {
 
       this._showShortcutList(this._arrangeData(this._searchInfo.search[i][keyName].data, keyName), keyName, this._cdn, 'init');
     } // end for
-    Tw.Logger.info('[common.search] [_nextInit]', '검색결과 데이터 및 카테고리 영역 노출/제거 처리 완료');
+    // Tw.Logger.info('[common.search] [_nextInit]', '검색결과 데이터 및 카테고리 영역 노출/제거 처리 완료');
 
     // 이전일 [S]
     // if (Tw.CommonHelper.getCookie('doSearch') === 'Y') {
@@ -225,13 +226,11 @@ Tw.CommonSearch.prototype = {
     // }
     // }
 
-    // 이전일 [E]
-    Tw.Logger.info('[common.search] [_nextInit]', '요기는?');
     // 카테고리 영역을 모두 그려주고 나서 해당 스와이프 영역의 width 를 동적으로 맞춰주기 위한 처리.
     $('#fe-category-slide').addClass('horizontal');
     $('#fe-category-slide').removeData('event');
     skt_landing.widgets.widget_horizontal($('.widget'));
-    Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 width 를 가변적으로 조정해주는 처리 완료');
+    // Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 width 를 가변적으로 조정해주는 처리 완료');
 
     // 선택된 카테고리를 화면 좌측으로 붙여서 노출해주기 위한 처리
     var categoryTop = $('.tod-srhcategory-scrwrap').offset().top;
@@ -241,21 +240,20 @@ Tw.CommonSearch.prototype = {
     $(window).on('scroll', function () {
       $('.tod-srhcategory-scrwrap').toggleClass('fixed', ($(window).scrollTop() + $('.searchbox-header').height()) > categoryTop);
     });
-    Tw.Logger.info('[common.search] [_nextInit]', '상하 스크롤 시 카테고리 영역을 헤더 (검색창 영역) 에 fix 하여 고정적으로 노출해주기 위한 처리 완료');
+    // Tw.Logger.info('[common.search] [_nextInit]', '상하 스크롤 시 카테고리 영역을 헤더 (검색창 영역) 에 fix 하여 고정적으로 노출해주기 위한 처리 완료');
 
     setTimeout(function () {
       $('#fe-category-area').scrollLeft(leftPosition);
     }, 0);
-    Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내에서 선택된 카테고리를 가장 좌측으로 붙여서 노출해주기 위한 처리 완료');
+    // Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내에서 선택된 카테고리를 가장 좌측으로 붙여서 노출해주기 위한 처리 완료');
 
-    // TEST
     Tw.Logger.info('[common.search] [_nextInit] searchInfo: ', this._searchInfo);
     totalCnt = this._searchInfo.totalcount;
     this.$container.find('.fe-total-count').each(function (a, b) {
       var $target = $(b);
       $target.text(totalCnt);
     });
-    Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내 "전체" 카테고리 및 검색결과 총 건수 영역에 결과건수 노출 처리 완료');
+    // Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내 "전체" 카테고리 및 검색결과 총 건수 영역에 결과건수 노출 처리 완료');
 
     this.$inputElement = this.$container.find('#keyword');
     this.$inputElement.on('keydown', $.proxy(this._keyDownInputEvt, this));
@@ -263,7 +261,7 @@ Tw.CommonSearch.prototype = {
     this.$inputElement.on('focus', $.proxy(this._inputFocusEvt, this));
     this.$container.on('click', '.icon-gnb-search, .fe-search-link', $.proxy(this._doSearch, this));
     this.$container.on('touchstart click', '.close-area', $.proxy(this._closeSearch, this));
-    Tw.Logger.info('[common.search] [_nextInit]', '검색창 이벤트 바인딩 완료');
+    // Tw.Logger.info('[common.search] [_nextInit]', '검색창 이벤트 바인딩 완료');
 
     this.$inputElementResultSearch = this.$container.find('#resultSearchKeyword');
     this.$inputElementResultSearch.on('keyup', _.debounce($.proxy(this._keyInputEvt, this), 500));
@@ -273,7 +271,7 @@ Tw.CommonSearch.prototype = {
       this.$inputElementResultSearch.attr('value', tempstr);
     }
     this.$container.on('click', '.btn-search', $.proxy(this._doResultSearch, this));
-    Tw.Logger.info('[common.search] [_nextInit]', '결과내 재검색 검색창 이벤트 바인딩 완료');
+    // Tw.Logger.info('[common.search] [_nextInit]', '결과내 재검색 검색창 이벤트 바인딩 완료');
 
 
     this.$container.on('click', '.icon-historyback-40', $.proxy(this._historyService.goBack, this));
@@ -611,7 +609,7 @@ Tw.CommonSearch.prototype = {
           var depthPaths = listData.DEPTH_PATH.split('$');
           //var menuGroups = i.MENU_GROUP.split("$");
           for (var j=0; j<docids.length; j++) {
-            var data = {
+            var docidsData = {
               MENU_GROUP: listData.MENU_GROUP,
               DOCID: docids[j],
               MENU_NM: menuNms[j],
@@ -619,10 +617,12 @@ Tw.CommonSearch.prototype = {
               MENU_URL: menuUrls[j],
               DEPTH_PATH: depthPaths[j]
             };
-            childList.push(data);
+            childList.push(docidsData);
           }
           listData.DEPTH_CHILD = childList;
         }
+
+        var removeLength;
 
         // 바로가기는 최대 3건만 노출
         if (dataKey === 'shortcut') {
@@ -630,7 +630,7 @@ Tw.CommonSearch.prototype = {
             return;
           }
           if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
-            var removeLength = data.length - 1;
+            removeLength = data.length - 1;
             if ( removeLength <= 0 ) {
               $('.' + dataKey).addClass('none');
             } else {
@@ -641,7 +641,7 @@ Tw.CommonSearch.prototype = {
           $list.append(templateData({ listData: listData, CDN: cdn }));
         } else {
           if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
-            var removeLength = data.length - 1;
+            removeLength = data.length - 1;
             if ( removeLength <= 0 ) {
               $('.' + dataKey).addClass('none');
             } else {
@@ -1744,7 +1744,9 @@ Tw.CommonSearch.prototype = {
    * @param {Object} data - 스마트 검색 결과
    * @returns {void}
    */
-  _showSmart: function (data) {
+  _showSmart: function (data, $container) {
+    Tw.Logger.info('[common.search] [_showSmart] data : ', data);
+
     if ( Tw.FormatHelper.isEmpty(data) ) {
       return;
     }
@@ -1759,12 +1761,13 @@ Tw.CommonSearch.prototype = {
         });
       }
     }
+
     if ( returnData.length <= 0 ) {
       return;
     } else {
-      this.$container.find('#smart_btn_base').removeClass('none');
-      var smartTemplate = Handlebars.compile(this.$container.find('#smart_template').html());
-      var $smartBase = this.$container.find('.btn-link-list');
+      $container.find('#smart_btn_base').removeClass('none');
+      var smartTemplate = Handlebars.compile($container.find('#smart_template').html());
+      var $smartBase = $container.find('.btn-link-list');
       _.each(returnData, function (data/*, idx */) {
         $smartBase.append(smartTemplate({ data: data }));
       });
@@ -1855,19 +1858,12 @@ Tw.CommonSearch.prototype = {
 
     // 선택된 회선이 유선인 경우
     if ( !Tw.FormatHelper.isEmpty(this._svcInfo) && this._svcInfo.svcAttrCd.startsWith('S') ) {
-      // console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 유선인 경우', '');
-
       var paidProdList = usingAdditions.pays || [];
       var unpaidProdList = usingAdditions.frees || [];
-
       var paidProdCnt = paidProdList.length;        // 가입한 유료 유선 부가상품 카운트
       var unpaidProdCnt = unpaidProdList.length;  // 가입한 무료 유선 부가상품 카운트
 
-      // console.log('[common.search] [_calculateAdditionsFee] 가입한 유료 유선 부가상품 카운트 : ', paidProdCnt);
-      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무료 유선 부가상품 카운트 : ', addProdPayFreeCnt);
-
       if ( paidProdCnt === 0 && unpaidProdCnt === 0 ) {
-        // console.log('[common.search] [_calculateAdditionsFee] 가입한 유선 부가서비스 없음');
         $('.tod-search-mytbox').parent().hide();
 
         // 가입된 부가서비스 개수가 모두 0 이면 smart 배너를 노출
@@ -1875,7 +1871,7 @@ Tw.CommonSearch.prototype = {
           keyName = Object.keys(this._searchInfo.search[i])[0];
 
           if ( keyName === 'smart' ) {
-            this._showSmart(this._searchInfo.search[i][keyName].data[0]);
+            this._showSmart(this._searchInfo.search[i][keyName].data[0], this.$container);
           }
         }
       } else {
@@ -1886,33 +1882,23 @@ Tw.CommonSearch.prototype = {
         this.$container.find('.fe-wire-unpaid-additions-cnt').text(returnStr2);
 
         if ( paidProdCnt === 0 ) {
-          // console.log('[common.search] [_calculateAdditionsFee] 가입한 유선 유료 부가서비스 없음');
           $('.fe-wire-paid-additions-cnt').removeAttr('href');
         }
 
         if ( unpaidProdCnt === 0 ) {
-          // console.log('[common.search] [_calculateAdditionsFee] 가입한 유선 무료 부가서비스 없음');
           $('.fe-wire-unpaid-additions-cnt').removeAttr('href');
         }
 
         $('.fe-prod-cnt-wireless').hide();
         $('.fe-prod-cnt-wire').show();
       }
-    }
-    // 선택된 회선이 무선인 경우
-    else {
-      // console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 무선인 경우', '');
-
+    } else {
+      // 선택된 회선이 무선인 경우
       var disProdCnt = usingAdditions.disProdCnt;               // 가입한 무선 션/할인 프로그램 카운트
       var addProdPayCnt = usingAdditions.addProdPayCnt;         // 가입한 무선 유료 부가상품 카운트
       var addProdPayFreeCnt = usingAdditions.addProdPayFreeCnt; // 가입한 무선 무료 부가상품 카운트
 
-      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 카운트 : ', disProdCnt);
-      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가상품 카운트 : ', addProdPayCnt);
-      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가상품 카운트 : ', addProdPayFreeCnt);
-
       if ( disProdCnt === 0 && addProdPayCnt === 0 && addProdPayFreeCnt === 0 ) {
-        // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 및 부가서비스 없음');
         $('.tod-search-mytbox').parent().hide();
 
         // 가입된 부가서비스 개수가 모두 0 이면 smart 배너를 노출
@@ -1920,7 +1906,7 @@ Tw.CommonSearch.prototype = {
           keyName = Object.keys(this._searchInfo.search[addIndex])[0];
 
           if ( keyName === 'smart' ) {
-            this._showSmart(this._searchInfo.search[addIndex][keyName].data[0]);
+            this._showSmart(this._searchInfo.search[addIndex][keyName].data[0], this.$container);
           }
         }
       } else {
@@ -1933,17 +1919,14 @@ Tw.CommonSearch.prototype = {
         this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
 
         if ( disProdCnt === 0 ) {
-          // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 없음');
           $('.fe-wireless-discount-additions-cnt').removeAttr('href');
         }
 
         if ( addProdPayCnt === 0 ) {
-          // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가서비스 없음');
           $('.fe-wireless-paid-additions-cnt').removeAttr('href');
         }
 
         if ( addProdPayFreeCnt === 0 ) {
-          // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가서비스 없음');
           $('.fe-wireless-unpaid-additions-cnt').removeAttr('href');
         }
 

@@ -70,6 +70,23 @@ inKeyword = encodeURIComponent(inKeyword);
             <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
 
+            <!-- 스마트배너 검색결과 -->
+            <% if ( searchKategorie && searchKategorie.smart && searchKategorie.smart.data && searchKategorie.smart.data.length > 0 ) { %>
+                <% if ( searchKategorie.smart.data[0] && searchKategorie.smart.data[0].BNNR_IOS320_URL && searchKategorie.smart.data[0].BNNR_IOS320_URL.length > 0 ) { %>
+                    <div class="search-banner">
+                        <a class="list-data smart-element" data-require-pay="<%= searchKategorie.smart.data[0].BNNR_NBILL_YN %>"
+                            href="<%= searchKategorie.smart.data[0].SMART_SRCH_URL %>"
+                            data-id="<%= searchKategorie.smart.data[0].DOCID %>" data-category="smart" data-tit="<%= searchKategorie.smart.data[0].SMART_SRCH_NM %>">
+                            <img src="<%= CDN + searchKategorie.smart.data[0].BNNR_IOS320_URL %>" alt="<%= searchKategorie.smart.data[0].SMART_SRCH_NM %>">
+                        </a>
+                    </div>
+                <% } %>
+                <div class="cont-box nogaps none" id="smart_btn_base">
+                    <ul class="btn-link-list"></ul>
+                </div>
+            <% } %>
+            <!--// 스마트배너 검색결과 -->
+
             <!-- 검색 결과 없음 -->
             <div class="cont-box nogaps-hoz">
                 <div class="tod-search-feedback noresult">
@@ -135,13 +152,26 @@ inKeyword = encodeURIComponent(inKeyword);
         </div>
     </div>
 
+    <!-- 스마트배너 버튼 템플릿 -->
+    <script type="text/x-handlebars-template" id="smart_template">
+        <li class="last-line">
+            <a class="list-data smart-element" href="{{data.link}}" data-require-pay="{{data.payInfo}}"
+               data-id="{{data.docId}}" data-category="smart" data-tit="{{data.title}}">
+                {{data.title}}
+            </a>
+        </li>
+    </script>
+    <!--// 스마트배너 버튼 템플릿 -->
 
 </div>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/search/search.keyword-list.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearchNotFound($('.wrap'),<%- JSON.stringify(surveyList) %>,<%- step %>,'<%- from %>','<%- keyword %>','<%- inKeyword %>');
+        // 카테고리별 검색 결과
+        var notFoundSearchKategorie = JSON.parse(window.unescape('<%- escape(JSON.stringify(searchKategorie)) %>'));
+
+        new Tw.CommonSearchNotFound($('.wrap'),<%- JSON.stringify(surveyList) %>,<%- step %>,'<%- from %>','<%- keyword %>','<%- inKeyword %>', notFoundSearchKategorie);
     });
 </script>
 <% include ../../components/end.component.html %>

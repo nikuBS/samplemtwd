@@ -23,9 +23,7 @@ class CommonSearchMore extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-
     // /common/search/more?keyword=요금제&step=3&category=rate&sort=A
-
     const query = StringHelper.encodeURIAllCase(req.query.keyword) || null;
     const collection = req.query.category || null;
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
@@ -48,7 +46,6 @@ class CommonSearchMore extends TwViewController {
       sort = collection + '-' + sort;
     }
 
-    // console.log('sort: ', sort);
     this.log.info(this, '[common.search.more.controller] ------------------------------------------------------', '');
     this.log.info(this, '[common.search.more.controller] req.query : ', req.query);   // keyword=요금제, step=3, category=rate, sort=A
     this.log.info(this, '[common.search.more.controller] req.query.sort : ', req.query.sort);
