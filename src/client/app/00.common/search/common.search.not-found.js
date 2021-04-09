@@ -15,7 +15,7 @@
  * @param {String} keyword – 검색어
  * @returns {void}
  */
- Tw.CommonSearchNotFound = function (rootEl,surveyList,step,from,keyword,inKeyword) {
+ Tw.CommonSearchNotFound = function (rootEl, surveyList, step, from, keyword, inKeyword, notFoundSearchKategorie) {
   //this._cdn = cdn;
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
@@ -28,6 +28,7 @@
   this._from = from;
   this._keyword = keyword;
   this._inKeyword = inKeyword;
+  this._notFoundSearchKategorie = notFoundSearchKategorie;
   this._init();
   /*
   HO_05_02_02_01_01.hbs : 검색 의견 신청 텍스트
@@ -92,6 +93,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     // Tw.Logger.info('[common.search.not-found] [_nextInit] decoded inKeyword : ', '[' + inKeyword + ']');
     // Tw.Logger.info('[common.search.not-found] [_nextInit] encoded keyword : ', '[' + encodedKeyword + ']');
     // Tw.Logger.info('[common.search.not-found] [_nextInit] encoded inKeyword : ', '[' + encodedInKeyword + ']');
+    Tw.Logger.info('[common.search.not-found] [_nextInit] this._notFoundSearchKategorie : ', this._notFoundSearchKategorie);
+
+    // 스마트배너 검색 결과가 있다면
+    if ( this._notFoundSearchKategorie && this._notFoundSearchKategorie.smart && this._notFoundSearchKategorie.smart.data && this._notFoundSearchKategorie.smart.data.length > 0 ) {
+      // 스마트검색 출력 (Tw.CommonSearch.prototype._showSmart)
+      this._showSmart(this._notFoundSearchKategorie.smart.data[0], this.$container);
+    }
 
     window.XtractorScript.xtrSearchResult(encodedKeyword, encodedInKeyword, '0');
   },

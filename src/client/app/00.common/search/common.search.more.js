@@ -485,7 +485,7 @@ $.extend(Tw.CommonSearchMore.prototype,
 
         for ( var idx in collectionSortArray[0] ) {
           var collectionSortData = collectionSortArray[0][idx];
-          Tw.Logger.info('[common.search.more] [_onOpenGradeActionSheet]', '[' + idx + '] : ' + collectionSortData);
+          // Tw.Logger.info('[common.search.more] [_onOpenGradeActionSheet]', '[' + idx + '] : ' + collectionSortData);
 
           var tmpCollection = collectionSortData.split('-')[0];
           var tmpSort = collectionSortData.split('-')[1];
@@ -1141,7 +1141,6 @@ $.extend(Tw.CommonSearchMore.prototype,
      * @returns {void}
      */
     _showSelectFilter: function (evt) {
-      // console.log('[_showSelectFilter] this._searchInfo.search[0] :',  this._searchInfo.search[0]);
       var sort = 'D';
 
       if ( this._searchInfo.search[0] ) {
