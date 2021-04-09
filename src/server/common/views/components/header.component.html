@@ -77,7 +77,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
             </div>
 
             <!-- 로밍 메인일 경우에는 image 노출, 이외에는 text 노출  locals.pageInfo.menuNm.indexOf('로밍') > -1))  ====> menuId 변경 -->
-            <% if (svcInfo && locals.pageInfo && (locals.pageInfo.menuId=='M000439')) { %>                    
+            <% if (svcInfo && locals.pageInfo && (locals.pageInfo.menuId=='M000439')) { %>
                 <h1 class="h-tit">
                     <img class="logo-tloaming" src="<%= CDN %>/img/product/roam/logo.png" alt="T 로밍" width="94" height="24"> <!-- //202011 - 웹접근성 수정건 적용 : 제목 추가, 이미지 alt 수정 / 클래스명 .logo-tloaming 로 변경-->
                 </h1>
@@ -309,7 +309,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
             <div class="tod-f-gb-area">
                 <div class="tod-f-gb-link">
                     <a href="/en/main/home" data-xt_eid="MWMA_A11_B3-122" data-xt_csid="NO"
-                    data-xt_action="BC"><i class="tod-i-global"></i> <em>ENG.</em> 
+                    data-xt_action="BC"><i class="tod-i-global"></i> <em>ENG.</em>
                     <!-- <img src="<%= CDN %>/img/common/icon_gb_beta.png" alt="Beta" class="i_beta"> -->
                     </a>
                 </div>
@@ -527,28 +527,24 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
 <% var fullUrl = locals.pageInfo ? locals.pageInfo.fullUrl : ''; %>
 <script defer type="text/javascript">
     var fullUrl = '<%= fullUrl %>';
-    var scriptPath = '';
-    if (fullUrl.indexOf('app.tworld') > -1) {
-        scriptPath = '/b201203e155342u664/304bbae058'; // app.tworld 인 경우
-    } else if (fullUrl.indexOf('m.tworld') > -1) {
-        scriptPath = '/b201203e155342u664/9e7dad796e';
-    } else if (fullUrl.indexOf('icp-stg.tworld') > -1 || fullUrl.indexOf('localhost')) {
-        scriptPath = '/b201203e155342u664/9e7dad796e';
-    } else {
-        // dev 환경
-        scriptPath = '';
+    var isLoadedScript = false;
+    if (fullUrl.indexOf('app.tworld') > -1 || fullUrl.indexOf('m.tworld') > -1) {
+      isLoadedScript = true;
     }
-    if (scriptPath) { 
-        window.addEventListener('load', function(){
-        (function(w, d, a){
-            w.__beusablerumclient__ = {
-            load : function(src){
-                var b = d.createElement('script');
-                b.src = src; b.defer=true; b.type = 'text/javascript';
-                d.getElementsByTagName('head')[0].appendChild(b);
+    if ( isLoadedScript ) {
+      window.addEventListener('load', function () {
+        (function (w, d, a) {
+          w.__baclient__ = {
+            load: function (src) {
+              var b = d.createElement('script');
+              b.src = src;
+              b.async = true;
+              b.type = 'text/javascript';
+              d.getElementsByTagName('head')[0].appendChild(b);
             }
-            };w.__beusablerumclient__.load(a);
-        })(window, document, '//sktrum.beusable.net/script' + scriptPath); //b201203e155342u664/304bbae058');
-        }, false);
+          };
+          w.__baclient__.load(a);
+        })(window, document, '//sktba.beusable.net/script/ba/7396cc2bb5');
+      }, false);
     }
 </script>

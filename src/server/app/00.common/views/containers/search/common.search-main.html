@@ -18,7 +18,7 @@
     <div class="searchbox-header" aria-hidden="false">
         <!-- 191001 [OP002-4009] 수정01 -->
         <div class="sch-form tod-sch-form">
-            <!-- 
+            <!--
             <form action="#" role="search" id="frm" defaultbutton="search_input">
                 <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
                 <span class="inputbox">
@@ -29,10 +29,10 @@
                     </span>
                 </span>
                 <button class="icon-gnb-search"><span class="blind">검색</span></button>
-            </form> 
+            </form>
             -->
-            
-            <form action="#" role="search" id="frm" onsubmit="return false;">            
+
+            <form action="#" role="search" id="frm" onsubmit="return false;">
                 <div class="searchbox-close"><button type="button" class="close-area"><span class="tod-blind">이전</span></button></div>
                 <span class="inputbox">
                     <span class="input">
@@ -148,23 +148,23 @@
                             <div class="widget-box slider1" data-slider-auto="<%- doLikeThis[0][0].rollYn == 'Y'?'true':'false' %>"> <!-- Slide Auto 기능 클래스에서 attr로 변경   -->
                                 <div class="slider-box">
                                     <ul class="slider">
-                                        <% 
-                                            var idx = 42;                                            
-                                            for( var i = 0; i < doLikeThis.length; i++ ) { 
+                                        <%
+                                            var idx = 42;
+                                            for( var i = 0; i < doLikeThis.length; i++ ) {
                                         %>
                                         <li>
                                             <ul class="help-list">
                                             <%  for( var j = 0; j < doLikeThis[i].length; j++ ) { %>
                                                 <li>
                                                     <!-- NO1.웹접근성 추가 -->
-                                                    <a role="link" data-url="/customer/faq/do-like-this?id=<%= doLikeThis[i][j].icntsId %>" class="bt fe-btn-doLikeThis" data-xt_eid="CMMA_A11_B4-<%= idx %>" data-xt_csid="NO" data-xt_action="BC"> 
+                                                    <a role="link" data-url="/customer/faq/do-like-this?id=<%= doLikeThis[i][j].icntsId %>" class="bt fe-btn-doLikeThis" data-xt_eid="CMMA_A11_B4-<%= idx %>" data-xt_csid="NO" data-xt_action="BC">
                                                         <span class="ico"><img src="<%= CDN %><%= doLikeThis[i][j].mainExpsImgPathNm %>" alt=""></span>
                                                         <%- doLikeThis[i][j].mainExpsTitNm %>
                                                     </a>
                                                 </li>
-                                            <% 
-                                                    idx++; 
-                                                } 
+                                            <%
+                                                    idx++;
+                                                }
                                             %>
                                             </ul>
                                         </li>
@@ -205,31 +205,27 @@
 <% include ../../components/javascript.component.html %>
 <% var fullUrl = locals.pageInfo ? locals.pageInfo.fullUrl : ''; %>
 <script defer type="text/javascript">
-    var fullUrl = '<%= fullUrl %>';
-    var scriptPath = '';
-    if (fullUrl.indexOf('app.tworld') > -1) {
-        scriptPath = '/b201203e155342u664/304bbae058'; // app.tworld 인 경우
-    } else if (fullUrl.indexOf('m.tworld') > -1) {
-        scriptPath = '/b201203e155342u664/9e7dad796e';
-    } else if (fullUrl.indexOf('icp-stg.tworld') > -1 || fullUrl.indexOf('localhost')) {
-        scriptPath = '/b201203e155342u664/9e7dad796e';
-    } else {
-        // dev 환경
-        scriptPath = '';
-    }
-    if (scriptPath) { 
-        window.addEventListener('load', function(){
-        (function(w, d, a){
-            w.__beusablerumclient__ = {
-            load : function(src){
-                var b = d.createElement('script');
-                b.src = src; b.defer=true; b.type = 'text/javascript';
-                d.getElementsByTagName('head')[0].appendChild(b);
-            }
-            };w.__beusablerumclient__.load(a);
-        })(window, document, '//sktrum.beusable.net/script' + scriptPath); //b201203e155342u664/304bbae058');
-        }, false);
-    }
+  var fullUrl = '<%= fullUrl %>';
+  var isLoadedScript = false;
+  if (fullUrl.indexOf('app.tworld') > -1 || fullUrl.indexOf('m.tworld') > -1) {
+    isLoadedScript = true;
+  }
+  if ( isLoadedScript ) {
+    window.addEventListener('load', function () {
+      (function (w, d, a) {
+        w.__baclient__ = {
+          load: function (src) {
+            var b = d.createElement('script');
+            b.src = src;
+            b.async = true;
+            b.type = 'text/javascript';
+            d.getElementsByTagName('head')[0].appendChild(b);
+          }
+        };
+        w.__baclient__.load(a);
+      })(window, document, '//sktba.beusable.net/script/ba/7396cc2bb5');
+    }, false);
+  }
 </script>
 <script>
     $(document).ready(function () {
