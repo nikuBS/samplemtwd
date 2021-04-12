@@ -1,9 +1,9 @@
 Tw.SurveyService = function() {
-  this._apiService = Tw.Api;    
+  this._apiService = Tw.Api;
   new Tw.XtractorService($('body'));
   this._init();
 };
-  
+
 Tw.SurveyService.prototype = {
   _init: function () {
     var menuDataInfo = JSON.parse(Tw.CommonHelper.getSessionStorage('MENU_DATA_INFO'));
@@ -30,9 +30,9 @@ Tw.SurveyService.prototype = {
         Tw.CommonHelper.setSessionStorage('MENU_DATA_INFO', JSON.stringify(resp.result.frontMenus));
         this._getSurveyFloatingBnnrInfo(resp.result.frontMenus);
       }
-    }, this));      
+    }, this));
   },
-  
+
   _getSurveyFloatingBnnrInfo: function (menuList) {
     var urlPath = location.pathname;
     var param = '';
@@ -44,19 +44,19 @@ Tw.SurveyService.prototype = {
         }
       }
     }
-
-    this._apiService.request(Tw.API_CMD.BFF_08_0085, {menuId: param})
-    .done($.proxy(this._drawSurveyFloatingBnnrPage, this));
+    if (param) {
+      // 해당되는 menuId가 없는 경우 불필요한 호출 제외
+      this._apiService.request(Tw.API_CMD.BFF_08_0085, {menuId: param})
+        .done($.proxy(this._drawSurveyFloatingBnnrPage, this));
+    }
   },
-  
+
   _drawSurveyFloatingBnnrPage: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      if (res.result.length > 0) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      if (res.result && res.result.length > 0) {
         $('.wrap').after(res.result[0].bnnrHtmlCtt);
         this._bindEvent();
-      } else {
-        // console.log('대상화면 아님');
-      }    
+      }
     }
   }
 };

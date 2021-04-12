@@ -374,7 +374,8 @@ Tw.CommonMemberLine.prototype = {
       line.showSvcAttrCd = Tw.SVC_ATTR[line.svcAttrCd];
       line.showSvcScrbDtm = Tw.FormatHelper.isNumber(line.svcScrbDt) ?
         Tw.DateHelper.getShortDateNoDot(line.svcScrbDt) : Tw.FormatHelper.conDateFormatWithDash(line.svcScrbDt);
-      line.showName = Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm;
+      // line.showName = Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm;
+      line.showName = line.nickNm || line.oriRmk || Tw.SVC_ATTR[line.svcAttrCd];
       line.useNickname = line.nickNm === line.showName;
       line.isRepSvcYn = line.resSvcYn === 'Y';
       line.isExpsYn = line.expsYn === 'Y';
