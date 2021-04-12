@@ -247,6 +247,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
         || this._brandCd === '2012003084'
         || this._brandCd === '2012003539' // 레저큐
         || this._brandCd === '2012003679' // 투믹스
+        || this._brandCd === '2012002808' // 국제전화00700
     ) {
       // [DV001-21674] T membership Car life 내 out link 지원 기능 개발
       if (Tw.BrowserHelper.isApp()) {
