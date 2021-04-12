@@ -375,7 +375,12 @@ Tw.CommonMemberLine.prototype = {
       line.showSvcScrbDtm = Tw.FormatHelper.isNumber(line.svcScrbDt) ?
         Tw.DateHelper.getShortDateNoDot(line.svcScrbDt) : Tw.FormatHelper.conDateFormatWithDash(line.svcScrbDt);
       // line.showName = Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm;
-      line.showName = line.nickNm || line.oriRmk || Tw.SVC_ATTR[line.svcAttrCd];
+      // 7자이상인 경우 예외처리
+      var showName = line.nickNm || line.oriRmk || Tw.SVC_ATTR[line.svcAttrCd];
+      if (showName && showName.length > 7) {
+        showName = showName.substring(0, 7) + '...';
+      }
+      line.showName = showName;
       line.useNickname = line.nickNm === line.showName;
       line.isRepSvcYn = line.resSvcYn === 'Y';
       line.isExpsYn = line.expsYn === 'Y';

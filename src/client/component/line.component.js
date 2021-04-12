@@ -268,9 +268,12 @@ Tw.LineComponent.prototype = {
 
           var childInfos = [];
           _.map(childLineList, $.proxy(function (childLine) {
+            // 7자리 이상인 경우 예외 추가
+            var childNick = childLine.eqpMdlNm && childLine.eqpMdlNm.length > 7 ?
+              childLine.eqpMdlNm.substring(0, 7) + '...' : (childLine.eqpMdlNm || '휴대폰');
             childInfos.push({
               index: this._index++,
-              txt: childLine.eqpMdlNm || '휴대폰',
+              txt: childNick,
               option: this._selectedMgmt.toString() === childLine.svcMgmtNum ? 'checked' : '',
               badge: false,
               showLine: this._index <= Tw.DEFAULT_LIST_COUNT ? '' : 'none',
@@ -723,12 +726,14 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
 
       // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
       if(line === 'MOBILE' && !Tw.FormatHelper.isEmpty(childLineList)) {
-
         var childInfos = [];
         _.map(childLineList, $.proxy(function (childLine) {
+          // 7자리 이상인 경우 예외 추가
+          var childNick = childLine.eqpMdlNm && childLine.eqpMdlNm.length > 7 ?
+            childLine.eqpMdlNm.substring(0, 7) + '...' : (childLine.eqpMdlNm || '휴대폰');
           childInfos.push({
             index: this._index++,
-            txt: childLine.eqpMdlNm || '휴대폰',
+            txt: childNick,
             option: this._selectedMgmt.toString() === childLine.svcMgmtNum ? 'checked' : '',
             badge: false,
             showLine: this._index <= Tw.DEFAULT_LIST_COUNT ? '' : 'none',
