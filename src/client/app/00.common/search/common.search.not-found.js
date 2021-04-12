@@ -29,6 +29,7 @@
   this._keyword = keyword;
   this._inKeyword = inKeyword;
   this._notFoundSearchKategorie = notFoundSearchKategorie;
+  this._bpcpService = Tw.Bpcp;
   this._init();
   /*
   HO_05_02_02_01_01.hbs : 검색 의견 신청 텍스트
@@ -46,6 +47,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
    * @returns {void}
    */
   _nextInit : function () {
+    Tw.Logger.info('[common.search.not-found] [_nextInit]', '');
 
     // 검색 의견 보내기 버튼 리스너
     this.$container.on('click', '#btn_08_0072', $.proxy(this._openAlert, this, Tw.ALERT_MSG_SEARCH.ALERT_4_A40, this._improveInvest));
@@ -69,6 +71,8 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this.$container.on('scroll',$.proxy(function () {
       this.$inputElement.blur();
     },this));
+    this.$container.on('click', '.list-data', $.proxy(this._goLink, this));  // 검색결과로 리스트업된 컨텐츠 클릭시 이벤트 바인딩
+
     this._recentKeywordInit();
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
     this._autoCompleteKeywrodTemplate = Handlebars.compile($('#auto_complete_template').html());
@@ -459,6 +463,53 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
       Tw.CommonHelper.endLoading('body');
     }, this));
-  }
+  },
+  /**
+   * @function
+   * @desc 검색결과 클릭 이벤트
+   * @param {Object} linkEvt - 이벤트 객체
+   * @returns {void}
+   */
+   _goLink: function (linkEvt) {
+    linkEvt.preventDefault();
+    var $linkData = $(linkEvt.currentTarget);
+    Tw.Logger.info('[common.search.not-found] [_goLink] 이동할 검색결과 element : ', $linkData);
 
+    var linkUrl = $linkData.attr('href');
+
+    if ( Tw.FormatHelper.isEmpty(linkUrl) ) {
+      return;
+    }
+
+    if ( this._bpcpService.isBpcp(linkUrl) ) {
+      this._bpcpService.open(linkUrl, null, null);
+    } else if ( $linkData.hasClass('direct-element') ) {
+      this._popupService.openConfirm(null, Tw.MSG_COMMON.DATA_CONFIRM,
+        $.proxy(function () {
+          this._popupService.close();
+          Tw.CommonHelper.openUrlExternal(linkUrl);
+        }, this),
+        $.proxy(this._popupService.close, this._popupService), $linkData
+      );
+    } else {
+      if ( this._exceptionDocId[$linkData.data('id')] ) {
+        linkUrl = this._exceptionDocId[$linkData.data('id')].link;
+      }
+      if ( linkUrl.indexOf('http') > -1 ) {
+        if ( $linkData.data('require-pay') === 'Y' ) {
+          this._popupService.openConfirm(null, Tw.POPUP_CONTENTS.NO_WIFI,
+            $.proxy(function () {
+              this._popupService.close();
+              Tw.CommonHelper.openUrlExternal(linkUrl);
+            }, this),
+            $.proxy(this._popupService.close, this._popupService), $linkData
+          );
+        } else {
+          Tw.CommonHelper.openUrlExternal(linkUrl);
+        }
+      } else {
+        this._moveUrl(linkUrl);
+      }
+    }
+  }
 });
