@@ -121,7 +121,9 @@ Tw.POPUP_TITLE = {
   REFUND_BANK_SELECT: '환불신청계좌 은행 선택',
   EVENT: '이벤트',
   TPLAN_SMARTWATCH: '스마트워치 회선 선택',
-  ROAMING_PROMOTION_SUCCESS: '선물 받는 번호로 등록이 가능한 회선입니다.'
+  ROAMING_PROMOTION_SUCCESS: '선물 받는 번호로 등록이 가능한 회선입니다.',
+  JOIN: '접수하기',
+  EDIT: '수정하기'
 };
 
 Tw.POPUP_CONTENTS = {
