@@ -5,7 +5,7 @@
  */
 
  /**
- * @class 
+ * @class
  * @desc 이메일상담하기 서비스케이스 전송하기
  * 특이사항 : 업로드 된 파일이 있으면 유스캔을 먼저 호출해서 전송된 파일을 서버에서 가져가도록 요청하고 반환값과 함께 등록하기 호출
  * @param {Object} rootEl - 최상위 element Object
@@ -39,7 +39,6 @@ Tw.CustomerEmailService.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성자 생성시 템플릿 엘리먼트 설정
    */
   _cachedElement: function () {
@@ -52,11 +51,10 @@ Tw.CustomerEmailService.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성시 이벤트 바인드
    */
   _bindEvent: function () {
-    this.$container.on('validateForm', $.proxy(this._validateForm, this)); // 밸리데이션 이벤트 
+    this.$container.on('validateForm', $.proxy(this._validateForm, this)); // 밸리데이션 이벤트
     this.$container.on('change keyup', '[required]', $.proxy(this._validateForm, this)); // 필수값 속성 input 변경시 밸리데이션 이벤트 - 등록하기 버튼 활성화여부
     this.$container.on('click', '.fe-service-register', _.debounce($.proxy(this._request, this), 500)); // 등록하기 버튼 클릭 중복 클릭 방지 적용
     this.$container.on('click', '.fe-quality-register', _.debounce($.proxy(this._request_quality, this), 500)); // 등록하기 버튼 클릭 중복 클릭 방지 적용
@@ -67,10 +65,11 @@ Tw.CustomerEmailService.prototype = {
   /**
    * @function
    * @desc 등록하기 버튼 클릭 이벤트
-   * @param {event} e 
+   * @param {event} e
    */
   _request: function (e) {
-    // 전화번호 검증 
+    var $curTarget = $(e.currentTarget);
+    // 전화번호 검증
     if ( !this._isValidServicePhone() ) {
       this._popupService.openAlert(
         Tw.CUSTOMER_EMAIL.INVALID_PHONE,
@@ -83,7 +82,7 @@ Tw.CustomerEmailService.prototype = {
           }, 500);
         }, this),
         null,
-        $(e.currentTarget)
+        $curTarget
       );
 
       return false;
@@ -102,45 +101,48 @@ Tw.CustomerEmailService.prototype = {
           }, 500);
         }, this),
         null,
-        $(e.currentTarget)
+        $curTarget
       );
 
       return false;
     }
+    // [OP002-14121] 연락가능한 번호 추가 확인 프로세스 추가
+    this._popupService.openConfirmButton(
+      '연락 가능한 번호 ('+ $('.fe-service_phone').val() + ')가 정확하게 입력되었나요?',
+      null,
+      $.proxy(function(){
+          // 파일 여부
+          var files = this.uploadObj.getServiceFilesInfo();
 
-    // 파일 여부 
-    var files = this.uploadObj.getServiceFilesInfo();
-    
-    // 파일이 있다면 유스캔 전송 호출
-    if (files.length) {
-      // 파일, 업로드 객체, 콜백, 타입
-      /**
-       * @function
-       * @param {object}
-       */
-      this._usanService.requestUscan({
-        files: files, // 파일정보
-        Upload: this.uploadObj, // 업로드 생성객체
-        type: this.$service_depth1.data('service-depth1'), // 카테고리 타입
-        request: $.proxy(this._requestCall, this), // 유스캔 호출 후 callback
-        $target: $(e.currentTarget), // 처리 후 되돌아갈 포커스 (등록버튼) 
-        proMemo: this.userId + '/' + this.$wrap_tpl_service.find('.fe-text_title').val() // API 호출시 메모 정보
-      });
-      
-    } else {
-      // 파일없음 바로 호출
-      this._requestCall($(e.currentTarget));
-    }
-   
+          // 파일이 있다면 유스캔 전송 호출
+          if (files.length) {
+            // 파일, 업로드 객체, 콜백, 타입
+            /**
+             * @function
+             * @param {object}
+             */
+            this._usanService.requestUscan({
+              files: files, // 파일정보
+              Upload: this.uploadObj, // 업로드 생성객체
+              type: this.$service_depth1.data('service-depth1'), // 카테고리 타입
+              request: $.proxy(this._requestCall, this), // 유스캔 호출 후 callback
+              $target: $curTarget, // 처리 후 되돌아갈 포커스 (등록버튼)
+              proMemo: this.userId + '/' + this.$wrap_tpl_service.find('.fe-text_title').val() // API 호출시 메모 정보
+            });
+          } else {
+            // 파일없음 바로 호출
+            this._requestCall($curTarget);
+          }
+      }, this), null, Tw.POPUP_TITLE.EDIT, Tw.POPUP_TITLE.JOIN, $curTarget);
   },
 
   /**
    * @function
    * @desc 등록하기 버튼 클릭 이벤트
-   * @param {event} e 
+   * @param {event} e
    */
   _request_quality: function (e) {
-
+    var $curTarget = $(e.currentTarget);
     // 전화번호 검증
     if ( !this._isValidQualityPhone() ) {
       this._popupService.openAlert(
@@ -154,7 +156,7 @@ Tw.CustomerEmailService.prototype = {
           }, 500);
         }, this),
         null,
-        $(e.currentTarget)
+        $curTarget
       );
 
       return false;
@@ -173,36 +175,37 @@ Tw.CustomerEmailService.prototype = {
           }, 500);
         }, this),
         null,
-        $(e.currentTarget)
+        $curTarget
       );
 
       return false;
     }
-
-    // 파일 여부 
-    var files = this.uploadObj.getQualityFilesInfo();
-
-    if (files.length) {
-      // 파일, 업로드 객체, 콜백, 타입
-      /**
-       * @function
-       * @param {object}
-       */
-      this._usanService.requestUscan({
-        files: files, // 파일정보
-        Upload: this.uploadObj, // 업로드 생성객체
-        type: this.$service_depth1.data('service-depth1'), // 카테고리 타입
-        request: $.proxy(this._requestCall_quality, this), // 유스캔 호출 후 callback
-        $target: $(e.currentTarget), // 처리 후 되돌아갈 포커스 (등록버튼)
-        proMemo: this.userId + '/' + this.$wrap_tpl_quality.find('.fe-text_title').val() // API 호출시 메모 정보
-      });
-      
-    } else {
-      // 파일없음 바로 호출
-      this._requestCall_quality($(e.currentTarget));
-    }
-
-    
+    // [OP002-14121] 연락가능한 번호 추가 확인 프로세스 추가
+    this._popupService.openConfirmButton(
+      '연락 가능한 번호 ('+ $('.fe-service_phone').val() + ')가 정확하게 입력되었나요?',
+      null,
+      $.proxy(function(){
+        // 파일 여부
+        var files = this.uploadObj.getQualityFilesInfo();
+        if (files.length) {
+          // 파일, 업로드 객체, 콜백, 타입
+          /**
+           * @function
+           * @param {object}
+           */
+          this._usanService.requestUscan({
+            files: files, // 파일정보
+            Upload: this.uploadObj, // 업로드 생성객체
+            type: this.$service_depth1.data('service-depth1'), // 카테고리 타입
+            request: $.proxy(this._requestCall_quality, this), // 유스캔 호출 후 callback
+            $target: $curTarget, // 처리 후 되돌아갈 포커스 (등록버튼)
+            proMemo: this.userId + '/' + this.$wrap_tpl_quality.find('.fe-text_title').val() // API 호출시 메모 정보
+          });
+        } else {
+          // 파일없음 바로 호출
+          this._requestCall_quality($curTarget);
+        }
+      }, this), null, Tw.POPUP_TITLE.EDIT, Tw.POPUP_TITLE.JOIN, $curTarget);
   },
 
   /**
@@ -259,7 +262,7 @@ Tw.CustomerEmailService.prototype = {
   _makeParams: function () {
     var arrPhoneNumber = $('.fe-service_phone').val().split('-');
 
-    var params = {
+    return {
       cntcNum1: arrPhoneNumber[0], // 연락가능한번호 1
       cntcNum2: arrPhoneNumber[1], // 연락가능한번호 2
       cntcNum3: arrPhoneNumber[2], // 연락가능한번호 3
@@ -268,8 +271,6 @@ Tw.CustomerEmailService.prototype = {
       content: this.$wrap_tpl_service.find('.fe-text_content').val(), // 내용
       smsRcvYn: $('.fe-service_sms').prop('checked') ? 'Y' : 'N' // 답변 등록시 sms 수신여부
     };
-
-    return params;
   },
 
   /**
@@ -279,7 +280,7 @@ Tw.CustomerEmailService.prototype = {
    */
   _makeParams_quality: function () {
     var arrPhoneNumber = $('.fe-quality_phone').val().split('-');
-    var params = {
+    return {
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15', // 앱접속이면 19 웹접속이면 15
       cntcNumClCd: $('.fe-quality-cntcNumClCd').find(':checked').val(), // 연락가능한번호 휴대폰 or 집전화
       inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').val(), // 2차 카테고리라고 보면 됨 템플릿내 라디오 버튼 옵션
@@ -290,8 +291,6 @@ Tw.CustomerEmailService.prototype = {
       email: $('.fe-quality_email').val(), // 이메일
       smsRcvYn: $('.fe-quality_sms').prop('checked') ? 'Y' : 'N' // 답변 등록시 sms 수신여부
     };
-
-    return params;
   },
 
   /**
@@ -339,7 +338,7 @@ Tw.CustomerEmailService.prototype = {
       inqSvcClCd: 'I', // 문의서비스구분코드 I : 인터넷/IPTV / P : 집전화/인터넷 전화
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15', // 앱으로 접속 : 19 웹으로 접속: 15
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'), // 2카테고리
-      cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(), // 연락가능한 전화번호 타입 
+      cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(), // 연락가능한 전화번호 타입
       fileAtchYn: this.uploadObj.getServiceFilesInfo().length ? 'Y' : 'N' // 파일첨부여부
     });
 
@@ -412,7 +411,7 @@ Tw.CustomerEmailService.prototype = {
       inptDtlAddr: $('.fe-detail-address').val(), // 상세주소
       selSvcMgmtNum: selSvcMgmtNum, // 회선정보
       content: this.tpl_quality_cell_content({
-        place: $('.fe-place').text(), 
+        place: $('.fe-place').text(),
         place_detail: $('.fe-place_detail').text(),
         occurrence: $('.fe-occurrence').text(),
         text_name: $('.fe-text_name').val(),
@@ -444,8 +443,8 @@ Tw.CustomerEmailService.prototype = {
    */
   _requestInternet_quality: function ($target) {
     var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
-    var $qualityLine = this.$wrap_tpl_quality.find('.fe-quality-line'); 
-    var elInputline = $qualityLine.length ? ( 
+    var $qualityLine = this.$wrap_tpl_quality.find('.fe-quality-line');
+    var elInputline = $qualityLine.length ? (
                         $qualityLine.is('.fe-numeric') ? $qualityLine.val().replace(/-/gi, '') : $qualityLine.val()
                       ) : '';
     var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
@@ -476,8 +475,8 @@ Tw.CustomerEmailService.prototype = {
   /**
    * @function
    * @desc 각 전송 API 성공후 페이지 이동 에러시 에러팝업
-   * @param {element} $target 
-   * @param {JSON} res 
+   * @param {element} $target
+   * @param {JSON} res
    */
   _onSuccessRequest: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
@@ -490,8 +489,8 @@ Tw.CustomerEmailService.prototype = {
   /**
    * @function
    * @desc 각 전송 API 성공후 페이지 이동 에러시 에러팝업
-   * @param {element} $target 
-   * @param {JSON} res 
+   * @param {element} $target
+   * @param {JSON} res
    */
   _onSuccessRequest_quality: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
@@ -515,78 +514,78 @@ Tw.CustomerEmailService.prototype = {
         if ( $(item).is('button')) {
           arrValid.push(!Tw.FormatHelper.isEmpty($(item).data('value')));
         }
-  
+
         if ( $(item).prop('type') === 'checkbox' ) {
           arrValid.push($(item).prop('checked'));
         }
-  
+
         if ( $(item).prop('type') === 'number') {
-          var isValidNumber = $(item).val().length !== 0 ? true : false;
+          var isValidNumber = $(item).val().length !== 0;
           arrValid.push(isValidNumber);
         }
-  
+
         if ( $(item).prop('type') === 'tel' ) {
           var isPhoneNumber = (Tw.ValidationHelper.isCellPhone($(item).val()) || Tw.ValidationHelper.isTelephone($(item).val()));
           arrValid.push(isPhoneNumber);
         }
-  
+
         if ( $(item).prop('type') === 'text' ) {
-          var isValidText = $(item).val().length !== 0 ? true : false;
+          var isValidText = $(item).val().length !== 0;
           arrValid.push(isValidText);
         }
-  
+
         if ( $(item).prop('type') === 'textarea' ) {
-          var isValidTextArea = $(item).val().length !== 0 ? true : false;
+          var isValidTextArea = $(item).val().length !== 0;
           arrValid.push(isValidTextArea);
         }
       });
 
       if ( arrValid.indexOf(false) === -1 ) {
-        console.log('통화품질 등록하기 가능', $('.fe-quality-register').prop('disabled'));
+        Tw.Logger.log('통화품질 등록하기 가능', $('.fe-quality-register').prop('disabled'));
         $('.fe-quality-register').prop('disabled', false);
-        console.log('버튼 상태 변경 후', $('.fe-quality-register').prop('disabled'));
+        Tw.Logger.log('버튼 상태 변경 후', $('.fe-quality-register').prop('disabled'));
       } else {
-        console.log('통화품질 등록하기 불가', $('.fe-quality-register').prop('disabled'));
+        Tw.Logger.log('통화품질 등록하기 불가', $('.fe-quality-register').prop('disabled'));
         $('.fe-quality-register').prop('disabled', true);
-        console.log('버튼 상태 변경 후', $('.fe-quality-register').prop('disabled'));
+        Tw.Logger.log('버튼 상태 변경 후', $('.fe-quality-register').prop('disabled'));
       }
     } else {
       var arrValid = [];
-      
+
       this.$wrap_tpl_service.find('[required]').each(function (nIndex, item) {
         if ( $(item).prop('type') === 'checkbox' ) {
           arrValid.push($(item).prop('checked'));
         }
-  
+
         if ( $(item).prop('type') === 'number') {
-          var isValidNumber = $(item).val().length !== 0 ? true : false;
+          var isValidNumber = $(item).val().length !== 0;
           arrValid.push(isValidNumber);
         }
-  
+
         if ( $(item).prop('type') === 'tel' ) {
           var isPhoneNumber = (Tw.ValidationHelper.isCellPhone($(item).val()) || Tw.ValidationHelper.isTelephone($(item).val()));
           arrValid.push(isPhoneNumber);
         }
-  
+
         if ( $(item).prop('type') === 'text' ) {
-          var isValidText = $(item).val().length !== 0 ? true : false;
+          var isValidText = $(item).val().length !== 0;
           arrValid.push(isValidText);
         }
-  
+
         if ( $(item).prop('type') === 'textarea' ) {
-          var isValidTextArea = $(item).val().length !== 0 ? true : false;
+          var isValidTextArea = $(item).val().length !== 0;
           arrValid.push(isValidTextArea);
         }
       });
 
       if ( arrValid.indexOf(false) === -1 && !!this.$service_depth2.data('serviceDepth2') ) {
-        console.log('서비스문의 등록하기 가능', $('.fe-service-register').attr('disabled'));
+        Tw.Logger.log('서비스문의 등록하기 가능', $('.fe-service-register').attr('disabled'));
         $('.fe-service-register').prop('disabled', false);
-        console.log('버튼 상태 변경 후', $('.fe-service-register').attr('disabled'));
+        Tw.Logger.log('버튼 상태 변경 후', $('.fe-service-register').attr('disabled'));
       } else {
-        console.log('서비스문의 등록하기 불가', $('.fe-service-register').attr('disabled'));
+        Tw.Logger.log('서비스문의 등록하기 불가', $('.fe-service-register').attr('disabled'));
         $('.fe-service-register').prop('disabled', true);
-        console.log('버튼 상태 변경 후', $('.fe-service-register').attr('disabled'));
+        Tw.Logger.log('버튼 상태 변경 후', $('.fe-service-register').attr('disabled'));
       }
     }
   },
@@ -594,7 +593,7 @@ Tw.CustomerEmailService.prototype = {
 
   _validateFormByTitle: function () {
     var key = $('.fe-service_depth1').data('service-depth1') + '-TITLE';
-    
+
     // 2번째 카테고리가 비노출이 아니면
     if ($('.fe-service_depth2').attr('aria-hidden') !== "true") {
       // 2번째 카테고리가 선택되지 않았으면
@@ -630,7 +629,7 @@ Tw.CustomerEmailService.prototype = {
 
   /**
    * @function
-   * @desc 전화번호 형식 검사 
+   * @desc 전화번호 형식 검사
    * @returns {boolean}
    */
   _isValidServicePhone: function () {
@@ -641,7 +640,7 @@ Tw.CustomerEmailService.prototype = {
 
   /**
    * @function
-   * @desc 전화번호 형식 검사 
+   * @desc 전화번호 형식 검사
    * @returns {boolean}
    */
   _isValidQualityPhone: function () {
@@ -685,7 +684,7 @@ Tw.CustomerEmailService.prototype = {
   /**
    * @function
    * @desc 요청 버튼 클릭가능하도록 처리 /에러팝업 열린 후 처리 등록하기 버튼 활성화 (등록하기 버튼 누르면 API 호출중 비활성화 시킴)
-   * @param {element} $target 
+   * @param {element} $target
    */
   _handleButtonAbled: function ($target) {
     $target.prop('disabled', false);

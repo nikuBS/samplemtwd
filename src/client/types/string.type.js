@@ -121,7 +121,9 @@ Tw.POPUP_TITLE = {
   REFUND_BANK_SELECT: '환불신청계좌 은행 선택',
   EVENT: '이벤트',
   TPLAN_SMARTWATCH: '스마트워치 회선 선택',
-  ROAMING_PROMOTION_SUCCESS: '선물 받는 번호로 등록이 가능한 회선입니다.'
+  ROAMING_PROMOTION_SUCCESS: '선물 받는 번호로 등록이 가능한 회선입니다.',
+  JOIN: '접수하기',
+  EDIT: '수정하기'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -1483,7 +1485,7 @@ Tw.CUSTOMER_EMAIL = {
   SELECT_SERVICE: '서비스 선택',
   SELECT_QUESTION: '문의사항 선택',
   SMS_ALARM: '문자 알림을 설정할 경우, 입력하신 휴대폰 번호로 등록된 답변을 보내드립니다.',
-  INVALID_PHONE: '연락처 번호를 다시 확인해 주세요.',
+  INVALID_PHONE: '연락 가능 번호를 확인해주세요.',
   INVALID_EMAIL: '이메일 주소를 다시 확인해 주세요.',
   INVALID_FILE: '첨부하실 수 없는 파일입니다. <br> 다시 확인해 주세요.',
   DEFAULT_PLACEHOLDER: '내용 입력',
