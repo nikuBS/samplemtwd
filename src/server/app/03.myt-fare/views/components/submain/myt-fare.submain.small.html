@@ -19,16 +19,16 @@ _%>
             <ul class="report-list">
                 <%_if(small.isAdult && !isBubinCD){_%>
                 <li class="report-item">
-                    <a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>" class="link d-wrap" data-make-eid="contentsBill">
+                    <a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>"  class="link d-wrap fe-smallCon" data-make-eid="contentsBill">
                         <dl class="report-define">
-                            <dt class="report-tit">휴대폰 결제 <span class="report-sub"><%-`${data.claimFirstDay} ~ ${data.claimLastDay}`%></span></dt>
+                            <dt class="report-tit">휴대폰 결제<span class="report-sub"><%-`${data.claimFirstDay} ~ ${data.claimLastDay}`%></span></dt>
                             <dd class="report-cont"><%-small.smallTotal%>원</dd>
                         </dl>
                     </a>
                 </li>
                 <%_}_%>
                 <li class="report-item">
-                    <a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>" class="link d-wrap" data-make-eid="contentsBill">
+                    <a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>"  class="link d-wrap fe-smallCon" data-make-eid="contentsBill">
                         <dl class="report-define">
                             <dt class="report-tit">콘텐츠 이용료 <span class="report-sub"><%-`${data.claimFirstDay} ~ ${data.claimLastDay}`%></span></dt>
                             <dd class="report-cont"><%-small.contentsTotal%>원</dd>

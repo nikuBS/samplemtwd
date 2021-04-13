@@ -612,6 +612,7 @@ Tw.VALIDATE_MSG_MYT_DATA = {
 };
 
 Tw.ALERT_MSG_MYT_FARE = {
+  FIVE_POSSIBLE: '매월5일경 부터 당월 요금조회가 가능합니다.', 
   SELECT_LINE: '회선을 선택해 주세요.',
   TEN_POINT: '10포인트 단위로 입력해 주세요.',
   TEN_UNIT: '선결제 금액은 10원 단위로 입력 가능합니다.',
