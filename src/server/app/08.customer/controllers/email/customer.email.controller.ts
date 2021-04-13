@@ -81,7 +81,7 @@ class CustomerEmail extends TwViewController {
       // 서비스문의 재문의 케이스
       case 'service-retry':
         Observable.combineLatest(
-          this.getServiceCategory(), // 서비스 카테고리 목록 
+          this.getServiceCategory(), // 서비스 카테고리 목록
           this.getEmailHistoryDetail(req.query.inqid, req.query.inqclcd, true) // 해당 문의 상세조회, 재문의 구분값 true
         ).subscribe(([serviceCategory, historyDetail]) => {
           res.render('email/customer.email.service.retry.html',
@@ -119,8 +119,8 @@ class CustomerEmail extends TwViewController {
 
             for (let idx = 0; idx < response.result.length; idx++) {
               // this.logger.info (this, '[customer.email.controller] rgstDt : ', DateHelper.convDateCustomFormat(response.result[idx].rgstDt, 'YYYYMMDD'));
-              
-              // 등록일 (rgstDt) 이 현재 일자를 기준으로 6개월 이전인 경우 노출하지 않음 (OP002-6350) 
+
+              // 등록일 (rgstDt) 이 현재 일자를 기준으로 6개월 이전인 경우 노출하지 않음 (OP002-6350)
               if (DateHelper.convDateCustomFormat(response.result[idx].rgstDt, 'YYYYMMDD') >= DateHelper.convDateCustomFormat(DateHelper.getPast6MonthsShortDate(), 'YYYYMMDD')) {
                 // this.logger.info (this, '[customer.email.controller] 쏘옥 ', idx + 1 );
                 resultList.push(response.result[idx]);
@@ -169,7 +169,7 @@ class CustomerEmail extends TwViewController {
 
   /**
    * @function
-   * @desc 상담내역 조회 
+   * @desc 상담내역 조회
    * @returns {Observable}
    */
   private getEmailHistory(): Observable<any> {
@@ -192,7 +192,7 @@ class CustomerEmail extends TwViewController {
       svcDvcClCd: 'M'
     }).map((resp) => {
       // 재문의 일때는 모두 등록
-      // 재문의일때 Y, 재문의 이면서 상위 있을때 Y, 재문의 아닐때 N,  
+      // 재문의일때 Y, 재문의 이면서 상위 있을때 Y, 재문의 아닐때 N,
 
 
       if(reTry) {  // 재문의 인 경우 (서비스 재문의 및 품질 재문의 그러나 멤버십 구서버 인 경우는 ejs에서 재문의 못하게 처리 및 api에서도 값 없음, )
@@ -203,7 +203,7 @@ class CustomerEmail extends TwViewController {
         }
         return resp;  // 재문의 이지만 상위 상담 id가 없는경우
       }
-      
+
       // 재문의가 아닌경우
       return resp;
 
@@ -234,7 +234,7 @@ class CustomerEmail extends TwViewController {
       case '5000273': case '5000274': case '5000270': case '5000271': case '5000275':
       case '5000269': case '5000280': case '5000117':
         return '휴대폰';
-      case '5000141': case '5000143': case '5000147': case '5000149': case '5000151': case '5000152': case '5000153': 
+      case '5000141': case '5000143': case '5000147': case '5000149': case '5000151': case '5000152': case '5000153':
         return '인터넷/전화/IPTV';
       // case '07': case '10': case '12': case '08': case '09': case '13': case '14':
       //   return 'T다이렉트샵';
@@ -271,13 +271,13 @@ class CustomerEmail extends TwViewController {
 
     // console.log('============= resp ==============', resp);
     return resp;
-  
+
   } // end of mapRetryResult
 
 
   /**
    * @function
-   * @desc 회선정보 조회 
+   * @desc 회선정보 조회
    * @returns {Observable}
    */
   private getAllSvcInfo(): Observable<any> {
@@ -310,7 +310,7 @@ class CustomerEmail extends TwViewController {
    * @desc 최초 등록일이 오늘 날짜부터 30일 이전인지 확인하는 함수를 전달 (템플릿에서 바로 사용), true이면 30일이 넘은 상태
    */
   public isDateOver = (firstDate) => (moment().subtract(30, 'days') > moment(firstDate,'YYYYMMDD')) ? true : false;
-   
+
 
   /**
    * @function

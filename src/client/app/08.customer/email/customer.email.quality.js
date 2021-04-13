@@ -5,7 +5,7 @@
  */
 
  /**
- * @class 
+ * @class
  * @desc 이메일상담하기 품질케이스 전송하기
  * 특이사항 : 업로드 된 파일이 있으면 유스캔을 먼저 호출해서 전송된 파일을 서버에서 가져가도록 요청하고 반환값과 함께 등록하기 호출
  * @param {Object} rootEl - 최상위 element Object
@@ -18,7 +18,7 @@ Tw.CustomerEmailQuality = function (rootEl, data) {
   this._history = new Tw.HistoryService();
 
   this.userId = (data && data.allSvc) ? data.allSvc.userId : '';
-  
+
   this.uploadObj = data.uploadObj; // 이메일 업로드 객체
   this._usanService = new Tw.CustomerUscanService(this.uploadObj); // 유스캔 서비스
 
@@ -42,7 +42,7 @@ Tw.CustomerEmailQuality.prototype = {
     this.tpl_quality_cell_content = Handlebars.compile($('#tpl_quality_cell_content').html()); // 품질 > 핸드폰 케이스에서 발생 현상 템플릿 전송시 사용
   },
 
-  
+
   /**
    * @function
    * @member
@@ -57,10 +57,10 @@ Tw.CustomerEmailQuality.prototype = {
   /**
    * @function
    * @desc 등록하기 버튼 클릭 이벤트
-   * @param {event} e 
+   * @param {event} e
    */
   _request: function (e) {
-
+    var $curTarget = $(e.currentTarget);
     // 전화번호 검증
     if ( !this._isValidQualityPhone() ) {
       this._popupService.openAlert(
@@ -74,7 +74,7 @@ Tw.CustomerEmailQuality.prototype = {
           }, 500);
         }, this),
         null,
-        $(e.currentTarget)
+        $curTarget
       );
 
       return false;
@@ -93,36 +93,39 @@ Tw.CustomerEmailQuality.prototype = {
           }, 500);
         }, this),
         null,
-        $(e.currentTarget)
+        $curTarget
       );
 
       return false;
     }
 
-    // 파일 여부 
-    var files = this.uploadObj.getQualityFilesInfo();
+    // [OP002-14121] 연락가능한 번호 추가 확인 프로세스 추가
+    this._popupService.openConfirmButton(
+      '연락 가능한 번호 ('+ $('.fe-service_phone').val() + ')가 정확하게 입력되었나요?',
+      null,
+      $.proxy(function(){
+        // 파일 여부
+        var files = this.uploadObj.getQualityFilesInfo();
 
-    if (files.length) {
-      // 파일, 업로드 객체, 콜백, 타입
-      /**
-       * @function
-       * @param {object}
-       */
-      this._usanService.requestUscan({
-        files: files, // 파일정보
-        Upload: this.uploadObj, // 업로드 생성객체
-        type: this.$quality_depth1.data('quality-depth1'), // 카테고리 타입
-        request: $.proxy(this._requestCall, this), // 유스캔 호출 후 callback
-        $target: $(e.currentTarget), // 처리 후 되돌아갈 포커스 (등록버튼)
-        proMemo: this.userId + '/' + this.$wrap_tpl_quality.find('.fe-text_title').val() // API 호출시 메모 정보
-      });
-      
-    } else {
-      // 파일없음 바로 호출
-      this._requestCall($(e.currentTarget));
-    }
-
-    
+        if (files.length) {
+          // 파일, 업로드 객체, 콜백, 타입
+          /**
+           * @function
+           * @param {object}
+           */
+          this._usanService.requestUscan({
+            files: files, // 파일정보
+            Upload: this.uploadObj, // 업로드 생성객체
+            type: this.$quality_depth1.data('quality-depth1'), // 카테고리 타입
+            request: $.proxy(this._requestCall, this), // 유스캔 호출 후 callback
+            $target: $curTarget, // 처리 후 되돌아갈 포커스 (등록버튼)
+            proMemo: this.userId + '/' + this.$wrap_tpl_quality.find('.fe-text_title').val() // API 호출시 메모 정보
+          });
+        } else {
+          // 파일없음 바로 호출
+          this._requestCall($(e.currentTarget));
+        }
+      }, this), null, Tw.POPUP_TITLE.EDIT, Tw.POPUP_TITLE.JOIN, $curTarget);
   },
 
   /**
@@ -143,7 +146,7 @@ Tw.CustomerEmailQuality.prototype = {
       default:
     }
   },
-  
+
   /**
    * @function
    * @desc 입력된 값으로 전송시 필요한 param 반환 [여러케이스 공통 사용범위]
@@ -185,7 +188,7 @@ Tw.CustomerEmailQuality.prototype = {
       inptDtlAddr: $('.fe-detail-address').val(), // 상세주소
       selSvcMgmtNum: selSvcMgmtNum, // 회선정보
       content: this.tpl_quality_cell_content({
-        place: $('.fe-place').text(), 
+        place: $('.fe-place').text(),
         place_detail: $('.fe-place_detail').text(),
         occurrence: $('.fe-occurrence').text(),
         text_name: $('.fe-text_name').val(),
@@ -217,8 +220,8 @@ Tw.CustomerEmailQuality.prototype = {
    */
   _requestInternet: function ($target) {
     var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
-    var $qualityLine = this.$wrap_tpl_quality.find('.fe-quality-line'); 
-    var elInputline = $qualityLine.length ? ( 
+    var $qualityLine = this.$wrap_tpl_quality.find('.fe-quality-line');
+    var elInputline = $qualityLine.length ? (
                         $qualityLine.is('.fe-numeric') ? $qualityLine.val().replace(/-/gi, '') : $qualityLine.val()
                       ) : '';
     var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
@@ -249,8 +252,8 @@ Tw.CustomerEmailQuality.prototype = {
   /**
    * @function
    * @desc 각 전송 API 성공후 페이지 이동 에러시 에러팝업
-   * @param {element} $target 
-   * @param {JSON} res 
+   * @param {element} $target
+   * @param {JSON} res
    */
   _onSuccessRequest: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
@@ -308,7 +311,7 @@ Tw.CustomerEmailQuality.prototype = {
 
   /**
    * @function
-   * @desc 전화번호 형식 검사 
+   * @desc 전화번호 형식 검사
    * @returns {boolean}
    */
   _isValidQualityPhone: function () {
