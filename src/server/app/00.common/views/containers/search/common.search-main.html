@@ -206,24 +206,37 @@
 <% var fullUrl = locals.pageInfo ? locals.pageInfo.fullUrl : ''; %>
 <script defer type="text/javascript">
   var fullUrl = '<%= fullUrl %>';
-  var isLoadedScript = false;
-  if (fullUrl.indexOf('app.tworld') > -1 || fullUrl.indexOf('m.tworld') > -1) {
-    isLoadedScript = true;
+  var scriptPath = '';
+  if (fullUrl.indexOf('app.tworld') > -1) {
+    scriptPath = '/b201203e155342u664/304bbae058'; // app.tworld 인 경우
+  } else if (fullUrl.indexOf('m.tworld') > -1) {
+    scriptPath = '/b201203e155342u664/9e7dad796e';
+  } else if (fullUrl.indexOf('icp-stg.tworld') > -1 || fullUrl.indexOf('localhost')) {
+    scriptPath = '/b201203e155342u664/9e7dad796e';
+  } else {
+    // dev 환경
+    scriptPath = '';
   }
-  if ( isLoadedScript ) {
-    window.addEventListener('load', function () {
-      (function (w, d, a) {
-        w.__baclient__ = {
-          load: function (src) {
-            var b = d.createElement('script');
-            b.src = src;
-            b.async = true;
-            b.type = 'text/javascript';
-            d.getElementsByTagName('head')[0].appendChild(b);
-          }
+  if (scriptPath) {
+    window.addEventListener('load', function(){
+      (function(window, document, beusablePath, baClientPath){
+        var createScriptTag = function(src) {
+          var scriptTag = document.createElement('script');
+          scriptTag.src = src;
+          scriptTag.defer = true;
+          scriptTag.type = 'text/javascript';
+          document.getElementsByTagName('head')[0].appendChild(scriptTag);
         };
-        w.__baclient__.load(a);
-      })(window, document, '//sktba.beusable.net/script/ba/7396cc2bb5');
+        window.__beusablerumclient__ = {
+          load: createScriptTag
+        };
+        window.__baclient__ = {
+          load: createScriptTag
+        };
+        window.__beusablerumclient__.load(beusablePath);
+        window.__baclient__.load(baClientPath);
+      })(window, document, '//sktrum.beusable.net/script' + scriptPath, '//sktba.beusable.net/script/ba/7396cc2bb5');
+      // beusablePath : b201203e155342u664/304bbae058'
     }, false);
   }
 </script>
