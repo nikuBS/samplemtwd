@@ -23,6 +23,9 @@
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 컴포너트 위젯 -->
     <!-- <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /> --><!-- [C] 단락별 컴퍼넌트 -->
     <!-- //191101_css링크수정 - main.css삭제/components추가 -->
+
+    <link rel="stylesheet" type="text/css" href="/css/product.css" media="all" /><!-- 210401 [OP002-13853] 요금제 UI 적용 -->
+
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
@@ -143,421 +146,150 @@
                 <hr class="cont-sp type1" aria-hidden="true">
     
                 <!-- 요금제 -->
-                <div class="cont-box nogaps-btm">
+                <!-- 210401 [OP002-13853] 요금제 리뉴얼로 UI 변경 -->
+                <div class="cont-box nogaps-btm tod-nmp-srhbox"><!-- 210401 [OP002-13853] class 추가 (tod-nmp-srhbox) -->
                     <div class="tod-searchlist-head">
                         <h3 class="tit">요금제</h3>
                         <div class="tod-fright">
                             <button class="btn-select" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
                         </div>
                     </div>
-                    <ul class="extraservice-list tod-srhtype1">
-                        <li class="category-type">
-                            <button class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">뉴 T끼리 <em class="tod-highlight-text">맞춤형</em>(100분+6GB) 뉴 T끼리 맞춤형(100분+6GB)</p>
-                                    <p class="info">월<span class="money">43,175</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#<em class="tod-highlight-text">5~8G</em>B</span>
-                                    <span class="tag-text">#실버</span>
-                                </div>
-                            </button>
+                    <ul class="extraservice-list">
+                        <li>
+                            <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                            <div class="tod-nmp-item plan-type1 prod-lte">
+                                <a href="#n" class="item-link">
+                                    <div class="rn-prod-name">
+                                        <p class="p-name">T플랜 맥스</p>
+                                        <p class="p-price">100,000원</p>
+                                    </div>
+                                    <div class="rn-prod-sale">
+                                        <span>선택약정 반영 시</span>
+                                        <em>98,705원</em>
+                                    </div>
+                                    <div class="rn-prod-info">
+                                        <ul class="p-etc">
+                                            <li class="v-data"><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
+                                            <li><i class="p-icon18-phone"><span class="blind">음성</span></i>SK고객간 무제한</li>
+                                            <li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
+                                        </ul>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- //요금제 모듈 : 일반형 -->
                         </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
+                        <li>
+                            <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
+                            <div class="tod-nmp-item plan-type2 prod-5g">
+                                <a href="#n" class="item-link">
+                                    <div class="rn-prod-name">
+                                        <p class="p-name">5GX 플래티넘</p>
+                                        <p class="p-price">125,000원</p>
+                                    </div>
+                                    <div class="rn-prod-sale">
+                                        <span>선택약정 반영 시</span>
+                                        <em>98,705원</em>
+                                    </div>
+                                    <div class="rn-prod-info">
+                                        <ul class="p-etc">
+                                            <li class="v-data"><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
+                                            <li><i class="p-icon18-phone"><span class="blind">음성</span></i>집전화 &middot; 이동전화 무제한</li>
+                                            <li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
+                                        </ul>
+                                    </div>
+                                    <div class="rn-prod-benefit">
+                                        <ul>
+                                            <li>
+                                                <i class="p-icon16-img"><img src="/img/product/v2/icon16-flo.png" alt=""></i> 
+                                                <span class="txt">FLO 앤 데이터 무료 </span>
+                                                <span class="price">
+                                                    <del>7,900원</del>
+                                                    <i class="icon-arr">&rarr;</i> 
+                                                    <em>0원</em>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <i class="p-icon16-img"><img src="/img/product/v2/icon16-wavve.png" alt=""></i> 
+                                                <span class="txt">wavve 앤 데이터 플러스 무료</span>
+                                                <span class="price">
+                                                    <del>7,900원</del>
+                                                    <i class="icon-arr">&rarr;</i> 
+                                                    <em>0원</em>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <i class="p-icon16-img"><img src="/img/product/v2/icon16-cover.png" alt=""></i>
+                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                <span class="price">
+                                                    <del>7,900원</del>
+                                                    <i class="icon-arr">&rarr;</i> 
+                                                    <em>0원</em>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <i class="p-icon16-img"><img src="/img/product/v2/icon16-cycle.png" alt=""></i>
+                                                <span class="txt">가족끼리 데이터주고받기</span>
+                                                <span class="price">
+                                                    <del>7,900원</del>
+                                                    <i class="icon-arr">&rarr;</i> 
+                                                    <em>0원</em>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <i class="p-icon16-img"><img src="/img/product/v2/icon16-together.png" alt=""></i>
+                                                <span class="txt">함께 쓰기</span>
+                                                <span class="price">
+                                                    <del>7,900원</del>
+                                                    <i class="icon-arr">&rarr;</i> 
+                                                    <em>0원</em>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <i class="p-icon16-img"><img src="/img/product/v2/icon16-2nd.png" alt=""></i>
+                                                <span class="txt">2nd 디바이스와 함께 쓰기</span>
+                                                <span class="price">
+                                                    <del>7,900원</del>
+                                                    <i class="icon-arr">&rarr;</i> 
+                                                    <em>0원</em>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <div class="p-benefit-choice">
+                                            <p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>
+                                            <ul>
+                                                <li>
+                                                    <i class="p-icon16-img"><img src="/img/product/v2/icon16-vip.png" alt=""></i>
+                                                    <span class="txt">T멤버쉽 VIP</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- //요금제 모듈 : 혜택강조형 -->
                         </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="category-type">
-                            <button class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">뉴 T끼리 <em class="tod-highlight-text">맞춤형</em>(100분+6GB) 뉴 T끼리 맞춤형(100분+6GB)</p>
-                                    <p class="info">월<span class="money">43,175</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#<em class="tod-highlight-text">5~8G</em>B</span>
-                                    <span class="tag-text">#실버</span>
-                                </div>
-                            </button>
-                        </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="category-type">
-                            <button class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">뉴 T끼리 <em class="tod-highlight-text">맞춤형</em>(100분+6GB) 뉴 T끼리 맞춤형(100분+6GB)</p>
-                                    <p class="info">월<span class="money">43,175</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#<em class="tod-highlight-text">5~8G</em>B</span>
-                                    <span class="tag-text">#실버</span>
-                                </div>
-                            </button>
-                        </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="category-type">
-                            <a href="#" class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">T시그니처 Master</p>
-                                    <p class="info">월<span class="money">110,000</span>원</p>
-                                </div>
-                                <ul class="products-detailinfo02">
-                                    <li class="category-type type01">
-                                        <p class="gb"><span>20</span>GB</p>
-                                    </li>
-                                    <li class="category-type type02">
-                                        <p class="type">
-                                            집,이동전화 무제한
-                                        </p>
-                                    </li>
-                                    <li class="category-type type03">
-                                        <p class="basic">
-                                            기본제공
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                            </a>
+                        <li>
+                            <!-- 요금제 모듈 : 데이터강조형 - .plan-type3 -->
+                            <div class="tod-nmp-item plan-type3 prod-5g">
+                                <a href="#n" class="item-link">
+                                    <div class="rn-prod-name">
+                                        <p class="p-name">5GX 플래티넘</p>
+                                        <p class="p-price">125,000원</p>
+                                    </div>
+                                    <div class="rn-prod-sale">
+                                        <span>선택약정 반영 시</span>
+                                        <em>98,705원</em>
+                                    </div>
+                                    <div class="rn-prod-info">
+                                        <ul class="p-etc">
+                                            <li class="v-data"><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
+                                            <li><i class="p-icon18-phone"><span class="blind">음성</span></i>집전화 &middot; 이동전화 무제한</li>
+                                            <li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
+                                        </ul>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- //요금제 모듈 : 데이터강조형 -->
                         </li>
                     </ul>
                     <div class="btn-more">

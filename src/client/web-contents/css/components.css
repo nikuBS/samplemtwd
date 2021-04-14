@@ -36738,3 +36738,9 @@ body.apphome .section-box {
 .tab-area.new01.tod-large .tab-linker ul li a{width: 100%; height: 3.625rem; line-height: 3.625rem;}
 .ti-caption-gray.tod-border{background:none;}
 .ti-caption-gray.tod-border .bt-select{font-weight: 500; border-bottom: 0.0625rem solid #000}
+
+/* 210401 [OP002-13853] 검색영역 - 상품 고도화 그랜드 오픈 시 영향도 및 반영 요청 */
+.tod-nmp-srhbox .extraservice-list {position:relative; margin:0 -1rem -1px}
+.tod-nmp-srhbox .extraservice-list > li {border-bottom:1px solid #d8d8d8;}
+.tod-nmp-srhbox .extraservice-list .tod-nmp-item {background-color:transparent}
+.tod-nmp-srhbox .extraservice-list .tod-nmp-item .rn-prod-info {border-color:#f2f2f2}
