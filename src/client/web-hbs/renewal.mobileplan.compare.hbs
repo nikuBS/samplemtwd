@@ -208,6 +208,38 @@
                     </li>
                 </ul>
             </div>
+            
+            {{!-- 2021-04-08 할인혜택(선택약정 반영가 영역 추가) --}}
+            {{#if data.curPlan.isSelAgrmtAplyMfixAmt}}
+                <div class="rn-benefit">
+                    <h3 class="b-title">할인혜택</h3>
+                    <div class="rn-comp-cont">
+                        <p class="title"><i class="p-icon16-check"></i> 선택약정할인제도 가입 시 요금</p><!-- 210330 문구수정 -->
+                        <ul class="tb-comp">
+                            <li>
+                                <span class="tod-blind">5GX 프라임</span>
+                                {{#if data.curPlan.selAgrmtAplyMfixAmt}}
+                                    <del>월 {{data.curPlan.basFeeAmt}}</del>
+                                    <p class="price">월 {{data.curPlan.selAgrmtAplyMfixAmt}}</p>
+                                {{else}}
+                                   <p class="txt nmp-fc-gray">가입할 수 없음</p>
+                                {{/if}}
+                            </li>
+                            <li>
+                                <span class="tod-blind">5GX 플래티넘</span>
+                                {{#if data.comparePlan.selAgrmtAplyMfixAmt}}
+                                    <del>월 {{data.comparePlan.basFeeAmt}}</del>
+                                    <p class="price">월 {{data.comparePlan.selAgrmtAplyMfixAmt}}</p>
+                                {{else}}
+                                    <p class="txt nmp-fc-gray">가입할 수 없음</p>
+                                {{/if}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {{/if}}
+            {{!-- 2021-04-08 할인혜택(선택약정 반영가 영역 추가) --}}
+
             {{#if data.addtionalBenf}}
                 <div class="rn-benefit">
                     <h3 class="b-title">추가혜택</h3>

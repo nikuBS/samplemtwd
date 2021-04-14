@@ -599,14 +599,17 @@ Tw.ProductRenewalList.prototype = {
     _mapProperData: function(item) { // API로 받아온 요금제 데이터 파싱
       if (item.basFeeAmt){
         if (item.basFeeAmt && /^[0-9]+$/.test(item.basFeeAmt)) {
-          item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt)+'원';
+          item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt) + '원';
         }
       } else {
         if (item.basFeeInfo && /^[0-9]+$/.test(item.basFeeInfo)) {
-          item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeInfo)+'원';
+          item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeInfo) + '원';
         } else {
           item.basFeeAmt = item.basFeeInfo;
         }
+      }
+      if (item.selAgrmtAplyMfixAmt) {
+        item.selAgrmtAplyMfixAmt = Tw.FormatHelper.addComma(item.selAgrmtAplyMfixAmt) + '원';
       }
       var data = '';
       if (!this._isEmptyAmount(item.basOfrDataQtyCtt)) {
