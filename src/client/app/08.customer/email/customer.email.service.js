@@ -182,7 +182,7 @@ Tw.CustomerEmailService.prototype = {
     }
     // [OP002-14121] 연락가능한 번호 추가 확인 프로세스 추가
     this._popupService.openConfirmButton(
-      '연락 가능한 번호 ('+ $('.fe-service_phone').val() + ')가 정확하게 입력되었나요?',
+      '연락 가능한 번호 ('+ $('.fe-quality_phone').val() + ')가 정확하게 입력되었나요?',
       null,
       $.proxy(function(){
         // 파일 여부
