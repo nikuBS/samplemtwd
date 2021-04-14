@@ -1,3 +1,5 @@
+// const { find } = require("rxjs/operator/find");
+
 /**
  * @file 요금제, 부가서비스, 인터넷/전화/IPTV 서브메인 < 상품
  * @author Kinam Kim
@@ -12,6 +14,7 @@ Tw.ProductRenewalSubmain = function(rootEl, svcInfo, sectionSort, line, myAge, c
   this._myAge = myAge;
   this._cdn = cdn;
   this._svcMgmtNum = svcInfo ? svcInfo.svcMgmtNum : '';
+  this._mbrNm = svcInfo ? svcInfo.mbrNm : '';
   
   console.log('[ProductRenewalSubmain]: ' + myAge + " / " + this._line.deviceCode);
 
@@ -22,11 +25,6 @@ Tw.ProductRenewalSubmain = function(rootEl, svcInfo, sectionSort, line, myAge, c
   this._tidLanding = new Tw.TidLandingComponent();
   this._dateHelper = Tw.DateHelper;
   this._xTractorService = new Tw.XtractorService(rootEl);
-
-  // 부가서비스 (손실보전)에서 사용하는 객체
-  this._additionId = '';
-  this._additionType = '';
-  this._additionAction = '';
 
   this._getTopBanner(); // 최 상단 배너
   this._getRedisBanner(); // 퀵 필터, 테마 배너, 프로모션 배너 조회
@@ -58,8 +56,79 @@ Tw.ProductRenewalSubmain.prototype = {
     this.$container.on('click', '.bt-switch', $.proxy(this._onPiAgree, this)); // 개인정보 수집이용 동의 시 클릭 이벤트
     this.$container.on('click', '.bt-detail', $.proxy(this._onClickPiDetail, this)); // 개인정보 수집이용 동의 상세보기 (원문) 클릭 이벤트
 
-    this.$container.on('click', '.btn-benefit', $.proxy(this._onClickMore, this)); // 손실보전 혜택 더보기 이벤트
-    this.$container.on('click', '.join-additions', $.proxy(this._onClickJoinAdditions, this)) // 부가서비스 가입하기
+    // 손실보전 가입하기/자세히보기 등 클릭 이벤트
+    // data-cmpsnum은 botShtYn=Y일 경우에만 존재함
+    this.$container.on('click', '[data-cmpsnum]', $.proxy(this._loadCmpsBottomSheet, this)); 
+    this.$container.on('click', '[data-url]', $.proxy(this._onClickLossCmpsBtn, this)); 
+
+    // 손실보전 더보기 버튼 이벤트
+    if($('#lossCmpsDiv')){
+      this.$container.on('click', '#lossCmpsMore', $.proxy(this._showLossCmpsMore, this)); 
+    }
+  },
+
+  _loadCmpsBottomSheet: function(element){
+    var linkUrl = element.currentTarget.dataset.linkurl;
+    var startIdx = linkUrl.lastIndexOf("=") + 1;
+    var endIdx;
+    if(linkUrl.lastIndexOf("#") > -1){
+      endIdx = linkUrl.lastIndexOf("#");
+    }else{
+      endIdx = linkUrl.length
+    }
+
+    //console.log('icon image url : ' + element.currentTarget.dataset.image);
+    //console.log('@@@ : ' + linkUrl.substring(startIdx, endIdx));
+    
+    var hbs= '';
+    var prodId = linkUrl.substring(startIdx, endIdx);
+
+    if(prodId === 'NA00006577'){
+      hbs = 'actionsheet_product_wavve70';
+    }else if(prodId === 'NA00006520'){
+      hbs = 'actionsheet_product_flo70';
+    }else if(prodId === 'NA00006484'){
+      var lossCmpsNum = element.currentTarget.dataset.cmpsnum;
+
+      if(lossCmpsNum === 13){
+        hbs = 'actionsheet_product_tab50';
+      }else{
+        hbs = 'actionsheet_product_tab';
+      }
+    }else{
+      hbs = '';
+    }
+
+    if(hbs){
+      var $target = $(element.currentTarget);
+      this._popupService.open({
+        hbs: hbs,
+        data: {'mbrNm' : this._mbrNm, 'prodId' : prodId},
+        layer: true,
+      }
+      , $.proxy(this._onOpenLossCmpsPopup, this, $target)
+      , $.proxy(this._onCloseLossCmpsPopup, this)
+      , 'loss-cmps-layer', $target);
+    }
+  },
+
+  _onOpenLossCmpsPopup: function(target, layer) {
+    Tw.CommonHelper.focusOnActionSheet(layer);
+    this._slidePopupClose(); // 슬라이딩 팝업 닫을 때
+  },
+
+  _onClickLossCmpsBtn: function(event){
+    var url = event.currentTarget.dataset.url;
+    this._slidePopupClose();
+    self.location.href = url;
+  },
+
+  _onCloseLossCmpsPopup: function() {
+  },
+
+  _showLossCmpsMore: function() {
+    $('#lossCmpsUl').addClass('show');
+    $('#lossCmpsDiv').hide();
   },
 
   /**

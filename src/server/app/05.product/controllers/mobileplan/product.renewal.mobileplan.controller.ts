@@ -96,6 +96,38 @@ enum LIST_THEME_CODE {
   'TAG0000214' = 'TAG0000214', // 혜택 강조형
 }
 
+const LOSS_CMPS_PRODUCT_ID = 
+[
+  'NA00006405', // 5GX플래티넘
+  'NA00006999', // D플래티넘(5GX플래티넘+다이렉트플랜)
+  'NA00006539', // T플랜 맥스
+  'NA00007004', // D맥스(T플랜 맥스+다이렉트플랜)
+  'NA00006404', // 5GX프라임
+  'NA00006538', // T플랜 스페셜
+  'NA00007005', // D스페셜(T플랜 스페셜+다이렉트플랜)
+  'NA00007001', // D프라임(5GX프라임+다이렉트플랜)
+  'NA00006797', // T플랜 시니어 스페셜
+  'NA00005134', // band 데이터 퍼펙트S
+  'NA00007165', // 5G 언택트 61
+  'NA00005959', // Data 인피니티
+  'NA00005958', // 패밀리
+  'NA00004777', // T 시그니처 Master(구)
+  'NA00004776', // T 시그니처 Classic(구)
+  'NA00006403', // 5GX스탠다드
+  'NA00007002', // D스탠다드(5GX스탠다드+다이렉트플랜)
+  'NA00007301', // 5GX레귤러플러스 
+  'NA00006157', // 0플랜 라지
+  'NA00006401'  // 0플랜 슈퍼 히어로
+];
+
+const LOSS_CMPS_PRODUCT_ID_EXCEPTIONAL = 
+[
+  'NA00006157', // 0플랜 라지
+  'NA00006401'  // 0플랜 슈퍼 히어로
+];
+
+let lossCmpsInfo = new Map<String, Object>();
+
 export default class RenewProduct extends TwViewController {
     constructor() {
       super();
@@ -113,6 +145,7 @@ export default class RenewProduct extends TwViewController {
             , this.getThemeListData(svcInfo, line) // 리스트 형 테마 데이터를 조회
             , this.getMyAge(svcInfo) // 나의 나이를 리턴받음
             , this.isCompareButton(line, svcInfo) // 비교하기 버튼 출력 여부
+            , this.getLossCmpsResult(svcInfo)  // 손실보전 항목 노출 여부
           ).subscribe(([
             payment // 사용중인 요금제 데이터 결과 값
             , piAgree // 개인정보 동의 여부
@@ -120,10 +153,26 @@ export default class RenewProduct extends TwViewController {
             , themeListData // 테마 리스트 데이터 조회
             , myAge // 내 회선에 대한 나의 만 나이
             , isCompareButton // 비교하기 버튼 출력 여부
+            , lossCmpsResult // 손실보전 항목 노출 여부
           ]) => {
+            // console.log('### =====================================================================');
+            // console.log('### lossCmpsResult : ' + JSON.stringify(lossCmpsResult));
+
+            let lossCmpsList : any;
+            if(lossCmpsResult == API_CODE.CODE_00 || lossCmpsResult === '0'){
+              lossCmpsList = this.getMultiAdditionCheck(svcInfo, lossCmpsInfo);
+            }else{
+              lossCmpsList = null;
+            }
+
+            // console.log('### lossCmpsList : ' + JSON.stringify(lossCmpsList));
+            // console.log('### lossCmpsList : render');
+            // console.log('### =====================================================================');
+
             const isWireless = svcInfo ? !(SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) : false; // 무선 회선인지 체크
             const data = {
               line, payment, piAgree, isWireless, sortSection, themeListData, myAge, isCompareButton, cdn: this.getCDN()
+              , lossCmpsList
             }
 
             res.render('mobileplan/renewal/submain/product.renewal.mobileplan.html', { svcInfo, pageInfo, data });
@@ -367,6 +416,7 @@ export default class RenewProduct extends TwViewController {
       if (FormatHelper.isEmpty(data.feePlanProd)) {
         return null;
       }
+
       // 금액, 음성, 문자, 할인상품 값 체크
       const basFeeTxt = FormatHelper.getValidVars(data.feePlanProd.basFeeTxt);
       const basOfrVcallTmsCtt = FormatHelper.getValidVars(data.feePlanProd.basOfrVcallTmsTxt);
@@ -527,6 +577,19 @@ export default class RenewProduct extends TwViewController {
     }
 
     /**
+     * 선택 약정 반영 월 정액 금액을 파싱
+     * @param benfProdList 
+     */
+    private convertAgreementAmount(basAgreementAmount) {
+      const isbasAgreementAmount = isNaN(Number(basAgreementAmount));
+
+      return {
+        isNaN: isbasAgreementAmount,
+        value: isbasAgreementAmount ? basAgreementAmount : FormatHelper.addComma(basAgreementAmount)
+      };
+    }
+
+    /**
      * 테마 요금제에 해당되는 데이터에 대해 의미있는 값으로 변환
      * @param data 
      */
@@ -543,6 +606,7 @@ export default class RenewProduct extends TwViewController {
         const basFeeTxt = FormatHelper.getValidVars(item.basFeeInfo); // 이용요금
         const basOfrVcallTmsCtt = FormatHelper.getValidVars(item.basOfrVcallTmsCtt); // 음성 제공량
         const basOfrCharCntCtt = FormatHelper.getValidVars(item.basOfrCharCntCtt); // 문자 제공량
+        const basAgreementAmountCtt = FormatHelper.getValidVars(item.selAgrmtAplyMfixAmt); // 선택 약정 금액 반영 월 정액 금액
 
         const basDataGbTxt = FormatHelper.getValidVars(item.basOfrGbDataQtyCtt); // 데이터 제공량 (GB)
         const basDataMbTxt = FormatHelper.getValidVars(item.basOfrMbDataQtyCtt); // 데이터 제공량 (MB)
@@ -551,6 +615,9 @@ export default class RenewProduct extends TwViewController {
         const basNetworkType = this.convertBasNetworkType(item.prodFltList) || ''; // 회선의 네트워크 타입 ( 데이터타입에 폰트 컬러를 설정하는 스타일 지정 )
         const basNetworkList = this.convertBasNetwork(item.prodFltList) || []; // 네트워크값을 파싱 ( LTE/5G의 아이콘 스타일 및 텍스트를 지정)
         const basAdditionalObject = this.convertAdditionalList(item.benfProdList) || []; // 부가 서비스 정보를 파싱
+
+        const basAgreementAmount = this.convertAgreementAmount(basAgreementAmountCtt); // 선택 약정 금액 반영 월 정액 금액 계산
+
         // 상품 스펙 공통 헬퍼 사용하여 컨버팅
         const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
 
@@ -562,6 +629,7 @@ export default class RenewProduct extends TwViewController {
           basOfrDataQtyCtt: spec.basOfrDataQtyCtt,  // 데이터
           basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,  // 음성
           basOfrCharCntCtt: spec.basOfrCharCntCtt,  // 문자
+          basAgreementAmount: basAgreementAmount, // 선택 약정 금액 반영 월 정액
           basNetworkType: basNetworkType, // 네트워크 타입
           basNetworkList: basNetworkList, // 네트워크 타입
           basAdditionalObject: basAdditionalObject // 기본혜택/추가혜택에 대한 정보
@@ -697,6 +765,375 @@ export default class RenewProduct extends TwViewController {
           return true;
         }
       });
+    }
+
+    /**
+      * 손실보전 조회
+      * @param svcInfo 
+      */
+    private getLossCmpsResult(svcInfo: any){
+      // 미로그인, 간편로그인일 경우 손실보전 조회 안함
+      if( !svcInfo || svcInfo.loginType != 'T'){ 
+        // console.log('### : 대상아님');
+        // console.log('### : ' + JSON.stringify(svcInfo));
+        return Observable.of(null);
+      }else{
+        // 1. 사용자의 상품이 손실보전 체크 대상인지 체크
+        return Observable.of(this.checkProductId(svcInfo))
+          .pipe(flatMap(p1 => {
+            // console.log('### pipe1 start');
+            // console.log('### pipe1 : ' + p1);
+            // console.log('### pipe1 end');
+            return Observable.of(p1);
+         }))
+          // 2. 손실보전 Redis 조회
+          .pipe(flatMap(p2 => {
+            // console.log('### pipe2 start : ' + p2);
+
+            if(p2 === undefined){
+              // console.log('### pipe2 end : 대상 요금제 아님');
+              return Observable.of(null);
+            }else{
+              lossCmpsInfo.set("productId", p2);
+
+              return this.redisService.getData(REDIS_KEY.LOSS_CMPS_INFO + p2).map((resp) => {
+                // console.log('### pipe2 redis resp : ' + JSON.stringify(resp));
+                //// console.log('### pipe2 redis resp : ' + JSON.stringify(resp.result.lossCmpsInfo));
+               
+                if(resp.code === API_CODE.CODE_00) {
+                  let redisProductList = resp.result.lossCmpsInfo;
+                
+                  for(let i = 0 ; i < redisProductList.length; i++){
+                    // console.log('### pipe2 redis[' + i + '] : ' + redisProductList[i].lossCmpsNm);
+                  }
+
+                  lossCmpsInfo.set("redisProductList", redisProductList);
+                  // console.log('### pipe2 end : success');
+                }else{
+                  // console.log('### pipe2 end : fail');
+                }
+
+                return resp.code;
+              });
+            }
+          }))
+          // 3.무선 부가서비스 사용 여부 조회
+          .pipe(flatMap(p3 => {
+            // console.log('### pipe3 start : ' + p3);
+
+            if(p3 === API_CODE.CODE_00  || p3 === '0'){
+              let tempScrbList = new Set();
+              let tempUnScrbList = new Set();
+              let tempBffList = new Set();
+              let redisProductList : any = lossCmpsInfo.get("redisProductList");
+
+              for(let i = 0 ; i < redisProductList.length; i++){
+                if(redisProductList[i].scrbChkObjInfo){
+                  let temp = (redisProductList[i].scrbChkObjInfo).split('~');
+                  temp.forEach(value => { tempScrbList.add(value); });
+                }
+
+                if(redisProductList[i].unscrbChkObjInfo){
+                  let temp = (redisProductList[i].unscrbChkObjInfo).split('~');
+                  temp.forEach(value => { tempUnScrbList.add(value); });
+                }
+
+                if(redisProductList[i].lossCmpsBffId){
+                  let temp = (redisProductList[i].lossCmpsBffId).split('~');
+                  temp.forEach(value => { tempBffList.add(value); });
+                }
+              }
+             
+              // 임시 변수의 내용을 배열로 반환
+              let checkScrbList = Array.from(tempScrbList);
+              let checkUnScrbList = Array.from(tempUnScrbList);
+              let lossCmpsBffId = Array.from(tempBffList);
+
+              lossCmpsInfo.set("scrbChkObjInfo", checkScrbList);
+              lossCmpsInfo.set("unscrbChkObjInfo", checkUnScrbList);
+              lossCmpsInfo.set("lossCmpsBffId", lossCmpsBffId); 
+
+              // 3-2. 무선 부가서비스 사용 여부 다중 조회
+              // 무선 부가서비스 사용 여부 조회할 상품 아이디 조합
+              let searchProductId = checkScrbList.join('~');
+              // console.log('### pipe3 scrbChkObjInfo : ' + checkScrbList);
+              // console.log('### pipe3 unscrbChkObjInfo : ' + checkUnScrbList);
+              // console.log('### pipe3 lossCmpsBffId : ' + lossCmpsBffId);
+
+              // 무선 부가서비스 사용 여부 조회(미성년자는 가입불가이므로 조회할 필요 없음)
+              if(svcInfo.isAdult){
+                if(!FormatHelper.isEmpty(checkScrbList) && !FormatHelper.isEmpty(checkUnScrbList)){
+                  searchProductId += '~';
+                }
+                searchProductId += checkUnScrbList.join('~');
+  
+                // console.log('### pipe3 BFF_10_0183 searchProductId : ' + searchProductId);
+
+                if(searchProductId){
+                  return this.apiService.request(API_CMD.BFF_10_0183, {}, {}, [ searchProductId ]).map((resp) => {
+                    // console.log('### pipe3 BFF_10_0183 : ' + JSON.stringify(resp));
+    
+                    if(resp.code === API_CODE.CODE_00) { 
+                      // console.log('### pipe3 end : success');
+                      lossCmpsInfo.set("multiAddition", resp.result);
+                      return resp.code;
+                    }else if (resp.code === 'ICAS4003') {
+                      let multiAddition = '';
+                      multiAddition += '{';
+                      for(let i = 0 ; i < searchProductId.split('~').length; i++){
+                        multiAddition += '"' + searchProductId.split('~')[i] + '":' + '"N"';
+                        if(i < searchProductId.split('~').length - 1){
+                          multiAddition += ',';
+                        }
+                      }
+                      multiAddition += '}';
+                      lossCmpsInfo.set("multiAddition", JSON.parse(multiAddition));
+                      // console.log('### pipe3 end : ICAS4003 => ' + JSON.parse(multiAddition));
+  
+                      return API_CODE.CODE_00;
+                    }else{
+                      // console.log('### pipe3 end : fail');
+                      return Observable.of(null); 
+                    }
+                  });
+                }else{
+                  // console.log('### pipe3 end : success : searchProductId is empty');
+                  return API_CODE.CODE_00;
+                }
+              }else{
+                // console.log('### pipe3 end : success : is not adult');
+                return API_CODE.CODE_00;
+              }
+            }else{
+              // console.log('### pipe3 end : pipe2 receive fail');
+              return Observable.of(null); 
+            }
+          }))
+          // 4. T Mermbership 체크가 필요할 경우 체크
+          .pipe(flatMap(p4 => {
+            // console.log('### pipe4 start : ' + p4);
+           
+            // 현재는 lossCmpsBffId에 BFF_04_0001 한개만 오게 되어있음
+            if(p4 === API_CODE.CODE_00 || p4 === '0'){
+              let lossCmpsBffId = lossCmpsInfo.get("lossCmpsBffId");
+              // console.log('### pipe4 lossCmpsBffId : ' + lossCmpsBffId);
+
+              if(lossCmpsBffId == 'BFF_04_0001'){
+                return this.apiService.request(API_CMD.BFF_04_0001, {}, {}, []).map((resp) => {
+                  // console.log('### pipe4 BFF_04_0001 : ' + JSON.stringify(resp));
+
+                  if(resp.code === API_CODE.CODE_00){ 
+                    // console.log('### pipe4 end : T membership pass');
+                    lossCmpsInfo.set("tmembership", "N");
+                  }else{
+                    // console.log('### pipe4 end : T membership add');
+                    lossCmpsInfo.set("tmembership", "Y");
+                  }
+
+                  return p4;
+                });
+              }else{
+                // console.log('### pipe4 end : T membership not');
+                return API_CODE.CODE_00;
+              }
+            }else{
+              // console.log('### pipe4 end : pipe3 receive fail');
+              return Observable.of(null);
+            }
+          }))
+          ;
+       }
+    }
+
+    // 사용자의 요금제가 손실보전 체크 대상 요금제인지 체크
+    private checkProductId(svcInfo : any){
+      return LOSS_CMPS_PRODUCT_ID.find((n) => ( n === svcInfo.prodId) );
+    }
+
+    // 사용자의 요금제가 예외 처리가 필요한 요금제인지 체크
+    private checkProductIdByExceptional(productId : String){
+      return LOSS_CMPS_PRODUCT_ID_EXCEPTIONAL.find((n) => ( n === productId) );
+    }
+
+    // 사용자의 부가서비스 가입 여부 체크하여, 손실 보전 정보 생성
+    private getMultiAdditionCheck(svcInfo : any, lossCmpsInfo : any){
+      // console.log('### getMultiAdditionCheck');
+      // console.log('### lossCmpsInfo.productId : ' + lossCmpsInfo.get("productId"));
+      // console.log('### lossCmpsInfo.redisProductList : ' + JSON.stringify(lossCmpsInfo.get("redisProductList")));
+      // console.log('### lossCmpsInfo.scrbChkObjInfo : ' + lossCmpsInfo.get("scrbChkObjInfo"));
+      // console.log('### lossCmpsInfo.unscrbChkObjInfo : ' + lossCmpsInfo.get("unscrbChkObjInfo"));
+      // console.log('### lossCmpsInfo.lossCmpsBffId : ' + lossCmpsInfo.get("lossCmpsBffId"));
+      // console.log('### lossCmpsInfo.multiAddition : ' + JSON.stringify(lossCmpsInfo.get("multiAddition")));
+
+      let productId = lossCmpsInfo.get("productId");
+      let lossCmpsList : Array<any> = [];
+
+      if(this.checkProductIdByExceptional(productId)){
+        lossCmpsList = this.getMultiAdditionCheckByExceptional(svcInfo, productId, lossCmpsInfo);
+      }else{
+        lossCmpsList = this.getMultiAdditionCheckByDefault(svcInfo, lossCmpsInfo);
+      }
+
+      // console.log('### getMultiAdditionCheck lossCmpsList last : ' + JSON.stringify(lossCmpsList));
+      // console.log('### getMultiAdditionCheck end ============================================');
+
+      //expsSeq에 맞게 변경하여 리턴
+      return lossCmpsList.sort(function(a, b){
+        return a.expsSeq - b.expsSeq;
+      });
+    }
+
+    private getMultiAdditionCheckByDefault(svcInfo : any, lossCmpsInfo : any){
+      // console.log('### getMultiAdditionCheckByDefault');
+
+      let lossCmpsList : Array<any> = [];
+      let multiAddition = lossCmpsInfo.get("multiAddition");
+      let redisProductList = lossCmpsInfo.get("redisProductList");
+
+      // scrbChkObjInfo, unscrbChkObjInfo, lossCmpsBffId 확인 후 lossCmpsList push
+      for(let i = 0 ; i < redisProductList.length; i++){
+        let item = redisProductList[i];
+
+        // console.log('### getMultiAdditionCheckByDefault redisProductList[' + i + '] start : ============================================');
+        // console.log('### getMultiAdditionCheckByDefault lossCmpsNum : ' + item.lossCmpsNum);
+        // console.log('### getMultiAdditionCheckByDefault lossCmpsNm : ' + item.lossCmpsNm);
+        // console.log('### getMultiAdditionCheckByDefault scrbChkObjInfo : ' + item.scrbChkObjInfo);
+        // console.log('### getMultiAdditionCheckByDefault unscrbChkObjInfo : ' + item.unscrbChkObjInfo);
+        // console.log('### getMultiAdditionCheckByDefault lossCmpsBffId : ' + item.lossCmpsBffId);
+
+        // 미성년자는 T Membership만 체크
+        if(svcInfo.isAdult){
+          // scrbChkObjInfo
+          if(item.scrbChkObjInfo){
+            let scrbChkObjList = item.scrbChkObjInfo.split('~');
+
+            for(let j = 0 ; j < scrbChkObjList.length; j++){
+              let scrbChkObjInfo = scrbChkObjList[j];
+              // console.log('### getMultiAdditionCheckByDefault scrbChkObjInfo [' + j + '] : ' + scrbChkObjInfo + ' : ' + multiAddition[scrbChkObjInfo]);
+            }
+          }
+
+          // unscrbChkObjInfo
+          if(item.unscrbChkObjInfo){
+            let check = '';
+            let join = '';
+            let unscrbChkObjList = item.unscrbChkObjInfo.split('~');
+
+            for(let k = 0 ; k < unscrbChkObjList.length; k++){
+              let unscrbChkObjInfo = unscrbChkObjList[k];
+              check += 'N';
+              join += multiAddition[unscrbChkObjInfo];
+              // console.log('### getMultiAdditionCheckByDefault unscrbChkObjInfo [' + k + '] : ' + unscrbChkObjInfo + ' : ' + multiAddition[unscrbChkObjInfo]);
+            }
+            // console.log('### getMultiAdditionCheckByDefault join : check = ' + join + ' : ' + check);
+
+            if(join === check && svcInfo.isAdult){
+              // console.log('### getMultiAdditionCheckByDefault lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
+              // console.log('### getMultiAdditionCheckByDefault lossCmpsList push item : ' + item);
+              lossCmpsList.push(item);
+            }
+          }
+        }
+
+        // T Membership 체크
+        if(item.lossCmpsBffId == 'BFF_04_0001'){
+          if(lossCmpsInfo.get("tmembership") === "Y"){
+            // console.log('### getMultiAdditionCheckByDefault lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
+            // console.log('### getMultiAdditionCheckByDefault lossCmpsList push item : ' + item);
+            lossCmpsList.push(item);
+          }
+        }
+        // console.log('### getMultiAdditionCheckByDefault redisProductList[' + i + '] end : ============================================');
+      }
+
+      return lossCmpsList;
+    }
+
+    private getMultiAdditionCheckByExceptional(svcInfo : any, productId : String, lossCmpsInfo : any){
+      // console.log('### getMultiAdditionCheckByExceptional exceptional');
+
+      let lossCmpsList : Array<any> = [];
+      let multiAddition = lossCmpsInfo.get("multiAddition");
+      let redisProductList = lossCmpsInfo.get("redisProductList");
+
+      if(productId === 'NA00006157' || productId === 'NA00006401'){
+        // console.log('### getMultiAdditionCheckByExceptional : NA00006157 or NA00006401');
+
+        // WAVVE_FLO_70% 체크 여부
+        let option1 = false;
+        // T Membership 체크 여부
+        let option2 = false;
+
+        // 미성년자는 T Membership만 체크하므로 if 안의 상품정보를 체크하지 않음
+        if(svcInfo.isAdult){
+          // NA00007298 or NA00006164 둘 중 한개는 반드시 가입되어 있음(둘다가입은 없음)
+          console.log('getMultiAdditionCheckByExceptional NA00007298 : ' + multiAddition['NA00007298']);
+          console.log('getMultiAdditionCheckByExceptional NA00006164 : ' + multiAddition['NA00006164']);
+
+          if(multiAddition['NA00007298'] != 'N' && multiAddition['NA00007298'] != 'undefined'){
+            // console.log('### getMultiAdditionCheckByExceptional : Flo, Wavve Check');
+            option1 = true;
+          }else if(multiAddition['NA00006164'] != 'N' && multiAddition['NA00006164'] != 'undefined'){
+            // console.log('### getMultiAdditionCheckByExceptional : T Membership Check');
+            option2 = true;
+          }else{
+            // console.log('### getMultiAdditionCheckByExceptional : Not Check');
+          }
+        }else{
+          option1 = false;
+          option2 = true;
+        }
+
+        // scrbChkObjInfo, unscrbChkObjInfo, lossCmpsBffId 확인 후 lossCmpsList push
+        for(let i = 0 ; i < redisProductList.length; i++){
+          let item = redisProductList[i];
+           
+          // console.log('### getMultiAdditionCheckByExceptional redisProductList[' + i + '] start : ============================================');
+          // console.log('### getMultiAdditionCheckByExceptional lossCmpsNum : ' + item.lossCmpsNum);
+          // console.log('### getMultiAdditionCheckByExceptional lossCmpsNm : ' + item.lossCmpsNm);
+          // console.log('### getMultiAdditionCheckByExceptional scrbChkObjInfo : ' + item.scrbChkObjInfo);
+          // console.log('### getMultiAdditionCheckByExceptional unscrbChkObjInfo : ' + item.unscrbChkObjInfo);
+          // console.log('### getMultiAdditionCheckByExceptional lossCmpsBffId : ' + item.lossCmpsBffId);
+
+          // 미성년자는 T Membership만 체크
+          if(svcInfo.isAdult){
+            // unscrbChkObjInfo
+            if(item.unscrbChkObjInfo && option1){
+              let check = '';
+              let join = '';
+              let unscrbChkObjList = item.unscrbChkObjInfo.split('~');
+
+              for(let k = 0 ; k < unscrbChkObjList.length; k++){
+                let unscrbChkObjInfo = unscrbChkObjList[k];
+                check += 'N';
+                join += multiAddition[unscrbChkObjInfo];
+                // console.log('### getMultiAdditionCheckByExceptional unscrbChkObjInfo [' + k + '] : ' + unscrbChkObjInfo + ' : ' + multiAddition[unscrbChkObjInfo]);
+              }
+              // console.log('### getMultiAdditionCheckByExceptional join : check = ' + join + ' : ' + check);
+
+              if(join === check){
+                // console.log('### getMultiAdditionCheckByExceptional lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
+                // console.log('### getMultiAdditionCheckByExceptional lossCmpsList push item : ' + item);
+                lossCmpsList.push(item);
+              }
+            }
+          }
+
+          // T Membership 체크
+          if(item.lossCmpsBffId == 'BFF_04_0001' && option2){
+            if(lossCmpsInfo.get("tmembership") === "Y"){
+              // console.log('### getMultiAdditionCheckByExceptional lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
+              // console.log('### getMultiAdditionCheckByExceptional lossCmpsList push item : ' + item);
+              lossCmpsList.push(item);
+            }
+          }
+          // console.log('### getMultiAdditionCheckByExceptional redisProductList[' + i + '] end : ============================================');
+        }
+      }else{
+        // console.log('### getMultiAdditionCheckByExceptional : else');
+      }
+
+      return lossCmpsList;
     }
 
     /**

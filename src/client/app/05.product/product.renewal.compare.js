@@ -7,12 +7,14 @@ Tw.ProductCompare = function(rootEl, svcInfo, networkInfo, myPLMData, cdn) {
         return;
     }
 
+    console.log('@@@ : ProductCompare');
+
     this.$container = rootEl;
     this._svcInfo = svcInfo;
     this._networkInfo = this._parseNetworkInfo(networkInfo);
     this._myPLMData = myPLMData;
     this._cdn = cdn;
-  
+
     this._apiService = Tw.Api;
     this._popupService = Tw.Popup;
     this._historyService = new Tw.HistoryService();
@@ -63,7 +65,7 @@ Tw.ProductCompare.prototype = {
    */
     _comparePlan: function(e) {
         var $target = $(e.currentTarget);
-
+        
         this.compareProdId = $target.data('prod-id');
         this._sendTracking(this._svcInfo.prodId, $target.data('prod-id'), 'CPR'); // 비교하기 버튼 눌렸을 때 통계코드 전송
         this._getRedisData(this._svcInfo.prodId, this.compareProdId, $target);
@@ -154,7 +156,8 @@ Tw.ProductCompare.prototype = {
           value: Tw.FormatHelper.appendVoiceUnit(myPLMData.basOfrVcallTmsTxt),
           detail: ''
         },
-        basOfrCharCntCtt: Tw.FormatHelper.appendSMSUnit(myPLMData.basOfrLtrAmtTxt)
+        basOfrCharCntCtt: Tw.FormatHelper.appendSMSUnit(myPLMData.basOfrLtrAmtTxt),
+        selAgrmtAplyMfixAmt: Tw.FormatHelper.addComma(myPLMData.selAgrmtAplyMfixAmt)+'원'
       };
 
       if (myPLMData.basFeeTxt && /^[0-9]+$/.test(myPLMData.basFeeTxt)) {
@@ -218,7 +221,8 @@ Tw.ProductCompare.prototype = {
           value: $target.data('prod-call'),
           detail: ''
         },
-        basOfrCharCntCtt: $target.data('prod-text')
+        basOfrCharCntCtt: $target.data('prod-text'),
+        selAgrmtAplyMfixAmt: Tw.FormatHelper.addComma($target.data('prod-sel-agrmt'))
       };
       if(this.compareData.comparePlan.basOfrCharCntCtt.trim().length == 0) {
         this.compareData.comparePlan.basOfrCharCntCtt = null;
@@ -226,6 +230,7 @@ Tw.ProductCompare.prototype = {
       if(this.compareData.comparePlan.basOfrVcallTmsCtt.value.trim().length == 0) {
         this.compareData.comparePlan.basOfrVcallTmsCtt.value = null;
       }
+
       var data = '';
       var chartData = '';
       data = $target.data('prod-data').trim();
@@ -259,7 +264,25 @@ Tw.ProductCompare.prototype = {
       if(redisData.prodBenfCd_01.length > 0) {
         this.compareData.comparePlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
       }
+      
+      // 할인혜택(선택약정) 영역을 표기할지 결정
+      // 현재 요금제/비교 요금제 중 하나라도 선택약정 금액을 제공할 경우 해당 영역을 표기
+      console.log('@@@ this.compareData.curPlan.selAgrmtAplyMfixAmt : ' + this.compareData.curPlan.selAgrmtAplyMfixAmt);
+      console.log('@@@ this.compareData.comparePlan.selAgrmtAplyMfixAmt : ' + this.compareData.comparePlan.selAgrmtAplyMfixAmt);
 
+      // 선택약정 금액이 '원' 일 경우 없음으로 처리함
+      if(this.compareData.curPlan.selAgrmtAplyMfixAmt == '원'){
+        this.compareData.curPlan.selAgrmtAplyMfixAmt = '';
+      }
+      if(this.compareData.comparePlan.selAgrmtAplyMfixAmt == '원'){
+        this.compareData.comparePlan.selAgrmtAplyMfixAmt == '';
+      }
+
+      if(this.compareData.curPlan.selAgrmtAplyMfixAmt || this.compareData.comparePlan.selAgrmtAplyMfixAmt){
+        this.compareData.curPlan.isSelAgrmtAplyMfixAmt = true;
+      }else{
+        this.compareData.curPlan.isSelAgrmtAplyMfixAmt = false;
+      }
     },
 
    /**

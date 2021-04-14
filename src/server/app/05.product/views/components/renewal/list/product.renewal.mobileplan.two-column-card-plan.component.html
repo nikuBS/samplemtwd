@@ -62,4 +62,10 @@
             <% } %>
         </p>
     </div>
+    <% if(thisPlan.selAgrmtAplyMfixAmt.value) { %>
+        <div class="p-prod-sale">
+            <em><%= thisPlan.selAgrmtAplyMfixAmt.value %>원</em><br>
+            <span>(선택약정 반영 시)</span>
+        </div>
+    <% } %>
 </a>

@@ -106,8 +106,61 @@
                                 </div>
 							<%_ } _%>
 
+							<%_ if ( data.lossCmpsList != null && data.lossCmpsList.length > 0 ) { _%>
+								<div class="pro-article free-service">
+									<div class="article-tit">고객님, 아직 신청하지 않은 혜택이 있어요.</div><!-- 210201 수정 -->
+									<div class="article-cont">
+										<%_ for (let i=0; i < data.lossCmpsList.length; i++) { _%>
+											<script>
+												console.log('======================================');
+												console.log('손실보전번호 : ' + '<%= data.lossCmpsList[i].lossCmpsNum %>');
+												console.log('손실보전혜택노출문구 : ' + '<%= data.lossCmpsList[i].lossCmpsBenfExpsPhrs %>');
+												console.log('바텀시트여부 : ' + '<%= data.lossCmpsList[i].botShtYn %>');
+												console.log('링크 URL : ' + '<%= data.lossCmpsList[i].linkUrl %>');
+												console.log('이미지 URL : ' + '<%= data.lossCmpsList[i].iconImgUrl %>');
+											</script>
+										<%_ } _%>
+
+										<ul id="lossCmpsUl" class="go-service add-service-list shadow-box"><!-- show toggle -->
+											<%_ for (let i=0; i < data.lossCmpsList.length; i++) { _%>
+												<li class="service-item">
+													<div class="item-inner">
+														<span class="service-name">
+															<i class="ico"><img src="<%= CDN %><%= data.lossCmpsList[i].iconImgUrl %>" alt="<%= data.lossCmpsList[i].iconImgAltCtt %>"></i>
+															<%= data.lossCmpsList[i].lossCmpsBenfExpsPhrs %>
+														</span>
+
+														<%_ if ( data.lossCmpsList[i].botShtYn == 'Y' ) { _%>
+															<a href="javascript:void(0);">
+																<span class="service-detail" data-cmpsnum="<%= data.lossCmpsList[i].lossCmpsNum %>"
+																							 data-linkurl="<%= data.lossCmpsList[i].linkUrl %>"
+																							 data-mbrnm="<%= svcInfo.mbrNm %>" 
+																							 data-image="<%= data.lossCmpsList[i].iconImgUrl %>" 
+																							 >
+																	<%= data.lossCmpsList[i].btnNm %>
+																</span>
+															</a>
+														<%_ } else { _%>
+															<a href="<%= data.lossCmpsList[i].linkUrl %>">
+																<span class="service-detail"><%= data.lossCmpsList[i].btnNm %></span>
+															</a>
+														<%_ } _%>
+													</div>
+												</li>
+											<%_ } _%>
+										</ul>
+										
+										<%_ if ( data.lossCmpsList.length > 5 ) { _%>
+											<div id="lossCmpsDiv" class="more-link-area">
+												<button type="button" id="lossCmpsMore" class="more"><span class="more-txt">혜택 더보기</span></button>
+											</div>
+										<%_ } _%>
+									</div>
+								</div>
+							<%_ } _%>
+
 							<%_ if ( data.isWireless && data.piAgree ) { _%>
-								<%# 무선 사용자이면서 개인정보 동의가 있는경우 %>
+								<%# 무선 사용자이면서 개인정보 동의가 N (data.piAgree => true)  일 때 %>
 								
 								<%_ if ( data.piAgree.agr203Yn == 'N' ) { _%>
 									<div class="pro-article pro-recmd-article">
@@ -205,11 +258,20 @@
 															</div>
 															<div class="rn-prod-name">
 																<p class="p-name"><%= data.themeListData.prodList[i].basProductNm %></p>
+																
 																<% if( !data.themeListData.prodList[i].basFeeInfo.isNaN ) { %>
 																	<%# 상품 가격이 있다면 출력 %>
 																	<p class="p-price"><%= data.themeListData.prodList[i].basFeeInfo.value %>원</p>
 																<% } %>
 															</div>
+
+															<% if ( !data.themeListData.prodList[i].basAgreementAmount.isNaN ) { %>
+																<div class="rn-prod-sale">
+																	<span>선택약정 반영 시</span>
+																	<em><%= data.themeListData.prodList[i].basAgreementAmount.value %>원</em>
+																</div>
+															<% } %>
+
 															<div class="rn-prod-info">
 																<ul class="p-etc">
 																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
@@ -278,6 +340,14 @@
 																	<p class="p-price"><%= data.themeListData.prodList[i].basFeeInfo.value %>원</p>
 																<% } %>
 															</div>
+
+															<% if ( !data.themeListData.prodList[i].basAgreementAmount.isNaN ) { %>
+																<div class="rn-prod-sale">
+																	<span>선택약정 반영 시</span>
+																	<em><%= data.themeListData.prodList[i].basAgreementAmount.value %>원</em>
+																</div>
+															<% } %>
+
 															<div class="rn-prod-info">
 																<ul class="p-etc">
 																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
@@ -338,11 +408,20 @@
 															</div>
 															<div class="rn-prod-name">
 																<p class="p-name"><%= data.themeListData.prodList[i].basProductNm %></p>
+
 																<% if( !data.themeListData.prodList[i].basFeeInfo.isNaN ) { %>
 																	<%# 상품 가격이 있다면 출력 %>
 																	<p class="p-price"><%= data.themeListData.prodList[i].basFeeInfo.value %>원</p>
 																<% } %>
 															</div>
+
+															<% if ( !data.themeListData.prodList[i].basAgreementAmount.isNaN ) { %>
+																<div class="rn-prod-sale">
+																	<span>선택약정 반영 시</span>
+																	<em><%= data.themeListData.prodList[i].basAgreementAmount.value %>원</em>
+																</div>
+															<% } %>
+
 															<div class="rn-prod-info">
 																<ul class="p-etc">
 																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
@@ -435,6 +514,7 @@
 																		let myData = data.themeListData.prodList[i].basOfrDataQtyCtt || ''; // 데이터
 																		let myVoice = data.themeListData.prodList[i].basOfrVcallTmsCtt || ''; // 음성
 																		let mySms = data.themeListData.prodList[i].basOfrCharCntCtt || ''; // 문자
+																		let mySelAgrmtAplyMfixAmt = data.themeListData.prodList[i].basAgreementAmount.value  + '원'; // 선택약정할인금액
 
 																		if ( myData ) {
 																			myData = myData.isNaN ? myData.value : myData.value.data + myData.value.unit;
@@ -455,7 +535,8 @@
 																		data-prod-fee="<%= myProductPrice%>" 
 																		data-prod-call="<%= myVoice %>" 
 																		data-prod-text="<%= mySms %>" 
-																		data-prod-data="<%= myData %>">내 요금제와 비교
+																		data-prod-data="<%= myData %>"
+																		data-prod-sel-agrmt="<%= mySelAgrmtAplyMfixAmt %>">내 요금제와 비교
 																	</button>
 																</div>
 															</div>
