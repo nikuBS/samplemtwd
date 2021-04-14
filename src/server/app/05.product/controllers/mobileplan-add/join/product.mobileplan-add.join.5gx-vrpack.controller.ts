@@ -38,7 +38,10 @@ class ProductMobileplanAddJoin5gxVRpack extends TwViewController {
     'NA00007259', // 오큘러스 퀘스트2 분할납_24
     'NB00000736',
     'NB00000751', // Care8_할인_신청
-    'NB00000749'  // Care8_일시_신청
+    'NB00000749',  // Care8_일시_신청
+    'NA00007336', // 퀘스트2 256G 일시납
+    'NA00007337', // 퀘스트2 256G 분할납_12
+    'NA00007338'   // 퀘스트2 256G 분할납_24
   ];
 
   /**

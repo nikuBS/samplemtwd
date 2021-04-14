@@ -95,7 +95,13 @@ class CommonMemberLineRegister extends TwViewController {
     lineData.map((line) => {
       line.showSvcAttrCd = SVC_ATTR_NAME[line.svcAttrCd];
       line.showSvcScrbDtm = DateHelper.getShortDateNoDot(line.svcScrbDt);
-      line.showName = FormatHelper.isEmpty(line.nickNm) ? SVC_ATTR_NAME[line.svcAttrCd] : line.nickNm;
+      // line.showName = FormatHelper.isEmpty(line.nickNm) ? SVC_ATTR_NAME[line.svcAttrCd] : line.nickNm;
+      // 노출 조건 순서 변경  닉네임 > 펜네임(마스킹해제) > 서비스속성(휴대폰, 선불폰, IPTV 등등)
+      let showName = line.nickNm || line.oriRmk || SVC_ATTR_NAME[line.svcAttrCd];
+      if (showName && showName.length > 7) {
+        showName = showName.substring(0, 7) + '...';
+      }
+      line.showName = showName;
       line.showPet = type === LINE_NAME.MOBILE;
       line.showDetail = type === LINE_NAME.MOBILE ? FormatHelper.conTelFormatWithDash(line.svcNum) :
         line.svcAttrCd === SVC_ATTR_E.TELEPHONE ? FormatHelper.conTelFormatWithDash(line.svcNum) : line.addr;

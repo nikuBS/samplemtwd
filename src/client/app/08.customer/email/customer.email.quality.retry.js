@@ -48,9 +48,53 @@ Tw.CustomerEmailQualityRetry.prototype = {
     };
   },
 
-  _retry_inquiry: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0012, this._makeParams(), null, null, null, { jsonp : false })
-      .done($.proxy(this._request_inquiry, this));
+  _retry_inquiry: function (event) {
+    var $curTarget = $(event.currentTarget);
+
+    // 번호 검증
+    if ( !this._isValidPhone() ) {
+      this._popupService.openAlert(
+        Tw.CUSTOMER_EMAIL.INVALID_PHONE,
+        Tw.POPUP_TITLE.NOTIFY,
+        Tw.BUTTON_LABEL.CONFIRM,
+        $.proxy(function () {
+          setTimeout(function () {
+            $('.fe-quality_phone').click();
+            $('.fe-quality_phone').focus();
+          }, 500);
+        }, this),
+        null,
+        $curTarget
+      );
+      return false;
+    }
+
+    // 이메일 검증
+    if ( !this._isValidEmail() ) {
+      this._popupService.openAlert(
+        Tw.CUSTOMER_EMAIL.INVALID_EMAIL,
+        Tw.POPUP_TITLE.NOTIFY,
+        Tw.BUTTON_LABEL.CONFIRM,
+        $.proxy(function () {
+          setTimeout(function () {
+            $('.fe-quality_email').click();
+            $('.fe-quality_email').focus();
+          }, 500);
+        }, this),
+        null,
+        $curTarget
+      );
+      return false;
+    }
+
+    // [OP002-14121] 연락가능한 번호 추가 확인 프로세스 추가
+    this._popupService.openConfirmButton(
+      '연락 가능한 번호 ('+ $('.fe-quality_phone').val() + ')가 정확하게 입력되었나요?',
+      null,
+      $.proxy(function(){
+        this._apiService.request(Tw.API_CMD.BFF_08_0012, this._makeParams(), null, null, null, { jsonp : false })
+          .done($.proxy(this._request_inquiry, this));
+      }, this), null, Tw.POPUP_TITLE.EDIT, Tw.POPUP_TITLE.JOIN, $curTarget);
   },
 
   _request_inquiry: function (res) {
@@ -70,17 +114,17 @@ Tw.CustomerEmailQualityRetry.prototype = {
       }
 
       if ( $(item).prop('type') === 'number' ) {
-        var isValidNumber = $(item).val().length !== 0 ? true : false;
+        var isValidNumber = $(item).val().length !== 0;
         arrValid.push(isValidNumber);
       }
 
       if ( $(item).prop('type') === 'text' ) {
-        var isValidText = $(item).val().length !== 0 ? true : false;
+        var isValidText = $(item).val().length !== 0;
         arrValid.push(isValidText);
       }
 
       if ( $(item).prop('type') === 'textarea' ) {
-        var isValidTextArea = $(item).val().length !== 0 ? true : false;
+        var isValidTextArea = $(item).val().length !== 0;
         arrValid.push(isValidTextArea);
       }
     });
@@ -110,6 +154,26 @@ Tw.CustomerEmailQualityRetry.prototype = {
       Tw.BUTTON_LABEL.YES,
       $(e.currentTarget)
     );
-  }
+  },
+
+  /**
+   * @function
+   * @desc 전화번호 형식 검사
+   * @returns {boolean}
+   */
+  _isValidPhone: function () {
+    var sPhone = $('.fe-quality_phone').val();
+    return Tw.ValidationHelper.isCellPhone(sPhone) || Tw.ValidationHelper.isTelephone(sPhone);
+  },
+
+  /**
+   * @function
+   * @desc 이메일 형식 검사
+   * @returns {boolean}
+   */
+  _isValidEmail: function () {
+    var sEmail = $('.fe-quality_email').val();
+    return Tw.ValidationHelper.isEmail(sEmail);
+  },
 };
 

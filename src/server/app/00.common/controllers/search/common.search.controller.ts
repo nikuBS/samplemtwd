@@ -60,29 +60,33 @@ class CommonSearch extends TwViewController {
       _this.logger.info(_this, '[common.search.controller] [showSearchResult] redirectParam : ', redirectParam);
       _this.logger.info(_this, '[common.search.controller] [showSearchResult]', '###########################################################');
 
-      if ( searchResult.result.totalcount === 0 || from === 'empty' ) {
-        Observable.combineLatest(
+      if ( searchResult && searchResult.result && searchResult.result.totalcount === 0 || from === 'empty' ) {
+        Observable.combineLatest([
+          // 통합검색 설문 검색어
           thisObj.apiService.request(API_CMD.BFF_08_0070, {}, {}),
+          // 인기검색어
           thisObj.apiService.request(API_CMD.POPULAR_KEYWORD, {range : 'D'}, {})
-        ).subscribe((resultObj) => {
-          if (resultObj[1].code !== 0) {
+        ]).subscribe(([invstList, popword]) => {
+          if (popword.code !== 0) {
             return thisObj.error.render(res, {
               svcInfo: svcInfo,
               pageInfo: pageInfo,
-              code: resultObj[1].code,
-              msg: resultObj[1].msg
+              code: popword.code,
+              msg: popword.msg
             });
           }
+
           res.render('search/common.search.not-found.html', {
             pageInfo: pageInfo,
-            popularKeyword : resultObj[1].result,
+            popularKeyword : popword.result,
             keyword : searchResult.result.query,
             relatedKeyword : relatedKeyword,
             inKeyword : searchResult.result.researchQuery,
-            surveyList : resultObj[0],
+            surveyList : invstList,
             suggestQuery : searchResult.result.suggestQuery,
             step : step,
-            from : from
+            from : from,
+            searchKategorie: _this._getSearchKategorie(searchResult.result)
           });
         });
 
@@ -177,7 +181,7 @@ class CommonSearch extends TwViewController {
                 collection === 'shortcut' && _searchResult.result.search[0].shortcut.data[0].DOCID === 'M000083') {
                 _searchResult.result.totalcount = 0;
               }
-              if ( _searchResult.result.totalcount === 0 ) {
+              if ( _searchResult && _searchResult.result && _searchResult.result.totalcount === 0 ) {
                 Observable.combineLatest(
                   _this.apiService.request(API_CMD.BFF_08_0070, {}, {}),
                   _this.apiService.request(API_CMD.POPULAR_KEYWORD, {range : 'D'}, {})
@@ -199,7 +203,8 @@ class CommonSearch extends TwViewController {
                     surveyList : surveyList,
                     suggestQuery : _searchResult.result.suggestQuery,
                     step : step,
-                    from : null
+                    from : null,
+                    searchKategorie: _this._getSearchKategorie(_searchResult.result)
                   });
                 });
               } else {
@@ -369,7 +374,6 @@ class CommonSearch extends TwViewController {
             });
             break;
           case 7:
-            console.log('❖❖❖❖❖❖❖❖❖❖❖ 부가서비스 검색 ❖❖❖❖❖❖❖❖❖❖❖');  
             // [OP002-9968] 의 배포 일정 연기 (9/17) 로 연기됨에 따라 기존 로직으로 복구함. 9/17 배포시에 본 로직은 제거 필요 [S]
             // this.apiService.request(API_CMD.BFF_05_0137, {}, {})
             // .subscribe((resultData) => {
@@ -409,7 +413,6 @@ class CommonSearch extends TwViewController {
             }
             // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/17) 로 연기됨에 따라 원복처리함 [E]
           case 8:
-            // console.log('❖❖❖❖❖❖❖❖❖❖❖ 음성잔여량 검색 ❖❖❖❖❖❖❖❖❖❖❖');
             this.apiService.request(API_CMD.BFF_05_0001, {}, {}).
             subscribe((resultData) => {
               if (resultData.code !== API_CODE.CODE_00) {
@@ -421,7 +424,6 @@ class CommonSearch extends TwViewController {
             });
             break;
           case 9:
-            // console.log('❖❖❖❖❖❖❖❖❖❖❖ 요금약정할인 검색 ❖❖❖❖❖❖❖❖❖❖❖');
             this.apiService.request(API_CMD.BFF_05_0063, {}, null, [], API_VERSION.V2).
             subscribe((resultData) => {
               if (resultData.code !== API_CODE.CODE_00) {
@@ -433,7 +435,6 @@ class CommonSearch extends TwViewController {
             });
             break;
           case 10:
-            // console.log('❖❖❖❖❖❖❖❖❖❖❖ 단말기 할부금 검색 ❖❖❖❖❖❖❖❖❖❖❖');
             this.apiService.request(API_CMD.BFF_05_0063, {}, null, [], API_VERSION.V2).
             subscribe((resultData) => {
               if (resultData.code !== API_CODE.CODE_00) {

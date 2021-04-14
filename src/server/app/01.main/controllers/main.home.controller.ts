@@ -89,8 +89,7 @@ class MainHome extends TwViewController {
           this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
           this.getProductGroup(),
           this.getPersonData(svcInfo, req),
-          this.getPersonSmsDisableTimeCheck()
-        ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList, personData, personSmsData]) => {
+        ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList, personData]) => {
           // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
           if ( usageData.data ) {
             usageData.data['isTplanProd'] = prodList && prodList.findIndex(item => item.prodId === svcInfo.prodId) > -1;
@@ -98,7 +97,6 @@ class MainHome extends TwViewController {
           homeData.usageData = usageData;
           homeData.membershipData = membershipData;
           recommendProdsData = recommendProdsResult;
-          svcInfo.personSmsDisableTimeCheck = personSmsData; // 무료문자 노출조건
           svcInfo.personTimeChk = personData.personDisableTimeCheck; // 아이콘 비노출 시간 체크
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck; // 아이콘 비노출 서비스 타입 체크
           svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
@@ -119,10 +117,8 @@ class MainHome extends TwViewController {
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
           this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
           this.getPersonData(svcInfo, req),
-          this.getPersonSmsDisableTimeCheck()
-        ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown, personData, personSmsData]) => {
+        ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown, personData]) => {
           homeData.billData = billData;
-          svcInfo.personSmsDisableTimeCheck = personSmsData; // 무료문자 노출조건
           svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
           svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
@@ -143,15 +139,13 @@ class MainHome extends TwViewController {
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
           this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
           this.getProductGroup(),
-          this.getPersonData(svcInfo, req),
-          this.getPersonSmsDisableTimeCheck()
-        ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList, personData, personSmsData]) => {
+          this.getPersonData(svcInfo, req)
+        ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList, personData]) => {
           // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
           if ( usageData.data ) {
             usageData.data['isTplanProd'] = prodList && prodList.findIndex(item => item.prodId === svcInfo.prodId) > -1;
           }
           homeData.usageData = usageData;
-          svcInfo.personSmsDisableTimeCheck = personSmsData; // 무료문자 노출조건
           svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
           svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크

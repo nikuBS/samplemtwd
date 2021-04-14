@@ -723,7 +723,6 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
 
       // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
       if(line === 'MOBILE' && !Tw.FormatHelper.isEmpty(childLineList)) {
-
         var childInfos = [];
         _.map(childLineList, $.proxy(function (childLine) {
           childInfos.push({

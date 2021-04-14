@@ -246,10 +246,10 @@ Tw.HistoryService.prototype = {
   /**
    * netfunnel 처리
    * @param { string } url
-   * @param { function } rSuc
+   * @param { function } successCallBack
    * @returns { boolean }
    */
-  requestNetfunnel: function(url, rSuc) {
+  requestNetfunnel: function(url, successCallBack) {
     // 로그인 안된상태 (sessionStorage 정보 확인) 에서는 정상 처리
     if (!Tw.CommonHelper.getSessionStorage(Tw.SSTORE_KEY.PRE_TWM)) {
       return false
@@ -262,8 +262,8 @@ Tw.HistoryService.prototype = {
     var findTarget = _.find(Tw.NetFunnelInfo, function(info) {
       return checkActionId === info.target;
     });
-    // netfunnel 환경설정변수 값 중 노출여부 체크
-    if (!findTarget || !(findTarget && findTarget.visible)) {
+    // netfunnel target이 없는 경우에는 처리하지 않는다
+    if (!findTarget) {
       return false;
     }
 
@@ -274,7 +274,7 @@ Tw.HistoryService.prototype = {
       skin_id: 'tworld'
     }, {
       success: function() {
-        rSuc();
+        successCallBack();
       }
     });
     return true;
