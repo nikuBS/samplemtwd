@@ -106,7 +106,7 @@
                                             <em class="ranking"><%= product.expsSeq %></em>
                                             <strong class="ti"><%= product.prodNm %></strong>
                                             <em class="sum">월 <span class="ff-tg-medium"><%= formatHelper.addComma(product.basFeeAmt.toString()) %></span>원</em>
-                                            <% if (product.selAgrmtAplyMfixAmt) { %>
+                                            <% if (product.selAgrmtAplyMfixAmt && parseInt(product.selAgrmtAplyMfixAmt, 10) > 0) { %>
                                             <span class="tod-choice">선택약정 반영 시 <span><%= formatHelper.addComma(product.selAgrmtAplyMfixAmt.toString()) %></span>원</span>
                                             <% } %>
                                             <span class="tag">
