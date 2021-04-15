@@ -90,7 +90,7 @@ Tw.ProductRenewalSubmain.prototype = {
     }else if(prodId === 'NA00006484'){
       var lossCmpsNum = element.currentTarget.dataset.cmpsnum;
 
-      if(lossCmpsNum === 13){
+      if(lossCmpsNum === '13'){
         hbs = 'actionsheet_product_tab50';
       }else{
         hbs = 'actionsheet_product_tab';
