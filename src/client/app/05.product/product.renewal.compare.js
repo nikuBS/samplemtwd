@@ -275,7 +275,7 @@ Tw.ProductCompare.prototype = {
         this.compareData.curPlan.selAgrmtAplyMfixAmt = '';
       }
       if(this.compareData.comparePlan.selAgrmtAplyMfixAmt == '원'){
-        this.compareData.comparePlan.selAgrmtAplyMfixAmt == '';
+        this.compareData.comparePlan.selAgrmtAplyMfixAmt = '';
       }
 
       if(this.compareData.curPlan.selAgrmtAplyMfixAmt || this.compareData.comparePlan.selAgrmtAplyMfixAmt){
