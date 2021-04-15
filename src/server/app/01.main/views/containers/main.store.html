@@ -106,13 +106,16 @@
                                             <em class="ranking"><%= product.expsSeq %></em>
                                             <strong class="ti"><%= product.prodNm %></strong>
                                             <% var basFeeAmt = parseInt(product.basFeeAmt, 10);
+                                            var isNoShowMfixAmt = true;
                                             if (basFeeAmt) {
                                             %>
                                             <em class="sum"><span class="ff-tg-medium"><%= formatHelper.addComma(product.basFeeAmt.toString()) %></span>원</em>
-                                            <% } else { %>
+                                            <% } else {
+                                            isNoShowMfixAmt = false;
+                                            %>
                                             <em class="sum"><span class="ff-tg-medium"><%= product.basFeeAmt.toString() %></span></em>
                                             <% } %>
-                                            <% if (product.selAgrmtAplyMfixAmt && parseInt(product.selAgrmtAplyMfixAmt, 10) > 0) { %>
+                                            <% if (isNoShowMfixAmt && (product.selAgrmtAplyMfixAmt && parseInt(product.selAgrmtAplyMfixAmt, 10) > 0)) { %>
                                             <span class="tod-choice">선택약정 반영 시 <span><%= formatHelper.addComma(product.selAgrmtAplyMfixAmt.toString()) %></span>원</span>
                                             <% } %>
                                             <span class="tag">
