@@ -108,7 +108,7 @@
                                             <% var basFeeAmt = parseInt(product.basFeeAmt, 10);
                                             if (basFeeAmt) {
                                             %>
-                                            <em class="sum">월 <span class="ff-tg-medium"><%= formatHelper.addComma(product.basFeeAmt.toString()) %></span>원</em>
+                                            <em class="sum"><span class="ff-tg-medium"><%= formatHelper.addComma(product.basFeeAmt.toString()) %></span>원</em>
                                             <% } else { %>
                                             <em class="sum"><span class="ff-tg-medium"><%= product.basFeeAmt.toString() %></span></em>
                                             <% } %>
