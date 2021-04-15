@@ -33,7 +33,7 @@ Tw.NetFunnelInfo = [
     target: '/product/mobileplan-add'
   }, {
     actionId: 'act-product_mobileplan',
-    target: '/product/mobileplan'
+    target: '/product/renewal/mobileplan'
   },
   {
     actionId: 'act-benefit_submain',
