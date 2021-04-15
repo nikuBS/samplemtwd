@@ -71,13 +71,13 @@ inKeyword = encodeURIComponent(inKeyword);
             <% } %>
 
             <!-- 스마트배너 검색결과 -->
-            <% if ( searchKategorie && searchKategorie.smart && searchKategorie.smart.data && searchKategorie.smart.data.length > 0 ) { %>
-                <% if ( searchKategorie.smart.data[0] && searchKategorie.smart.data[0].BNNR_IOS320_URL && searchKategorie.smart.data[0].BNNR_IOS320_URL.length > 0 ) { %>
+            <% if ( searchCategory && searchCategory.smart && searchCategory.smart.data && searchCategory.smart.data.length > 0 ) { %>
+                <% if ( searchCategory.smart.data[0] && searchCategory.smart.data[0].BNNR_IOS320_URL && searchCategory.smart.data[0].BNNR_IOS320_URL.length > 0 ) { %>
                     <div class="search-banner">
-                        <a class="list-data smart-element" data-require-pay="<%= searchKategorie.smart.data[0].BNNR_NBILL_YN %>"
-                            href="<%= searchKategorie.smart.data[0].SMART_SRCH_URL %>"
-                            data-id="<%= searchKategorie.smart.data[0].DOCID %>" data-category="smart" data-tit="<%= searchKategorie.smart.data[0].SMART_SRCH_NM %>">
-                            <img src="<%= CDN + searchKategorie.smart.data[0].BNNR_IOS320_URL %>" alt="<%= searchKategorie.smart.data[0].SMART_SRCH_NM %>">
+                        <a class="list-data smart-element" data-require-pay="<%= searchCategory.smart.data[0].BNNR_NBILL_YN %>"
+                            href="<%= searchCategory.smart.data[0].SMART_SRCH_URL %>"
+                            data-id="<%= searchCategory.smart.data[0].DOCID %>" data-category="smart" data-tit="<%= searchCategory.smart.data[0].SMART_SRCH_NM %>">
+                            <img src="<%= CDN + searchCategory.smart.data[0].BNNR_IOS320_URL %>" alt="<%= searchCategory.smart.data[0].SMART_SRCH_NM %>">
                         </a>
                     </div>
                 <% } %>
@@ -169,9 +169,9 @@ inKeyword = encodeURIComponent(inKeyword);
 <script>
     $(document).ready(function () {
         // 카테고리별 검색 결과
-        var notFoundSearchKategorie = JSON.parse(window.unescape('<%- escape(JSON.stringify(searchKategorie)) %>'));
+        var notFoundSearchCategory = JSON.parse(window.unescape('<%- escape(JSON.stringify(searchCategory)) %>'));
 
-        new Tw.CommonSearchNotFound($('.wrap'),<%- JSON.stringify(surveyList) %>,<%- step %>,'<%- from %>','<%- keyword %>','<%- inKeyword %>', notFoundSearchKategorie);
+        new Tw.CommonSearchNotFound($('.wrap'),<%- JSON.stringify(surveyList) %>,<%- step %>,'<%- from %>','<%- keyword %>','<%- inKeyword %>', notFoundSearchCategory);
     });
 </script>
 <% include ../../components/end.component.html %>
