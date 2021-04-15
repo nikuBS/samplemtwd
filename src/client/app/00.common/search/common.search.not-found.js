@@ -15,7 +15,7 @@
  * @param {String} keyword – 검색어
  * @returns {void}
  */
- Tw.CommonSearchNotFound = function (rootEl, surveyList, step, from, keyword, inKeyword, notFoundSearchKategorie) {
+ Tw.CommonSearchNotFound = function (rootEl, surveyList, step, from, keyword, inKeyword, notFoundSearchCategory) {
   //this._cdn = cdn;
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
@@ -28,7 +28,7 @@
   this._from = from;
   this._keyword = keyword;
   this._inKeyword = inKeyword;
-  this._notFoundSearchKategorie = notFoundSearchKategorie;
+  this._notFoundSearchCategory = notFoundSearchCategory;
   this._bpcpService = Tw.Bpcp;
   this._init();
   /*
@@ -97,12 +97,12 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     // Tw.Logger.info('[common.search.not-found] [_nextInit] decoded inKeyword : ', '[' + inKeyword + ']');
     // Tw.Logger.info('[common.search.not-found] [_nextInit] encoded keyword : ', '[' + encodedKeyword + ']');
     // Tw.Logger.info('[common.search.not-found] [_nextInit] encoded inKeyword : ', '[' + encodedInKeyword + ']');
-    Tw.Logger.info('[common.search.not-found] [_nextInit] this._notFoundSearchKategorie : ', this._notFoundSearchKategorie);
+    Tw.Logger.info('[common.search.not-found] [_nextInit] this._notFoundSearchCategory : ', this._notFoundSearchCategory);
 
     // 스마트배너 검색 결과가 있다면
-    if ( this._notFoundSearchKategorie && this._notFoundSearchKategorie.smart && this._notFoundSearchKategorie.smart.data && this._notFoundSearchKategorie.smart.data.length > 0 ) {
+    if ( this._notFoundSearchCategory && this._notFoundSearchCategory.smart && this._notFoundSearchCategory.smart.data && this._notFoundSearchCategory.smart.data.length > 0 ) {
       // 스마트검색 출력 (Tw.CommonSearch.prototype._showSmart)
-      this._showSmart(this._notFoundSearchKategorie.smart.data[0], this.$container);
+      this._showSmart(this._notFoundSearchCategory.smart.data[0], this.$container);
     }
 
     window.XtractorScript.xtrSearchResult(encodedKeyword, encodedInKeyword, '0');
