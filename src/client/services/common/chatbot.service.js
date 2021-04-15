@@ -24,7 +24,7 @@ Tw.ChatbotService = function() {
         { command: Tw.API_CMD.BFF_06_0015, params: {} },                            // 5. 데이터 선물가능
         { command: Tw.API_CMD.BFF_05_0149, params: {} },                            // 6. 일시정지 (svcStCd: AC(사용중), SP(일시정지))
         { command: Tw.API_CMD.BFF_04_0006, params: {} },                            // 7. 콘텐츠결제 이용 여부 (Y: 이용, N: 미이용)
-        { command: Tw.API_CMD.BFF_05_0235, params: {
+        { command: Tw.API_CMD.BFF_05_0235, params: {                                // [챗봇] MLS User Profile
             profile_id : 'default', 
             item_ids : ['app_use_traffic_category_ratio','app_use_traffic_game_median_yn','app_use_traffic_music_ratio_median_yn']
         }}
@@ -32,12 +32,13 @@ Tw.ChatbotService = function() {
 
     // 챗봇 팝업 노출대상 화면 리스트 (10/22)
      this._chatbotPopDispPageUrls = {
-        '/myt-data/submain' : 'greeting_pop',        // 1. 나의 데이터/통화
-        '/myt-fare/submain'   : 'greeting_pop',      // 2. 나의요금
-        '/myt-join/submain'   : 'greeting_pop',      // 3. 나의 가입정보
-        '/membership/submain'   : 'greeting_pop',    // 4. T 멤버십
-        '/product/mobileplan'   : 'greeting_pop',    // 5. 요금제
-        '/product/mobileplan-add'   : 'greeting_pop' // 6. 부가서비스
+        '/myt-data/submain' : 'greeting_pop',           // 1. 나의 데이터/통화
+        '/myt-fare/submain' : 'greeting_pop',           // 2. 나의요금
+        '/myt-join/submain' : 'greeting_pop',           // 3. 나의 가입정보
+        '/membership/submain' : 'greeting_pop',         // 4. T 멤버십
+        '/product/mobileplan' : 'greeting_pop',         // 5. 요금제
+        '/product/mobileplan-add' : 'greeting_pop',     // 6. 부가서비스
+        '/product/renewal/mobileplan' : 'greeting_pop'  // 요금제
     };
 
     // 발화어 리스트
@@ -230,6 +231,9 @@ Tw.ChatbotService.prototype = {
                 this._mlsChannelId = 'tw_greeting_rank_sub_mbr';
                 break;
             case '/product/mobileplan':
+                this._mlsChannelId = 'tw_greeting_rank_sub_plan';
+                break;
+            case '/product/renewal/mobileplan':
                 this._mlsChannelId = 'tw_greeting_rank_sub_plan';
                 break;
             case '/product/mobileplan-add':
@@ -563,7 +567,7 @@ Tw.ChatbotService.prototype = {
                                             var mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|' + this._mlsGreetingRangking[0];
                                             this._mlsItemIds = mlsItemIds;
                                             // 발화어 배열 크기 (B타입인 경우 1)
-                                            var greetingRangkingSize = 1;
+                                            // var greetingRangkingSize = 1;
                                             // processId (0232, 0233 호출하지 않도록 처리하기 위해 'N'으로)
                                             this._mlsProcessId = 'N';
 
@@ -875,8 +879,8 @@ Tw.ChatbotService.prototype = {
         $('.bpcpItem').on('click', function(e){
             Tw.Logger.info('[chatbot.service] [_bindEvent] bpcpItem click', '');
 
-            // 나의 요금 페이지 클릭 이벤트 중복 수행 수정
-            if ( location.pathname === '/myt-fare/submain' ) {
+            // 나의 요금, 요금제 페이지 클릭 이벤트 중복 수행 수정
+            if ( location.pathname === '/myt-fare/submain' || location.pathname === '/product/renewal/mobileplan' ) {
                 e.preventDefault();
                 e.stopPropagation();
             }
@@ -984,8 +988,8 @@ Tw.ChatbotService.prototype = {
         $('.fe-home-charge_open').on('click', function(e){
             Tw.Logger.info('[chatbot.service] [_bindEvent] fe-home-charge_open click', '');
             
-            // 나의 요금 페이지 클릭 이벤트 중복 수행 수정
-            if ( location.pathname === '/myt-fare/submain' ) {
+            // 나의 요금, 요금제 페이지 클릭 이벤트 중복 수행 수정
+            if ( location.pathname === '/myt-fare/submain' || location.pathname === '/product/renewal/mobileplan' ) {
                 e.preventDefault();
                 e.stopPropagation();
             }
@@ -1022,8 +1026,8 @@ Tw.ChatbotService.prototype = {
         $('.bpcpItemlink').on('click', function(e){
             Tw.Logger.info('[chatbot.service] [_bindEvent] bpcpItemlink click', '');
             
-            // 나의 요금 페이지 클릭 이벤트 중복 수행 수정
-            if ( location.pathname === '/myt-fare/submain' ) {
+            // 나의 요금, 요금제 페이지 클릭 이벤트 중복 수행 수정
+            if ( location.pathname === '/myt-fare/submain' || location.pathname === '/product/renewal/mobileplan' ) {
                 e.preventDefault();
                 e.stopPropagation();
             }
@@ -1581,7 +1585,7 @@ Tw.ChatbotService.prototype = {
 
         Tw.Logger.info('[chatbot.service] [_redirectChatbotPage] 유무선 여부 (M:무선, W:유선) : ', serviceType);
 
-        var eParam = '';
+        // var eParam = '';
         var chkAccessDtm = Tw.DateHelper.getFullDateAnd24Time(new Date());
         // var extraParam = 'menuId=&svcType=' + serviceType + '&svcGr=' + _this._svcInfo.svcGr + '&appVersion=' + _this._appVersion + '&twdAgreeInfo=' + _this._twdAgreeYn.split('~')[0] + '&keyword=initial';
         var extraParam = 'menuId=&svcType=' + serviceType + '&svcGr=' + _this._svcInfo.svcGr + '&appVersion=' + _this._appVersion + '&keyword=initial' + '&chkAccessDtm=' + chkAccessDtm;
