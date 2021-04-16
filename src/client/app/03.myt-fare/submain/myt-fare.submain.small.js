@@ -9,7 +9,7 @@ Tw.MyTFareSubMainSmall = function (params) {
   this.$container = params.$element;
   this.data = params.data;
   this._apiService = Tw.Api;
-  this._popupService = Tw.Popup;
+  this._popupService = Tw.Popup; 
 
   this._init();
 };
