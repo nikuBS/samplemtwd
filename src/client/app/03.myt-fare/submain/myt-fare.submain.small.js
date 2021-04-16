@@ -10,7 +10,6 @@ Tw.MyTFareSubMainSmall = function (params) {
   this.data = params.data;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._historyService = new Tw.HistoryService(this.$container);
 
   this._init();
 };
@@ -27,6 +26,7 @@ Tw.MyTFareSubMainSmall.prototype = {
    */
   _cachedElement: function () {
     // this._realtimeArea = this.$container.find('.fe-realtime-list');
+
   },
 
   /**
@@ -35,22 +35,6 @@ Tw.MyTFareSubMainSmall.prototype = {
    */
   _bindEvent: function () {
     this.$container.on('click', '[data-change-limit]', $.proxy(this._changeLimit, this));
-    this.$container.on('click', '.fe-smallCon', $.proxy(this._onUsageLink, this));
-  },
-  
-   /**
-   * @function
-   * @desc 매월5일 전후 페이지 진입 변경
-   */
-  _onUsageLink: function(e){
-    e.preventDefault();
-    var $url = $(e.currentTarget).attr('href') , date = new Date() , day = date.getDate();
-    if(day < 5){ // 매월 5일 이전
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.FIVE_POSSIBLE);
-      return;
-    }else{       // 매월 5일 이후 
-      this._historyService.goLoad($url);
-    }
   },
 
   /**
