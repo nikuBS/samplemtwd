@@ -123,7 +123,8 @@ const LOSS_CMPS_PRODUCT_ID =
 const LOSS_CMPS_PRODUCT_ID_EXCEPTIONAL = 
 [
   'NA00006157', // 0플랜 라지
-  'NA00006401'  // 0플랜 슈퍼 히어로
+  'NA00006401', // 0플랜 슈퍼 히어로
+  'NA00006403'  // 5GX스탠다드 -> 2021-04-19 추가
 ];
 
 let lossCmpsInfo = new Map<String, Object>();
@@ -155,8 +156,8 @@ export default class RenewProduct extends TwViewController {
             , isCompareButton // 비교하기 버튼 출력 여부
             , lossCmpsResult // 손실보전 항목 노출 여부
           ]) => {
-            // console.log('### =====================================================================');
-            // console.log('### lossCmpsResult : ' + JSON.stringify(lossCmpsResult));
+            //console.log('### =====================================================================');
+            //console.log('### lossCmpsResult : ' + JSON.stringify(lossCmpsResult));
 
             let lossCmpsList : any;
             if(lossCmpsResult == API_CODE.CODE_00 || lossCmpsResult === '0'){
@@ -165,9 +166,9 @@ export default class RenewProduct extends TwViewController {
               lossCmpsList = null;
             }
 
-            // console.log('### lossCmpsList : ' + JSON.stringify(lossCmpsList));
-            // console.log('### lossCmpsList : render');
-            // console.log('### =====================================================================');
+            //console.log('### lossCmpsList : ' + JSON.stringify(lossCmpsList));
+            //console.log('### lossCmpsList : render');
+            //console.log('### =====================================================================');
 
             const isWireless = svcInfo ? !(SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) : false; // 무선 회선인지 체크
             const data = {
@@ -774,43 +775,42 @@ export default class RenewProduct extends TwViewController {
     private getLossCmpsResult(svcInfo: any){
       // 미로그인, 간편로그인일 경우 손실보전 조회 안함
       if( !svcInfo || svcInfo.loginType != 'T'){ 
-        // console.log('### : 대상아님');
-        // console.log('### : ' + JSON.stringify(svcInfo));
+        //console.log('### : 대상아님');
+        //console.log('### : ' + JSON.stringify(svcInfo));
         return Observable.of(null);
       }else{
         // 1. 사용자의 상품이 손실보전 체크 대상인지 체크
         return Observable.of(this.checkProductId(svcInfo))
           .pipe(flatMap(p1 => {
-            // console.log('### pipe1 start');
-            // console.log('### pipe1 : ' + p1);
-            // console.log('### pipe1 end');
+            //console.log('### pipe1 start');
+            //console.log('### pipe1 : ' + p1);
+            //console.log('### pipe1 end');
             return Observable.of(p1);
          }))
           // 2. 손실보전 Redis 조회
           .pipe(flatMap(p2 => {
-            // console.log('### pipe2 start : ' + p2);
+            //console.log('### pipe2 start : ' + p2);
 
             if(p2 === undefined){
-              // console.log('### pipe2 end : 대상 요금제 아님');
+              //console.log('### pipe2 end : 대상 요금제 아님');
               return Observable.of(null);
             }else{
               lossCmpsInfo.set("productId", p2);
 
               return this.redisService.getData(REDIS_KEY.LOSS_CMPS_INFO + p2).map((resp) => {
-                // console.log('### pipe2 redis resp : ' + JSON.stringify(resp));
-                //// console.log('### pipe2 redis resp : ' + JSON.stringify(resp.result.lossCmpsInfo));
-               
+                //console.log('### pipe2 redis resp : ' + JSON.stringify(resp));
+                
                 if(resp.code === API_CODE.CODE_00) {
                   let redisProductList = resp.result.lossCmpsInfo;
                 
                   for(let i = 0 ; i < redisProductList.length; i++){
-                    // console.log('### pipe2 redis[' + i + '] : ' + redisProductList[i].lossCmpsNm);
+                    //console.log('### pipe2 redis[' + i + '] : ' + redisProductList[i].lossCmpsNm);
                   }
 
                   lossCmpsInfo.set("redisProductList", redisProductList);
-                  // console.log('### pipe2 end : success');
+                  //console.log('### pipe2 end : success');
                 }else{
-                  // console.log('### pipe2 end : fail');
+                  //console.log('### pipe2 end : fail');
                 }
 
                 return resp.code;
@@ -819,7 +819,7 @@ export default class RenewProduct extends TwViewController {
           }))
           // 3.무선 부가서비스 사용 여부 조회
           .pipe(flatMap(p3 => {
-            // console.log('### pipe3 start : ' + p3);
+            //console.log('### pipe3 start : ' + p3);
 
             if(p3 === API_CODE.CODE_00  || p3 === '0'){
               let tempScrbList = new Set();
@@ -856,9 +856,9 @@ export default class RenewProduct extends TwViewController {
               // 3-2. 무선 부가서비스 사용 여부 다중 조회
               // 무선 부가서비스 사용 여부 조회할 상품 아이디 조합
               let searchProductId = checkScrbList.join('~');
-              // console.log('### pipe3 scrbChkObjInfo : ' + checkScrbList);
-              // console.log('### pipe3 unscrbChkObjInfo : ' + checkUnScrbList);
-              // console.log('### pipe3 lossCmpsBffId : ' + lossCmpsBffId);
+              //console.log('### pipe3 scrbChkObjInfo : ' + checkScrbList);
+              //console.log('### pipe3 unscrbChkObjInfo : ' + checkUnScrbList);
+              //console.log('### pipe3 lossCmpsBffId : ' + lossCmpsBffId);
 
               // 무선 부가서비스 사용 여부 조회(미성년자는 가입불가이므로 조회할 필요 없음)
               if(svcInfo.isAdult){
@@ -867,14 +867,14 @@ export default class RenewProduct extends TwViewController {
                 }
                 searchProductId += checkUnScrbList.join('~');
   
-                // console.log('### pipe3 BFF_10_0183 searchProductId : ' + searchProductId);
+                //console.log('### pipe3 BFF_10_0183 searchProductId : ' + searchProductId);
 
                 if(searchProductId){
                   return this.apiService.request(API_CMD.BFF_10_0183, {}, {}, [ searchProductId ]).map((resp) => {
-                    // console.log('### pipe3 BFF_10_0183 : ' + JSON.stringify(resp));
+                    //console.log('### pipe3 BFF_10_0183 : ' + JSON.stringify(resp));
     
                     if(resp.code === API_CODE.CODE_00) { 
-                      // console.log('### pipe3 end : success');
+                      //console.log('### pipe3 end : success');
                       lossCmpsInfo.set("multiAddition", resp.result);
                       return resp.code;
                     }else if (resp.code === 'ICAS4003') {
@@ -888,56 +888,56 @@ export default class RenewProduct extends TwViewController {
                       }
                       multiAddition += '}';
                       lossCmpsInfo.set("multiAddition", JSON.parse(multiAddition));
-                      // console.log('### pipe3 end : ICAS4003 => ' + JSON.parse(multiAddition));
+                      //console.log('### pipe3 end : ICAS4003 => ' + JSON.parse(multiAddition));
   
                       return API_CODE.CODE_00;
                     }else{
-                      // console.log('### pipe3 end : fail');
+                      //console.log('### pipe3 end : fail');
                       return Observable.of(null); 
                     }
                   });
                 }else{
-                  // console.log('### pipe3 end : success : searchProductId is empty');
+                  //console.log('### pipe3 end : success : searchProductId is empty');
                   return API_CODE.CODE_00;
                 }
               }else{
-                // console.log('### pipe3 end : success : is not adult');
+                //console.log('### pipe3 end : success : is not adult');
                 return API_CODE.CODE_00;
               }
             }else{
-              // console.log('### pipe3 end : pipe2 receive fail');
+              //console.log('### pipe3 end : pipe2 receive fail');
               return Observable.of(null); 
             }
           }))
           // 4. T Mermbership 체크가 필요할 경우 체크
           .pipe(flatMap(p4 => {
-            // console.log('### pipe4 start : ' + p4);
+            //console.log('### pipe4 start : ' + p4);
            
             // 현재는 lossCmpsBffId에 BFF_04_0001 한개만 오게 되어있음
             if(p4 === API_CODE.CODE_00 || p4 === '0'){
               let lossCmpsBffId = lossCmpsInfo.get("lossCmpsBffId");
-              // console.log('### pipe4 lossCmpsBffId : ' + lossCmpsBffId);
+              //console.log('### pipe4 lossCmpsBffId : ' + lossCmpsBffId);
 
               if(lossCmpsBffId == 'BFF_04_0001'){
                 return this.apiService.request(API_CMD.BFF_04_0001, {}, {}, []).map((resp) => {
-                  // console.log('### pipe4 BFF_04_0001 : ' + JSON.stringify(resp));
+                  //console.log('### pipe4 BFF_04_0001 : ' + JSON.stringify(resp));
 
                   if(resp.code === API_CODE.CODE_00){ 
-                    // console.log('### pipe4 end : T membership pass');
+                    //console.log('### pipe4 end : T membership pass');
                     lossCmpsInfo.set("tmembership", "N");
                   }else{
-                    // console.log('### pipe4 end : T membership add');
+                    //console.log('### pipe4 end : T membership add');
                     lossCmpsInfo.set("tmembership", "Y");
                   }
 
                   return p4;
                 });
               }else{
-                // console.log('### pipe4 end : T membership not');
+                //console.log('### pipe4 end : T membership not');
                 return API_CODE.CODE_00;
               }
             }else{
-              // console.log('### pipe4 end : pipe3 receive fail');
+              //console.log('### pipe4 end : pipe3 receive fail');
               return Observable.of(null);
             }
           }))
@@ -957,13 +957,13 @@ export default class RenewProduct extends TwViewController {
 
     // 사용자의 부가서비스 가입 여부 체크하여, 손실 보전 정보 생성
     private getMultiAdditionCheck(svcInfo : any, lossCmpsInfo : any){
-      // console.log('### getMultiAdditionCheck');
-      // console.log('### lossCmpsInfo.productId : ' + lossCmpsInfo.get("productId"));
-      // console.log('### lossCmpsInfo.redisProductList : ' + JSON.stringify(lossCmpsInfo.get("redisProductList")));
-      // console.log('### lossCmpsInfo.scrbChkObjInfo : ' + lossCmpsInfo.get("scrbChkObjInfo"));
-      // console.log('### lossCmpsInfo.unscrbChkObjInfo : ' + lossCmpsInfo.get("unscrbChkObjInfo"));
-      // console.log('### lossCmpsInfo.lossCmpsBffId : ' + lossCmpsInfo.get("lossCmpsBffId"));
-      // console.log('### lossCmpsInfo.multiAddition : ' + JSON.stringify(lossCmpsInfo.get("multiAddition")));
+      //console.log('### getMultiAdditionCheck');
+      //console.log('### lossCmpsInfo.productId : ' + lossCmpsInfo.get("productId"));
+      //console.log('### lossCmpsInfo.redisProductList : ' + JSON.stringify(lossCmpsInfo.get("redisProductList")));
+      //console.log('### lossCmpsInfo.scrbChkObjInfo : ' + lossCmpsInfo.get("scrbChkObjInfo"));
+      //console.log('### lossCmpsInfo.unscrbChkObjInfo : ' + lossCmpsInfo.get("unscrbChkObjInfo"));
+      //console.log('### lossCmpsInfo.lossCmpsBffId : ' + lossCmpsInfo.get("lossCmpsBffId"));
+      //console.log('### lossCmpsInfo.multiAddition : ' + JSON.stringify(lossCmpsInfo.get("multiAddition")));
 
       let productId = lossCmpsInfo.get("productId");
       let lossCmpsList : Array<any> = [];
@@ -974,8 +974,8 @@ export default class RenewProduct extends TwViewController {
         lossCmpsList = this.getMultiAdditionCheckByDefault(svcInfo, lossCmpsInfo);
       }
 
-      // console.log('### getMultiAdditionCheck lossCmpsList last : ' + JSON.stringify(lossCmpsList));
-      // console.log('### getMultiAdditionCheck end ============================================');
+      //console.log('### getMultiAdditionCheck lossCmpsList last : ' + JSON.stringify(lossCmpsList));
+      //console.log('### getMultiAdditionCheck end ============================================');
 
       //expsSeq에 맞게 변경하여 리턴
       return lossCmpsList.sort(function(a, b){
@@ -984,7 +984,7 @@ export default class RenewProduct extends TwViewController {
     }
 
     private getMultiAdditionCheckByDefault(svcInfo : any, lossCmpsInfo : any){
-      // console.log('### getMultiAdditionCheckByDefault');
+      //console.log('### getMultiAdditionCheckByDefault');
 
       let lossCmpsList : Array<any> = [];
       let multiAddition = lossCmpsInfo.get("multiAddition");
@@ -994,12 +994,12 @@ export default class RenewProduct extends TwViewController {
       for(let i = 0 ; i < redisProductList.length; i++){
         let item = redisProductList[i];
 
-        // console.log('### getMultiAdditionCheckByDefault redisProductList[' + i + '] start : ============================================');
-        // console.log('### getMultiAdditionCheckByDefault lossCmpsNum : ' + item.lossCmpsNum);
-        // console.log('### getMultiAdditionCheckByDefault lossCmpsNm : ' + item.lossCmpsNm);
-        // console.log('### getMultiAdditionCheckByDefault scrbChkObjInfo : ' + item.scrbChkObjInfo);
-        // console.log('### getMultiAdditionCheckByDefault unscrbChkObjInfo : ' + item.unscrbChkObjInfo);
-        // console.log('### getMultiAdditionCheckByDefault lossCmpsBffId : ' + item.lossCmpsBffId);
+        //console.log('### getMultiAdditionCheckByDefault redisProductList[' + i + '] start : ============================================');
+        //console.log('### getMultiAdditionCheckByDefault lossCmpsNum : ' + item.lossCmpsNum);
+        //console.log('### getMultiAdditionCheckByDefault lossCmpsNm : ' + item.lossCmpsNm);
+        //console.log('### getMultiAdditionCheckByDefault scrbChkObjInfo : ' + item.scrbChkObjInfo);
+        //console.log('### getMultiAdditionCheckByDefault unscrbChkObjInfo : ' + item.unscrbChkObjInfo);
+        //console.log('### getMultiAdditionCheckByDefault lossCmpsBffId : ' + item.lossCmpsBffId);
 
         // 미성년자는 T Membership만 체크
         if(svcInfo.isAdult){
@@ -1009,7 +1009,7 @@ export default class RenewProduct extends TwViewController {
 
             for(let j = 0 ; j < scrbChkObjList.length; j++){
               let scrbChkObjInfo = scrbChkObjList[j];
-              // console.log('### getMultiAdditionCheckByDefault scrbChkObjInfo [' + j + '] : ' + scrbChkObjInfo + ' : ' + multiAddition[scrbChkObjInfo]);
+              //console.log('### getMultiAdditionCheckByDefault scrbChkObjInfo [' + j + '] : ' + scrbChkObjInfo + ' : ' + multiAddition[scrbChkObjInfo]);
             }
           }
 
@@ -1023,13 +1023,13 @@ export default class RenewProduct extends TwViewController {
               let unscrbChkObjInfo = unscrbChkObjList[k];
               check += 'N';
               join += multiAddition[unscrbChkObjInfo];
-              // console.log('### getMultiAdditionCheckByDefault unscrbChkObjInfo [' + k + '] : ' + unscrbChkObjInfo + ' : ' + multiAddition[unscrbChkObjInfo]);
+              //console.log('### getMultiAdditionCheckByDefault unscrbChkObjInfo [' + k + '] : ' + unscrbChkObjInfo + ' : ' + multiAddition[unscrbChkObjInfo]);
             }
-            // console.log('### getMultiAdditionCheckByDefault join : check = ' + join + ' : ' + check);
+            //console.log('### getMultiAdditionCheckByDefault join : check = ' + join + ' : ' + check);
 
             if(join === check && svcInfo.isAdult){
-              // console.log('### getMultiAdditionCheckByDefault lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
-              // console.log('### getMultiAdditionCheckByDefault lossCmpsList push item : ' + item);
+              //console.log('### getMultiAdditionCheckByDefault lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
+              //console.log('### getMultiAdditionCheckByDefault lossCmpsList push item : ' + item);
               lossCmpsList.push(item);
             }
           }
@@ -1038,26 +1038,26 @@ export default class RenewProduct extends TwViewController {
         // T Membership 체크
         if(item.lossCmpsBffId == 'BFF_04_0001'){
           if(lossCmpsInfo.get("tmembership") === "Y"){
-            // console.log('### getMultiAdditionCheckByDefault lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
-            // console.log('### getMultiAdditionCheckByDefault lossCmpsList push item : ' + item);
+            //console.log('### getMultiAdditionCheckByDefault lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
+            //console.log('### getMultiAdditionCheckByDefault lossCmpsList push item : ' + item);
             lossCmpsList.push(item);
           }
         }
-        // console.log('### getMultiAdditionCheckByDefault redisProductList[' + i + '] end : ============================================');
+        //console.log('### getMultiAdditionCheckByDefault redisProductList[' + i + '] end : ============================================');
       }
 
       return lossCmpsList;
     }
 
     private getMultiAdditionCheckByExceptional(svcInfo : any, productId : String, lossCmpsInfo : any){
-      // console.log('### getMultiAdditionCheckByExceptional exceptional');
+      //console.log('### getMultiAdditionCheckByExceptional exceptional');
 
       let lossCmpsList : Array<any> = [];
       let multiAddition = lossCmpsInfo.get("multiAddition");
       let redisProductList = lossCmpsInfo.get("redisProductList");
 
       if(productId === 'NA00006157' || productId === 'NA00006401'){
-        // console.log('### getMultiAdditionCheckByExceptional : NA00006157 or NA00006401');
+        //console.log('### getMultiAdditionCheckByExceptional : NA00006157 or NA00006401');
 
         // WAVVE_FLO_70% 체크 여부
         let option1 = false;
@@ -1067,17 +1067,17 @@ export default class RenewProduct extends TwViewController {
         // 미성년자는 T Membership만 체크하므로 if 안의 상품정보를 체크하지 않음
         if(svcInfo.isAdult){
           // NA00007298 or NA00006164 둘 중 한개는 반드시 가입되어 있음(둘다가입은 없음)
-          console.log('getMultiAdditionCheckByExceptional NA00007298 : ' + multiAddition['NA00007298']);
-          console.log('getMultiAdditionCheckByExceptional NA00006164 : ' + multiAddition['NA00006164']);
+          //console.log('### getMultiAdditionCheckByExceptional NA00007298 : ' + multiAddition['NA00007298']);
+          //console.log('### getMultiAdditionCheckByExceptional NA00006164 : ' + multiAddition['NA00006164']);
 
           if(multiAddition['NA00007298'] != 'N' && multiAddition['NA00007298'] != 'undefined'){
-            // console.log('### getMultiAdditionCheckByExceptional : Flo, Wavve Check');
+            //console.log('### getMultiAdditionCheckByExceptional : Flo, Wavve Check');
             option1 = true;
           }else if(multiAddition['NA00006164'] != 'N' && multiAddition['NA00006164'] != 'undefined'){
-            // console.log('### getMultiAdditionCheckByExceptional : T Membership Check');
+            //console.log('### getMultiAdditionCheckByExceptional : T Membership Check');
             option2 = true;
           }else{
-            // console.log('### getMultiAdditionCheckByExceptional : Not Check');
+            //console.log('### getMultiAdditionCheckByExceptional : Not Check');
           }
         }else{
           option1 = false;
@@ -1088,12 +1088,12 @@ export default class RenewProduct extends TwViewController {
         for(let i = 0 ; i < redisProductList.length; i++){
           let item = redisProductList[i];
            
-          // console.log('### getMultiAdditionCheckByExceptional redisProductList[' + i + '] start : ============================================');
-          // console.log('### getMultiAdditionCheckByExceptional lossCmpsNum : ' + item.lossCmpsNum);
-          // console.log('### getMultiAdditionCheckByExceptional lossCmpsNm : ' + item.lossCmpsNm);
-          // console.log('### getMultiAdditionCheckByExceptional scrbChkObjInfo : ' + item.scrbChkObjInfo);
-          // console.log('### getMultiAdditionCheckByExceptional unscrbChkObjInfo : ' + item.unscrbChkObjInfo);
-          // console.log('### getMultiAdditionCheckByExceptional lossCmpsBffId : ' + item.lossCmpsBffId);
+          //console.log('### getMultiAdditionCheckByExceptional redisProductList[' + i + '] start : ============================================');
+          //console.log('### getMultiAdditionCheckByExceptional lossCmpsNum : ' + item.lossCmpsNum);
+          //console.log('### getMultiAdditionCheckByExceptional lossCmpsNm : ' + item.lossCmpsNm);
+          //console.log('### getMultiAdditionCheckByExceptional scrbChkObjInfo : ' + item.scrbChkObjInfo);
+          //console.log('### getMultiAdditionCheckByExceptional unscrbChkObjInfo : ' + item.unscrbChkObjInfo);
+          //console.log('### getMultiAdditionCheckByExceptional lossCmpsBffId : ' + item.lossCmpsBffId);
 
           // 미성년자는 T Membership만 체크
           if(svcInfo.isAdult){
@@ -1107,13 +1107,13 @@ export default class RenewProduct extends TwViewController {
                 let unscrbChkObjInfo = unscrbChkObjList[k];
                 check += 'N';
                 join += multiAddition[unscrbChkObjInfo];
-                // console.log('### getMultiAdditionCheckByExceptional unscrbChkObjInfo [' + k + '] : ' + unscrbChkObjInfo + ' : ' + multiAddition[unscrbChkObjInfo]);
+                //console.log('### getMultiAdditionCheckByExceptional unscrbChkObjInfo [' + k + '] : ' + unscrbChkObjInfo + ' : ' + multiAddition[unscrbChkObjInfo]);
               }
-              // console.log('### getMultiAdditionCheckByExceptional join : check = ' + join + ' : ' + check);
+              //console.log('### getMultiAdditionCheckByExceptional join : check = ' + join + ' : ' + check);
 
               if(join === check){
-                // console.log('### getMultiAdditionCheckByExceptional lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
-                // console.log('### getMultiAdditionCheckByExceptional lossCmpsList push item : ' + item);
+                //console.log('### getMultiAdditionCheckByExceptional lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
+                //console.log('### getMultiAdditionCheckByExceptional lossCmpsList push item : ' + item);
                 lossCmpsList.push(item);
               }
             }
@@ -1121,16 +1121,78 @@ export default class RenewProduct extends TwViewController {
 
           // T Membership 체크
           if(item.lossCmpsBffId == 'BFF_04_0001' && option2){
+            //console.log('### getMultiAdditionCheckByExceptional lossCmpsInfo.get("tmembership") : ' + lossCmpsInfo.get("tmembership"));
             if(lossCmpsInfo.get("tmembership") === "Y"){
-              // console.log('### getMultiAdditionCheckByExceptional lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
-              // console.log('### getMultiAdditionCheckByExceptional lossCmpsList push item : ' + item);
+              //console.log('### getMultiAdditionCheckByExceptional lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
+              //console.log('### getMultiAdditionCheckByExceptional lossCmpsList push item : ' + item);
               lossCmpsList.push(item);
             }
           }
-          // console.log('### getMultiAdditionCheckByExceptional redisProductList[' + i + '] end : ============================================');
+          //console.log('### getMultiAdditionCheckByExceptional redisProductList[' + i + '] end : ============================================');
+        }
+      }else if(productId === 'NA00006403'){
+        //console.log('### getMultiAdditionCheckByExceptional : NA00006403');
+
+        // scrbChkObjInfo 확인 후 lossCmpsList push
+        let tMemberShipOnly = false;
+        for(let i = 0 ; i < redisProductList.length; i++){
+          let item = redisProductList[i];
+          if(item.scrbChkObjInfo === 'NA00006598'){
+            tMemberShipOnly = true;
+          }
+        }
+
+        //console.log('### getMultiAdditionCheckByExceptional tMemberShipOnly : ' + tMemberShipOnly);
+
+        for(let j = 0 ; j < redisProductList.length; j++){
+          let item = redisProductList[j];
+
+          //console.log('### getMultiAdditionCheckByExceptional redisProductList[' + j + '] start : ============================================');
+          //console.log('### getMultiAdditionCheckByExceptional lossCmpsNum : ' + item.lossCmpsNum);
+          //console.log('### getMultiAdditionCheckByExceptional lossCmpsNm : ' + item.lossCmpsNm);
+          //console.log('### getMultiAdditionCheckByExceptional scrbChkObjInfo : ' + item.scrbChkObjInfo);
+          //console.log('### getMultiAdditionCheckByExceptional unscrbChkObjInfo : ' + item.unscrbChkObjInfo);
+          //console.log('### getMultiAdditionCheckByExceptional lossCmpsBffId : ' + item.lossCmpsBffId);
+
+          if(tMemberShipOnly){
+            if(item.scrbChkObjInfo == 'NA00006598'){
+              // T Membership 체크
+              if(item.lossCmpsBffId == 'BFF_04_0001'){
+                //console.log('### getMultiAdditionCheckByExceptional lossCmpsInfo.get("tmembership") : ' + lossCmpsInfo.get("tmembership"));
+                if(lossCmpsInfo.get("tmembership") === "Y"){
+                  //console.log('### getMultiAdditionCheckByExceptional lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
+                  //console.log('### getMultiAdditionCheckByExceptional lossCmpsList push item : ' + item);
+                  lossCmpsList.push(item);
+                }
+              }
+            }
+          }else{
+            if(item.scrbChkObjInfo == 'NA00006598'){
+              //console.log('### getMultiAdditionCheckByExceptional tmembership : pass');
+            }else{
+              let check = '';
+              let join = '';
+              let unscrbChkObjList = item.unscrbChkObjInfo.split('~');
+
+              for(let k = 0 ; k < unscrbChkObjList.length; k++){
+                let unscrbChkObjInfo = unscrbChkObjList[k];
+                check += 'N';
+                join += multiAddition[unscrbChkObjInfo];
+                //console.log('### getMultiAdditionCheckByExceptional unscrbChkObjInfo [' + k + '] : ' + unscrbChkObjInfo + ' : ' + multiAddition[unscrbChkObjInfo]);
+              }
+
+              if(join === check){
+                //console.log('### getMultiAdditionCheckByExceptional lossCmpsList push : ' + item.lossCmpsNum + '.' + item.lossCmpsNm);
+                //console.log('### getMultiAdditionCheckByExceptional lossCmpsList push item : ' + item);
+                lossCmpsList.push(item);
+              }
+              //console.log('### getMultiAdditionCheckByExceptional join : check = ' + join + ' : ' + check);
+            }
+          }
+          //console.log('### getMultiAdditionCheckByExceptional redisProductList[' + i + '] end : ============================================');
         }
       }else{
-        // console.log('### getMultiAdditionCheckByExceptional : else');
+        //console.log('### getMultiAdditionCheckByExceptional : else');
       }
 
       return lossCmpsList;
