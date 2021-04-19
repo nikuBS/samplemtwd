@@ -68,6 +68,7 @@ Tw.ProductRenewalSubmain.prototype = {
   },
 
   _loadCmpsBottomSheet: function(element){
+    var cdn = element.currentTarget.dataset.cdn;
     var linkUrl = element.currentTarget.dataset.linkurl;
     var startIdx = linkUrl.lastIndexOf("=") + 1;
     var endIdx;
@@ -103,7 +104,7 @@ Tw.ProductRenewalSubmain.prototype = {
       var $target = $(element.currentTarget);
       this._popupService.open({
         hbs: hbs,
-        data: {'mbrNm' : this._mbrNm, 'prodId' : prodId},
+        data: {'mbrNm' : this._mbrNm, 'prodId' : prodId, 'cdn' : cdn},
         layer: true,
       }
       , $.proxy(this._onOpenLossCmpsPopup, this, $target)
