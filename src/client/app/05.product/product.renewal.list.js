@@ -49,6 +49,13 @@ Tw.ProductRenewalList.prototype = {
       $('.resetBtn').click(_.debounce($.proxy(this._initialFilter, this), 30)); // 초기화 버튼 클릭 시
       $('#themeSelectBtn').click($.proxy(this._goToTheme, this)); // 테마 텝 선택 시
       $('.f-del-list').click($.proxy(this._goDeleteFilter, this));//필터 란에서 필터 X 버튼
+      $('.filterInitialization').click(_.debounce($.proxy(this._initFilterPopup, this), 30)); //필터 버튼 클릭 시
+    },
+
+    _initFilterPopup: function(e){
+      this.curFilter = [];
+      var $target = $(e.currentTarget);
+      this._handleClickChangeFilters($target);
     },
 
     _scrollFocus: function() { // 탭 제목 보이도록 상단 스크롤 이동 (퍼블리셔님이 준 스크립트)
@@ -266,7 +273,6 @@ Tw.ProductRenewalList.prototype = {
         Tw.Error(quickFilterResp.code, quickFilterResp.msg).pop();
         return;
       }
-
   
       this._filters = filterResp.result;
       this._filters.quickFilters = quickFilterResp.result.filters;
@@ -275,7 +281,6 @@ Tw.ProductRenewalList.prototype = {
     },
 
     _openSelectFiltersPopup: function($target) { // 필터 팝업 띄움
-  
       this._popupService.open({
           hbs: 'renewal.mobileplan.list.filter',
           layer: true,
@@ -327,6 +332,7 @@ Tw.ProductRenewalList.prototype = {
             $('.container-wrap').removeClass('active');
           }
       });
+
       if(this.curFilter) { // 현재 적용된 필터 항목 하단에 표시
         for(var a=0 ; a < this.curFilter.length ; a++) {
           
@@ -413,8 +419,12 @@ Tw.ProductRenewalList.prototype = {
         }
         this._params.searchFltIds += this.curMobileFilter[0];
       }
-      this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params)
-        .done($.proxy(this._handleLoadDataWithNewFilters, this, $('.confrim'))); 
+
+      console.log('this._params.searchFltIds : ' + this._params.searchFltIds);
+      this._historyService.goLoad('/product/renewal/mobileplan/list?filters=' + this._params.searchFltIds);
+
+      //this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params)
+      //  .done($.proxy(this._handleLoadDataWithNewFilters, this, $('.confrim'))); 
     },
 
     _handleLoadDataWithNewFilters: function($target,resp) { // 요금제 항목 없으면 없음 팝업 출력
