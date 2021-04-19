@@ -149,7 +149,7 @@
         Tw.CommonHelper.endLoading('.container');
     
         if (resp.code !== Tw.API_CODE.CODE_00) {
-          return Tw.Error(resp.code, resp.msg).pop();
+  //        return Tw.Error(resp.code, resp.msg).pop();
         }
         //선택한 값 이 T맴버십 VIP 6164일 경우 완료 팝업후 프로세스 종료
         if( ('NA00006164' === $checked.val())){
