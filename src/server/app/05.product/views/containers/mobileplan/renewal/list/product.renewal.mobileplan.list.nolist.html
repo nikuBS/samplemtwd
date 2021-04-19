@@ -20,9 +20,26 @@
                     </div>
                     
                     <section class="tod-nmp-search-nodata">
-                        <p class="nd-txt">조건에 맞는 요금제가 없습니다.<br> 조건을 다시 선택해 주세요.</p>
+                        <p class="nd-txt">
+                            <% if(series.seriesCode){ %>
+                                <% if(series.seriesCode == 'F01713'){ %>
+                                    <em class="nmp-fc-orange">5G 휴대폰</em>에는 <br>
+                                <% }else if(series.seriesCode == 'F01121'){ %>
+                                    <em class="nmp-fc-orange">LTE 휴대폰</em>에는 <br>
+                                <% }else if(series.seriesCode == 'F01122'){ %>
+                                    <em class="nmp-fc-orange">3G 휴대폰</em>에는 <br>
+                                <% }else if(series.seriesCode == 'F01124'){ %>
+                                    <em class="nmp-fc-orange">태블릿/스마트기기</em>에는 <br>
+                                <% }else if(series.seriesCode == 'F01125'){ %>
+                                    <em class="nmp-fc-orange">선불폰</em>에는 <br>
+                                <% }else{ %>
+
+                                <% } %>        
+                            <% } %>
+                            조건에 맞는 요금제가 없습니다.<br> 조건을 다시 선택해 주세요.
+                        </p>
                         <div class="nd-btn-area">
-                            <a class="tod-nmp-btn32 sm-style1 filterBtn" data-xt_eid="CMMA_A4_B84_C1215-8" data-xt_csid="NO" data-xt_action="BC">확인</a>
+                            <a class="tod-nmp-btn32 sm-style1 filterInitialization" data-xt_eid="CMMA_A4_B84_C1215-8" data-xt_csid="NO" data-xt_action="BC">확인</a>
                         </div>
                     </section>
                     <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>

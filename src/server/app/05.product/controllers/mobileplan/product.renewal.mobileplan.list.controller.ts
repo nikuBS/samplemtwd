@@ -163,8 +163,8 @@ export default class RenewProductPlans extends TwViewController {
               }
             }
             if(req.query.theme) { //시리즈별 리스트형 테마
-            series.theme = ' class=on';
-            res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
+              series.theme = ' class=on';
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else if (series.seriesCode == INDEX_CATAGORY['5G']) { //시리즈별 카드형
               res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else if(series.seriesCode == INDEX_CATAGORY.LTE || series.seriesCode == INDEX_CATAGORY['3G']) { // 시리즈별 리스트형
