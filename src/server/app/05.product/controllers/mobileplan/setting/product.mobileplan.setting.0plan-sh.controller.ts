@@ -48,12 +48,22 @@ class ProductMobileplanSetting0planSh extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
+  let render_url = 'mobileplan/setting/product.mobileplan.setting.0plan-sh.html' ;
+
+  if(renderCommonInfo.pageInfo.menuUrl !== '/product/mobileplan/setting/0plan-sh'){
+    render_url = 'mobileplan/setting/product.mobileplan.setting.0plan-sh-new.html'
+  } 
+
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0177, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_05_0040, {}, {}, [this._floNData]),
-      this.apiService.request(API_CMD.BFF_05_0040, {}, {}, [this._pooqNData])
-    ).subscribe(([zeroPlanInfo, floNDataUseYn, pooqNDataUseYn]) => {
-      const apiError = this.error.apiError([zeroPlanInfo, floNDataUseYn, pooqNDataUseYn]);
+      this.apiService.request(API_CMD.BFF_05_0040, {}, {}, [this._pooqNData]),
+
+      this.apiService.request(API_CMD.BFF_05_0040, {}, {}, ['NA00006622']),
+      this.apiService.request(API_CMD.BFF_05_0040, {}, {}, ['NA00006634']),
+      this.apiService.request(API_CMD.BFF_05_0040, {}, {}, ['NA00007298'])
+    ).subscribe(([zeroPlanInfo, Yn_6520, Yn_6577, Yn_6622, Yn_6634, Yn_7298]) => {
+      const apiError = this.error.apiError([zeroPlanInfo, Yn_6520, Yn_6577, Yn_6622, Yn_6634, Yn_7298]);
 
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -62,11 +72,16 @@ class ProductMobileplanSetting0planSh extends TwViewController {
         }));
       }
 
-      res.render('mobileplan/setting/product.mobileplan.setting.0plan-sh.html', Object.assign(renderCommonInfo, {
+      res.render(render_url, Object.assign(renderCommonInfo, {
         prodId: prodId,
-        zeroPlanInfo: zeroPlanInfo.result,
-        floNDataUseYn: floNDataUseYn.result,
-        pooqNDataUseYn: pooqNDataUseYn.result
+        zeroPlanInfo: zeroPlanInfo.result,    //현제 요금재 옵션 설정 값
+        floNDataUseYn: Yn_6520.result,        // 신규로 변경 되기전 as-is 화면 에서 사용할 타입, to-be 화면 에서는 미사용(202105월 이후 삭제 무방)
+        pooqNDataUseYn: Yn_6577.result,       // 신규로 변경 되기전 as-is 화면 에서 사용할 타입, to-be 화면 에서는 미사용(202105월 이후 삭제 무방)
+        Yn_6520: Yn_6520.result.isAdditionUse,
+        Yn_6577: Yn_6577.result.isAdditionUse, 
+        Yn_6622: Yn_6622.result.isAdditionUse,
+        Yn_6634: Yn_6634.result.isAdditionUse,
+        Yn_7298: Yn_7298.result.isAdditionUse
       }));
     });
   }
