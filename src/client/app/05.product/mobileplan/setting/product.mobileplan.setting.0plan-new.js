@@ -132,7 +132,7 @@
       
       //부가서비스 옵션 설정 처리
       Tw.CommonHelper.startLoading('.container', 'grey', true);
-      this._apiService.request(Tw.API_CMD.BFF_10_0035, { addCd: '2' }, {}, ['aaaaaa'])
+      this._apiService.request(Tw.API_CMD.BFF_10_0035, { addCd: '2' }, {},[$checked.val()])
         .done($.proxy(this._procSetupOkRes, this))
         .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
     },
