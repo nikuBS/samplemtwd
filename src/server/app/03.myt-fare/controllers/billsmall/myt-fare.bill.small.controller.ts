@@ -34,6 +34,12 @@ class MyTFareBillSmall extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    // contents 경로로 진입한 경우 small 로 리다이렉트 시킨다.
+    if (req.path.indexOf('small') < 0) {
+      res.redirect('/myt-fare/bill/small');
+      return;
+    }
+
     this.apiService.setTimeout(3000); // 타임아웃 설정
     const isBubin = ['R', 'D'].indexOf(svcInfo.svcGr) > -1; // 법인 C, D (회선등급 C의 경우 정책서 상에는 svcGr 값이 C이고 시스템 상에는 svcGr 값이 R)
     const reqList = new Array();

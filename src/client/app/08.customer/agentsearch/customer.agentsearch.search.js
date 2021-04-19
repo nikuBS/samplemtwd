@@ -163,6 +163,7 @@ Tw.CustomerAgentsearch.prototype = {
     this.$filterArea = this.$container.find('.fe-filter-area');  // 필터 영역
     this.$listArea = this.$container.find('.fe-list-area');  // 리스트 바인딩 될 영역
     this.$noShop = this.$container.find('.fe-no-shop');  // 반경 거리 이내에 매장 없을 때 보이는 영역
+    this.$tFactory = this.$container.find('#fe-t-factory');  // T Factory 영역
   },
 
   /**
@@ -174,7 +175,7 @@ Tw.CustomerAgentsearch.prototype = {
     this.$search.on('click', $.proxy(this._getSearch, this)); // 검색 버튼 클릭
     this.$tabs.on('click', 'li', $.proxy(this._onReset, this)); // 탭 클릭
     this.$btnsSelect.on('click', $.proxy(this._onTube, this));  // 지하철 탭의 셀렉트 박스들 클릭시 액션시트 띄움
-    this.$container.on('click', 'a[target="_blank"]', $.proxy(this._onExternalLink, this));
+    this.$container.on('click', '.fe-go-t-factory', $.proxy(this._goTFactory, this)); // tFactory 외부 새창 이동
     this._createObserver();
   },
 
@@ -198,9 +199,11 @@ Tw.CustomerAgentsearch.prototype = {
       $noShop = this.$noShop,
       $toggleButton = this.$toggleButton,
       $listTitle = this.$listTitle,
-      $normalListArea = this.$normalListArea;
+      $normalListArea = this.$normalListArea,
+      $tFactory = this.$tFactory;
     // 모두 숨김
-    var selectors = [$locationAlert, $filterArea, $noData, $loading, $mapListArea, $listArea, $noShop, $normalListArea, $listTitle, $toggleButton];
+    var selectors = [$locationAlert, $filterArea, $noData, $loading, $mapListArea, $listArea, $noShop, $normalListArea,
+      $listTitle, $toggleButton, $tFactory];
     selectors.forEach(function (selector){
       selector.addClass(none);
     });
@@ -246,7 +249,7 @@ Tw.CustomerAgentsearch.prototype = {
       // P.9: 위치동의 > 지도형식 (카운트영역, 지도, 리스트)
       case 1:
         this.resultContents(options.res.totalCount);
-        showArea([$filterArea, $mapListArea, $toggleButton, $listArea]);
+        showArea([$filterArea, $mapListArea, $toggleButton, $listArea, $tFactory]);
         listRender(options, map);
         break;
       // P.10: 위치 미동의 (위치정보 이용동의 배너(만 14세 이상인경우만 노출), 티샵예약가능 매장들)
@@ -286,7 +289,7 @@ Tw.CustomerAgentsearch.prototype = {
         if (this.customerAgentsearchMap._isNotAgreeLocation && this._isAcceptAge && !this.customerAgentsearchComponent.hasStorage()) {
           showArea([$locationAlert]);
         }
-        showArea([$filterArea, $normalListArea]);
+        showArea([$filterArea, $normalListArea, $tFactory]);
         this.resultContents(options.res.totalCount);
         listRender(options, list);
         break;
@@ -572,6 +575,7 @@ Tw.CustomerAgentsearch.prototype = {
       history.replaceState(null, null, '?' + $.param(param) + '#' + this._getType());
       this.$keyword.blur(); // 인풋 포커스 아웃을 해줘야 단말기의 "키보드" 가 아래로 내려감.
       this.isKeywordSearch = true;
+      // 매장 리스트 없을때
       if (Tw.FormatHelper.isEmpty(resp.result.regionInfoList)) {
         this.searchTShop(function (res){
           this.layout({
@@ -583,6 +587,7 @@ Tw.CustomerAgentsearch.prototype = {
         }.bind(this));
         return;
       }
+      // 매장 리스트 있을때
       this.layout({
         type: 7,
         res: resp.result,
@@ -753,24 +758,13 @@ Tw.CustomerAgentsearch.prototype = {
   },
 
   /**
-   * @function
-   * @desc 외부 링크 클릭 시 과금팝업 발생 후 동의 시 외부 브라우저로 이동
-   * @param  {Object} e - click event
+   * @desc tFactory 외부 새창 이동
+   * @param e
+   * @private
    */
-  _onExternalLink: function (e) {
-    if(Tw.BrowserHelper.isApp()) {
-      Tw.CommonHelper.showDataCharge(
-        $.proxy(function () {
-          var url = $(e.currentTarget).attr('href');
-          Tw.CommonHelper.openUrlExternal(url);
-        }, this)
-      );
-
-    } else {
-      var url = $(e.currentTarget).attr('href');
-      Tw.CommonHelper.openUrlExternal(url);
-    }
-    return false;
+  _goTFactory: function (e) {
+    e.preventDefault();
+    Tw.CommonHelper.openUrlExternalCharge(Tw.OUTLINK.T_FACTORY);
   }
 };
 

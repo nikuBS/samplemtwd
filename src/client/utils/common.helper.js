@@ -36,8 +36,8 @@ Tw.CommonHelper = (function () {
    */
       // 앱 / 일반에서 링크 열기
   var openUrlExternal = function (url, option) {
-        openUrl(url, Tw.NTV_BROWSER.EXTERNAL, option);
-      };
+    openUrl(url, Tw.NTV_BROWSER.EXTERNAL, option);
+  };
 
   /**
    * @desc 외부 링크 열기(SSO)
@@ -595,8 +595,25 @@ Tw.CommonHelper = (function () {
     return true;
   };
 
+  /**
+   * @desc 외부 링크 열기. app 인 경우 과금발생 alert 띄우기
+   * @param url
+   * @param option
+   */
+  var openUrlExternalCharge = function (url, option) {
+    var _openUrl = function () {
+      openUrl(url, Tw.NTV_BROWSER.EXTERNAL, option);
+    };
+    if (Tw.BrowserHelper.isApp()) {
+      showDataCharge(_openUrl);
+      return;
+    }
+    _openUrl();
+  };
+
   return {
     openUrlExternal: openUrlExternal,
+    openUrlExternalCharge: openUrlExternalCharge,
     openSsoUrlExternal: openSsoUrlExternal,
     openUrlInApp: openUrlInApp,
     toggle: toggle,

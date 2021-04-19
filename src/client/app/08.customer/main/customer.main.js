@@ -51,15 +51,15 @@ Tw.CustomerMain.prototype = {
     this.$fe_faq_search.on('click', $.proxy(this._goToFaq, this)); // 검색하기 클릭
     this.$fe_faq_search_text.on('keyup', $.proxy(this._activateFaqSearch, this)); // 검색 text input 이벤트
     this.$fe_faq_search_text.siblings('.cancel').on('click', $.proxy(this._faqDelete, this)); // 검색 text 삭제 클릭
-    this.$surveyBtn.on('click', $.proxy(this._goSurvey, this)); // 설문조사 이동 
+    this.$surveyBtn.on('click', $.proxy(this._goSurvey, this)); // 설문조사 이동
+    this.$container.on('click', '.fe-go-t-factory', $.proxy(this._goTFactory, this)); // tFactory 외부 새창 이동
   },
 
   /**
    * @function
    * @desc 검색입력 삭제 
-   * @param {event} e 
    */
-  _faqDelete: function (e) {
+  _faqDelete: function (){
     this.$fe_faq_search_text.val('').trigger('keyup'); // 텍스트 삭제 및 밸리데이션 체크 trigger
     this.$fe_faq_search.prop('disabled', true); // 검색하기 버튼 비활성화
   },
@@ -108,5 +108,15 @@ Tw.CustomerMain.prototype = {
     if (!Tw.FormatHelper.isEmpty(link)) {
       this._history.goLoad(link);
     }
+  },
+
+  /**
+   * @desc tFactory 외부 새창 이동
+   * @param e
+   * @private
+   */
+  _goTFactory: function (e) {
+    e.preventDefault();
+    Tw.CommonHelper.openUrlExternalCharge(Tw.OUTLINK.T_FACTORY);
   }
 };
