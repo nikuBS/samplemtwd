@@ -42,6 +42,11 @@ class MyTFareBillSmallHistory extends TwViewController {
   }
 
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    // contents 경로로 진입한 경우 small 로 리다이렉트 시킨다.
+    if (_req.path.indexOf('small') < 0) {
+      res.redirect('/myt-fare/bill/small/history');
+      return;
+    }
 
     return res.render('billsmall/myt-fare.bill.small.history.html', {
       svcInfo,

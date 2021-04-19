@@ -6,6 +6,7 @@ Tw.UIService = function () {
   this.setBackRefresh();
   this.setInputEvent();
   this.setNetfunnel();
+  this.setExternalLink();
 };
 
 Tw.UIService.prototype = {
@@ -113,6 +114,19 @@ Tw.UIService.prototype = {
       if (href) {
         event.preventDefault();
         this.historyService.replaceURL(href);
+      }
+    }, this));
+  },
+
+  /**
+   * @desc 외부 새창 열기. app 인 경우 wifi가 아니면 "과금알림 팝업" 노출
+   */
+  setExternalLink: function () {
+    $('.fe-common-external').on('click', $.proxy(function ($event) {
+      $event.preventDefault();
+      var href = $($event.currentTarget).attr('href');
+      if (href) {
+        Tw.CommonHelper.openUrlExternalCharge(href);
       }
     }, this));
   }
