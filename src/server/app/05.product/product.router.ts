@@ -150,13 +150,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan/join/data-together', controller: ProductMobileplanJoinDataTogether });
     this.controllers.push({ url: '/mobileplan/join', controller: ProductMobileplanJoin });
     this.controllers.push({ url: '/mobileplan/setting/tplan', controller: ProductMobileplanSettingTplan });
-
-    this.controllers.push({ url: '/mobileplan/setting/0plan',     controller: ProductMobileplanSetting0plan });
-    this.controllers.push({ url: '/mobileplan/setting/0plan-new', controller: ProductMobileplanSetting0plan });
-    
+    this.controllers.push({ url: '/mobileplan/setting/0plan', controller: ProductMobileplanSetting0plan });
     this.controllers.push({ url: '/mobileplan/setting/0plan-sh', controller: ProductMobileplanSetting0planSh });
-    this.controllers.push({ url: '/mobileplan/setting/0plan-sh-new', controller: ProductMobileplanSetting0planSh });
-
     this.controllers.push({ url: '/mobileplan/setting/0plan-sm', controller: ProductMobileplanSetting0planSm });
     this.controllers.push({ url: '/mobileplan/setting/option', controller: ProductMobileplanSettingOption });
     this.controllers.push({ url: '/mobileplan/setting/ting', controller: ProductMobileplanSettingTing });
