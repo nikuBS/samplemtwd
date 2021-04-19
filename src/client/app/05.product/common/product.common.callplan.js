@@ -727,6 +727,8 @@ Tw.ProductCommonCallplan.prototype = {
       new Tw.ProductMobilePlanDowngradeVcoloring(this.$container, this._event, $.proxy(this._reqTerminateDefenseVcoloring, this, joinTermCd, url));
     }else if(this._prodId === 'NA00007246'){
       new Tw.ProductMobilePlanDowngradeVcoloringPlus(this.$container, this._event, $.proxy(this._reqTerminateDefenseVcoloring, this, joinTermCd, url));
+    }else if(this._prodId === 'NA00007114'){
+      new Tw.ProductMobilePlanDowngradeGamePass(this.$container, this._event, $.proxy(this._reqTerminateDefenseVcoloring, this, joinTermCd, url));
     }else{
       this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'V' },{}, [this._prodId] )
       .done($.proxy(this._resTerminateDefense, this, joinTermCd, url));
