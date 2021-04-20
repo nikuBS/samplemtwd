@@ -1189,7 +1189,7 @@ export default class RenewProduct extends TwViewController {
               //console.log('### getMultiAdditionCheckByExceptional join : check = ' + join + ' : ' + check);
             }
           }
-          //console.log('### getMultiAdditionCheckByExceptional redisProductList[' + i + '] end : ============================================');
+          //console.log('### getMultiAdditionCheckByExceptional redisProductList[' + j + '] end : ============================================');
         }
       }else{
         //console.log('### getMultiAdditionCheckByExceptional : else');
