@@ -209,6 +209,9 @@ Tw.CustomerAgentsearch.prototype = {
     });
 
     var showArea = function (selectors1) {
+      if (Tw.FormatHelper.isEmptyArray(selectors1)) {
+        return;
+      }
       selectors1.forEach(function (selector){
         selector.removeClass(none);
       });
@@ -245,11 +248,15 @@ Tw.CustomerAgentsearch.prototype = {
       });
     }.bind(this);
 
+    // T Factory 배너 노출여부(지하철 탭 인 경우만 비노출)
+    var isShowTFactoryBanner = this._getType() !== 'tube';
+
     switch (options.type) {
       // P.9: 위치동의 > 지도형식 (카운트영역, 지도, 리스트)
       case 1:
         this.resultContents(options.res.totalCount);
-        showArea([$filterArea, $mapListArea, $toggleButton, $listArea, $tFactory]);
+        showArea([$filterArea, $mapListArea, $toggleButton, $listArea]);
+        showArea(isShowTFactoryBanner ? [$tFactory] : undefined);
         listRender(options, map);
         break;
       // P.10: 위치 미동의 (위치정보 이용동의 배너(만 14세 이상인경우만 노출), 티샵예약가능 매장들)
@@ -262,7 +269,11 @@ Tw.CustomerAgentsearch.prototype = {
         break;
       // P.11: 위치 동의 > 필터 > 로딩중 (로딩중)
       case 3:
-        showArea([$loading, $tFactory]);
+        // 위치 미동의가 아닌경우 "T Factory" 배너 노출
+        if (!this.customerAgentsearchMap._isNotAgreeLocation) {
+          showArea(isShowTFactoryBanner ? [$tFactory] : undefined);
+        }
+        showArea([$loading]);
         break;
       /*
         P.12: 위치 동의 > 필터 > 매장 0건일때 > 3km안에는 없지만 전체매장 중에는 있을때
@@ -374,7 +385,6 @@ Tw.CustomerAgentsearch.prototype = {
    */
   _onReset: function (event) {
     var hash = $(event.currentTarget).find('a').attr('href');
-    // history.replaceState(null, null, hash);
     history.replaceState(null, null, window.location.pathname + hash);
     this._selectTab();
     // 로딩중 표시
@@ -526,11 +536,6 @@ Tw.CustomerAgentsearch.prototype = {
    * @desc 매장유형 리턴. 0:전체, 1:지점, 2: 대리점
    */
   getStoreTypeByQuery : function () {
-    /*var type = {
-      branch: 1,  // 지점
-      agent : 2 // 대리점
-    };
-    return type[this._query.storeType] || 0;*/ // 없으면 전체:0
     return parseInt(this._query.storeType, 10) || 0;
 
   },
