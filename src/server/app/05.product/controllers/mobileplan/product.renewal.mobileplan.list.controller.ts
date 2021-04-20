@@ -245,7 +245,12 @@ export default class RenewProductPlans extends TwViewController {
               }
             }
           }
-          res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, cdn, tabList, compareData } );
+
+          if(plans.products.length > 0){
+            res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, cdn, tabList, compareData } );
+          }else{
+            res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.nolist.html' , { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, cdn, tabList, compareData } );
+          }
         });
 
     } else {
