@@ -1,6 +1,6 @@
 {{#if param.[0].typeA}}
     <!--  A 타입 -->
-    <div class="tod-ui-chabot2" data-scroll="true">
+    <div class="tod-ui-chabot2 chatbot-greeting-wrap" data-scroll="true">
         <div class="tod-ui-chabot2-inner">
             <!-- button -->
             <!-- title -->
@@ -34,7 +34,7 @@
 
 {{#if param.[0].typeB}}
     <!--  B 타입 -->
-    <div class="tod-combot-wrap">
+    <div class="tod-combot-wrap chatbot-greeting-wrap">
         <div class="tod-combot-btn {{param.[0].greetingLines}}" {{#if param.[0].color}}data-color="{{param.[0].color}}" data-thema="{{param.[0].theme}}"{{/if}}>
 			<span class="beta" aria-hidden="true"><span class="blind">beta</span></span> 
 			{{#if param.[0].greetingKeywordInfos.[0].linkUrl}}
@@ -56,7 +56,7 @@
 
 {{#if param.[0].typeC}}
     <!--  C 타입 -->
-    <div class="tod-combot-ctype-wrap">
+    <div class="tod-combot-ctype-wrap chatbot-greeting-wrap">
 		<div class="tod-combot-ctype {{param.[0].greetingLines}}" data-color="{{param.[0].color}}"><!-- 개발 참고사항 : ctype 한줄 : class="tod-combot-ctype" / ctype 두줄 :  class="tod-combot-ctype twoline" / color 테마 : data-color="gray", data-color="purple" data-color="white" -->
 			<span class="beta" aria-hidden="true"><span class="blind">beta</span></span>
 			<div class="list-wrap">

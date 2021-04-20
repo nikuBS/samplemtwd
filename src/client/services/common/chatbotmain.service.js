@@ -197,26 +197,8 @@ Tw.ChatbotMainService.prototype = {
             case '/main/home':
                 this._mlsChannelId = 'tw_greeting_rank_main';
                 break;
-            case '/myt-data/submain':
-                this._mlsChannelId = 'tw_greeting_rank_sub_data';
-                break;
-            case '/myt-fare/submain':
-                this._mlsChannelId = 'tw_greeting_rank_sub_fare';
-                break;
-            case '/myt-join/submain':
-                this._mlsChannelId = 'tw_greeting_rank_sub_join';
-                break;
-            case '/membership/submain':
-                this._mlsChannelId = 'tw_greeting_rank_sub_mbr';
-                break;
-            case '/product/mobileplan':
-                this._mlsChannelId = 'tw_greeting_rank_sub_plan';
-                break;
-            case '/product/mobileplan-add':
-                this._mlsChannelId = 'tw_greeting_rank_sub_vas';
-                break; 
             default:
-                this._mlsChannelId  = 'tw_greeting_rank_sub_fare';
+                this._mlsChannelId  = 'tw_greeting_rank_main';
                 break;                    
         }
 

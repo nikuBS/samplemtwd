@@ -876,7 +876,7 @@ Tw.ChatbotService.prototype = {
         });
 
         // 말풍선 (챗봇 발화어) 클릭시 
-        $('.bpcpItem').on('click', function(e){
+        $('.chatbot-greeting-wrap .bpcpItem').on('click', function(e){
             Tw.Logger.info('[chatbot.service] [_bindEvent] bpcpItem click', '');
 
             // 나의 요금, 요금제 페이지 클릭 이벤트 중복 수행 수정
@@ -1023,7 +1023,7 @@ Tw.ChatbotService.prototype = {
         });
         
         // 말풍선 (링크) 클릭시 ( wavve, flo - 상품페이지 이동 )
-        $('.bpcpItemlink').on('click', function(e){
+        $('.chatbot-greeting-wrap .bpcpItemlink').on('click', function(e){
             Tw.Logger.info('[chatbot.service] [_bindEvent] bpcpItemlink click', '');
             
             // 나의 요금, 요금제 페이지 클릭 이벤트 중복 수행 수정

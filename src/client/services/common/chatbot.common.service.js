@@ -171,20 +171,20 @@ Tw.ChatbotCommonService = function() {
         {   // 요금제 (리뉴얼)
             pageUrl: '/product/renewal/mobileplan', 
             xtEidArr: [
-                { keyword:'pay_bill', xtEid: 'CMMA_A4_B15-22' },
-                { keyword:'hotbill', xtEid: 'CMMA_A4_B15-23' },
-                { keyword:'hotdata', xtEid: 'CMMA_A4_B15-24' },
-                { keyword:'refill_coupon', xtEid: 'CMMA_A4_B15-25' },
-                { keyword:'pay_mthd', xtEid: 'CMMA_A4_B15-26' },
-                { keyword:'unpaid_amt', xtEid: 'CMMA_A4_B15-27' },
-                { keyword:'micro_pay', xtEid: 'CMMA_A4_B15-28' },
-                { keyword:'contents_pay', xtEid: 'CMMA_A4_B15-29' },
-                { keyword:'vcoloring', xtEid: 'CMMA_A4_B15-30' },
-                { keyword:'wavve', xtEid: 'CMMA_A4_B15-31' },
-                { keyword:'data_gift', xtEid: 'CMMA_A4_B15-32' },
-                { keyword:'cancel_pause', xtEid: 'CMMA_A4_B15-33' },
-                { keyword: 'flo', xtEid: 'CMMA_A4_B15-34' },
-                { keyword: 'xbox', xtEid: 'CMMA_A4_B15-35' }
+                { keyword:'pay_bill', xtEid: 'CMMA_A4_B84-60' },
+                { keyword:'hotbill', xtEid: 'CMMA_A4_B84-61' },
+                { keyword:'hotdata', xtEid: 'CMMA_A4_B84-62' },
+                { keyword:'refill_coupon', xtEid: 'CMMA_A4_B84-63' },
+                { keyword:'pay_mthd', xtEid: 'CMMA_A4_B84-64' },
+                { keyword:'unpaid_amt', xtEid: 'CMMA_A4_B84-65' },
+                { keyword:'micro_pay', xtEid: 'CMMA_A4_B84-66' },
+                { keyword:'contents_pay', xtEid: 'CMMA_A4_B84-67' },
+                { keyword:'vcoloring', xtEid: 'CMMA_A4_B84-68' },
+                { keyword:'wavve', xtEid: 'CMMA_A4_B84-69' },
+                { keyword:'data_gift', xtEid: 'CMMA_A4_B84-70' },
+                { keyword:'cancel_pause', xtEid: 'CMMA_A4_B84-71' },
+                { keyword: 'flo', xtEid: 'CMMA_A4_B84-72' },
+                { keyword: 'xbox', xtEid: 'CMMA_A4_B84-73' }
             ]
         },
         {   // 부가서비스
