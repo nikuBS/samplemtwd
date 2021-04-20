@@ -104,6 +104,9 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
             this._confirmCallback();
             //this._elseCallback();
         }
+        console.log("KKKK : ~ file: product.mobileplan-add.downgrade.js ~ line 99 ~ dwonGradeType", dwonGradeType)
+        console.log("KKKK : ~ file: product.mobileplan-add.downgrade.js ~ line 99 ~ dwonGradeType", dwonGradeType)
+        console.log("KKKK : ~ file: product.mobileplan-add.downgrade.js ~ line 99 ~ dwonGradeType", dwonGradeType)
 
     },
 
