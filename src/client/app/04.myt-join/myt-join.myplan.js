@@ -89,6 +89,7 @@ Tw.MyTJoinMyPlan.prototype = {
    * @private
    */
   _onBtChangePlanClicked: function () {
-    this._historyService.goLoad('/product/mobileplan');
+    // this._historyService.goLoad('/product/mobileplan');
+    this._historyService.goLoad('/product/renewal/mobileplan');
   }
 };
