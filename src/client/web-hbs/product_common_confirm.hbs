@@ -495,37 +495,26 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list02 fe-noti-list">
+                <!-- 210409 [OP002-14234] 추가에서 툴팁 하나 추가 시 과거 디자인으로 인한 라인 높이가 맞지 않아 new 디자인으로 모두 바꿈, 퍼블 담당자 구두 권고, 
+                fe-btn_tip_view 들어간 케이스는 해당 클래스로 이벤트 처리를 하기 때문에 남겨둠 -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
                         {{#noticeList}}
                             <li>
-                                <button type="button" class="tip-view-btn fe-btn_tip_view" aria-haspopup="true" data-title="{{noticeTit}}">
-                                    {{noticeTit}}<span class="tip-view">TIP</span>
-                                </button>
+                                <button class="btn-tip fe-btn_tip_view" aria-haspopup="true" data-title="{{noticeTit}}">{{noticeTit}}<i class="icon-badge-tip"><span class="blind">tip</span></i></button>
                                 <div class="none fe-tip_view_html">{{{noticeTxt}}}</div>
                             </li>
                         {{/noticeList}}
                         {{#isMobilePlan}}
-                            <li>
-                                <button type="button" class="tip-view-btn fe-product-tip" id="MP_02_02_02_tip_01" aria-haspopup="true">
-                                    서비스 이용안내 <span class="tip-view">TIP</span>
-                                </button>
-                            </li>
+                            <li><button class="btn-tip" id="MP_02_02_02_tip_01" aria-haspopup="true">서비스 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li> 
+                            <li><button class="btn-tip" id="TC000122" aria-haspopup="true">프리미엄패스 자동 해지 및 재가입 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li><!-- 210409 [OP002-14234] 추가 -->
                         {{/isMobilePlan}}
-                        {{#isDiscountPgm}}
-                            <li>
-                                <button type="button" class="tip-view-btn fe-product-tip" id="BS_02_01_01_02_tip_01" aria-haspopup="true">
-                                    할인반환금 안내 <span class="tip-view">TIP</span>
-                                </button>
-                            </li>
+                        {{#isDiscountPgm}} 
+                            <li><button class="btn-tip" id="BS_02_01_01_02_tip_01" aria-haspopup="true">할인반환금 안내 <i class="icon-badge-tip"><span class="blind">tip</span></i></button></li> 
                         {{/isDiscountPgm}}
                         {{#is5G}}
-                            <li>
-                                <button type="button" class="tip-view-btn fe-product-tip" id="TC000118" aria-haspopup="true">
-                                    5G 가용지역 안내 <span class="tip-view">TIP</span>
-                                </button>
-                            </li>
+                            <li><button class="btn-tip" id="TC000118" aria-haspopup="true">5G 가용지역 안내 <i class="icon-badge-tip"><span class="blind">tip</span></i></button></li> 
                         {{/is5G}}
                     </ul>
                 </div>
