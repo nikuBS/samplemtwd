@@ -36284,7 +36284,7 @@ body.apphome .section-box {
     background: url('/img/ico/ico-tmap-pin.png') no-repeat 0 0;
     background-size: 100%;
 }
-.tod-o2o-item .item-tit .tit{font-size: 1rem; font-weight: bold; color: #000; letter-spacing: -1.4px; word-break: break-all; max-width: 70%;}
+.tod-o2o-item .item-tit .tit{font-size: 1rem; font-weight: bold; color: #000; letter-spacing: -1.4px; word-break: break-all; max-width: 70%; padding-right: 1px} /* 210412 [OP002-14248] 수정 */
 .tod-o2o-item .item-tit .tit a{font-weight: bold;}
 .tod-o2o-item .type{
     display: inline-block;
@@ -36744,3 +36744,7 @@ body.apphome .section-box {
 .tod-nmp-srhbox .extraservice-list > li {border-bottom:1px solid #d8d8d8;}
 .tod-nmp-srhbox .extraservice-list .tod-nmp-item {background-color:transparent}
 .tod-nmp-srhbox .extraservice-list .tod-nmp-item .rn-prod-info {border-color:#f2f2f2}
+
+/* 210412 [OP002-14248] T Factory 노출도 강화요건 */
+.main-faq-menu ul li .menu-bt.ico-type17 .ico {background-image: url(/img/customer/bg_cs_01_01_18_01.png)}
+.main-faq-menu ul.col4 li{width:25%}
