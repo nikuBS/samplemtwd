@@ -297,14 +297,14 @@ Tw.CustomerAgentsearchMap.prototype = {
    * @param  {Object} location - 현재 위치 좌표
    */
   _checkLocationAgreement: function () {
-    // 로딩 표시
-    this._customerAgentsearch.layout({
-      type: 3
-    });
     // 만 14세 미만, 미 로그인/간편 로그인 일때
     if (!this._isAcceptAge || Tw.FormatHelper.isEmpty(this._svcInfo)) {
       return this._notAgreeLocation();
     }
+    // 로딩 표시
+    this._customerAgentsearch.layout({
+      type: 3
+    });
     // 이미 위치정보 조회를 했으면 바로 지점 조회한다.
     if (this._location) {
       return this._firstTimeFindNearShop();
