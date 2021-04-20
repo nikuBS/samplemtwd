@@ -228,7 +228,7 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
   _onClose: function() {
     this._popupService.closeAll();
     setTimeout($.proxy(function() {
-      this._historyService.goLoad('/product/mobileplan');
+      this._historyService.goLoad('/product/renewal/mobileplan');
     }, this));
   },
 
