@@ -262,7 +262,7 @@ Tw.CustomerAgentsearch.prototype = {
         break;
       // P.11: 위치 동의 > 필터 > 로딩중 (로딩중)
       case 3:
-        showArea([$loading]);
+        showArea([$loading, $tFactory]);
         break;
       /*
         P.12: 위치 동의 > 필터 > 매장 0건일때 > 3km안에는 없지만 전체매장 중에는 있을때
@@ -289,7 +289,7 @@ Tw.CustomerAgentsearch.prototype = {
         if (this.customerAgentsearchMap._isNotAgreeLocation && this._isAcceptAge && !this.customerAgentsearchComponent.hasStorage()) {
           showArea([$locationAlert]);
         }
-        showArea([$filterArea, $normalListArea, $tFactory]);
+        showArea([$filterArea, $normalListArea]);
         this.resultContents(options.res.totalCount);
         listRender(options, list);
         break;
