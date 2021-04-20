@@ -132,7 +132,8 @@
 
 														<%_ if ( data.lossCmpsList[i].botShtYn == 'Y' ) { _%>
 															<a href="javascript:void(0);">
-																<span class="service-detail" data-cmpsnum="<%= data.lossCmpsList[i].lossCmpsNum %>"
+																<span class="service-detail" data-pid="<%= svcInfo.prodId %>"
+																							 data-cmpsnum="<%= data.lossCmpsList[i].lossCmpsNum %>"
 																							 data-linkurl="<%= data.lossCmpsList[i].linkUrl %>"
 																							 data-mbrnm="<%= svcInfo.mbrNm %>" 
 																							 data-image="<%= data.lossCmpsList[i].iconImgUrl %>"
