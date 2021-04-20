@@ -481,7 +481,7 @@ export const PREPAID_PAYMENT_PAY_CD = {
 };
 
 export const PRODUCT_TYP_CD_LIST = {
-  AB: 'product/mobileplan/list',
+  AB: 'product/renewal/mobileplan/list',
   C: 'product/mobileplan-add/list',
   D_I: 'product/wireplan/internet',
   D_P: 'product/wireplan/phone',

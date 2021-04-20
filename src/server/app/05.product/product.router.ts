@@ -142,8 +142,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/renewal/mobileplan', controller: RenewalProduct });
     this.controllers.push({ url: '/renewal/mobileplan/list', controller: RenewalProductPlans });
 
-    this.controllers.push({ url: '/mobileplan', controller: Product });
-    this.controllers.push({ url: '/mobileplan/list', controller: ProductPlans });
+    this.controllers.push({ url: '/mobileplan', controller: RenewalProduct });
+    this.controllers.push({ url: '/mobileplan/list', controller: RenewalProductPlans });
     this.controllers.push({ url: '/mobileplan/join/tplan', controller: ProductMobileplanJoinTplan });
     this.controllers.push({ url: '/mobileplan/join/0plan-sm', controller: ProductMobileplanJoin0planSm });
     this.controllers.push({ url: '/mobileplan/join/share-line', controller: ProductMobileplanJoinShareLine });
