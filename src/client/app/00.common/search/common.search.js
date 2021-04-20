@@ -599,6 +599,8 @@ Tw.CommonSearch.prototype = {
 
         var childList = [];
         listData.MENU_GROUP = listData.MENU_GROUP || '';
+        listData.PROD_FILTER_CODE = this._filterServiceCode(listData.PROD_FLT_ID);
+        listData.PROD_SMRY_EXPS_FILTER_CODE = this._filterSummaryCode(listData.PROD_SMRY_EXPS_TYP_CD);
 
         // 자식이 있는 경우.
         if ( listData.MENU_GROUP !== '' && listData.MENU_GROUP !== undefined){
@@ -2210,5 +2212,51 @@ Tw.CommonSearch.prototype = {
       this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
       Tw.CommonHelper.endLoading('body');
     }, this));
+  },
+
+  /**
+   * 상품 노출유형 코드 확인 후 CSS 변환
+   * @param code
+   * @private
+   */
+  _filterSummaryCode: function(code) {
+    switch (code) {
+      case '1':
+        return 'plan-type1';
+      case '2':
+        return 'plan-type3';
+      case '3':
+        return 'plan-type2';
+      case 'TAG0000212' :
+        return 'plan-type1';
+      case 'TAG0000213' :
+        return 'plan-type3';
+      case 'TAG0000214' :
+        return 'plan-type2';
+      default:
+        return '';
+    }
+  },
+  /**
+   * 요금제 ID 코드 확인 후 CSS 변환
+   * @param code
+   * @returns {string}
+   * @private
+   */
+  _filterServiceCode: function(code) {
+    switch (code) {
+      case 'F01713':
+        return 'prod-5g';
+      case 'F01121':
+        return 'prod-lte';
+      case 'F01122':
+        return 'prod-band';
+      case 'F01124':
+        return 'prod-2nd';
+      case 'F01125':
+        return 'prod-2nd';
+      default :
+        return '';
+    }
   }
 };

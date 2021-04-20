@@ -81,16 +81,7 @@
 
 <script type="text/x-handlebars-template" id="rate_template">
     <li>
-        {{#ifCond listData.PROD_SMRY_EXPS_TYP_CD '===' '3' }}
-        <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
-        <div class="tod-nmp-item plan-type2 prod-5g">
-        {{else ifCond listData.PROD_SMRY_EXPS_TYP_CD '===' '2'}}
-        <!-- 요금제 모듈 : 데이터강조형 -->
-        <div class="tod-nmp-item plan-type3 prod-5g">
-        {{else}}
-        <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
-        <div class="tod-nmp-item plan-type1 prod-lte">
-        {{/ifCond}}
+        <div class="tod-nmp-item {{PROD_SMRY_EXPS_FILTER_CODE}} {{PROD_FILITER_CODE}}">
             <a href="/product/callplan?prod_id={{listData.PRID}}" data-category="rate" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.PROD_NM}}" class="item-link">
                 <div class="rn-prod-name">
                     <p class="p-name">{{{listData.PROD_NM}}}</p>
