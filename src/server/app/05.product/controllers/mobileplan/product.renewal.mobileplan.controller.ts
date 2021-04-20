@@ -253,7 +253,7 @@ export default class RenewProduct extends TwViewController {
       }
 
       return this.apiService.request(API_CMD.BFF_03_0014, {}, {}, [svcInfo.svcMgmtNum] ).map((resp) => {
-        console.log('API_CMD.BFF_03_0014::: ', resp);
+        //console.log('API_CMD.BFF_03_0014::: ', resp);
         
         if (resp.code === API_CODE.CODE_00) {
           return resp.result;

@@ -69,6 +69,8 @@ Tw.ProductRenewalSubmain.prototype = {
 
   _loadCmpsBottomSheet: function(element){
     var cdn = element.currentTarget.dataset.cdn;
+    var pid = element.currentTarget.dataset.pid;
+    
     var linkUrl = element.currentTarget.dataset.linkurl;
     var startIdx = linkUrl.lastIndexOf("=") + 1;
     var endIdx;
@@ -77,17 +79,22 @@ Tw.ProductRenewalSubmain.prototype = {
     }else{
       endIdx = linkUrl.length
     }
-
-    //console.log('icon image url : ' + element.currentTarget.dataset.image);
-    //console.log('@@@ : ' + linkUrl.substring(startIdx, endIdx));
     
     var hbs= '';
-    var prodId = linkUrl.substring(startIdx, endIdx);
+    var prodId = linkUrl.substring(startIdx, endIdx); // 상품ID
 
     if(prodId === 'NA00006577'){
-      hbs = 'actionsheet_product_wavve70';
+      if(pid === 'NA00006157' || pid === 'NA00006401'){
+        hbs = 'actionsheet_product_wavve70_0plan';
+      }else{
+        hbs = 'actionsheet_product_wavve70';
+      }
     }else if(prodId === 'NA00006520'){
-      hbs = 'actionsheet_product_flo70';
+      if(pid === 'NA00006157' || pid === 'NA00006401'){
+        hbs = 'actionsheet_product_flo70_0plan';
+      }else{
+        hbs = 'actionsheet_product_flo70';
+      }
     }else if(prodId === 'NA00006484'){
       var lossCmpsNum = element.currentTarget.dataset.cmpsnum;
 
