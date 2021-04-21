@@ -69,7 +69,6 @@ Tw.ProductRenewalSubmain.prototype = {
 
   _loadCmpsBottomSheet: function(element){
     var cdn = element.currentTarget.dataset.cdn;
-    var pid = element.currentTarget.dataset.pid;  // 사용자 요금제 ID
     var prodId = ''; // 상품 원장 ID
     var linkUrl = element.currentTarget.dataset.linkurl;
 
@@ -85,29 +84,15 @@ Tw.ProductRenewalSubmain.prototype = {
     var hbs= '';
 
     if(prodId === 'NA00006577'){
-      if(pid === 'NA00006157' || pid === 'NA00006401'){
-        console.log('0플랜 wavve 바텀시트 출력');
-        hbs = 'actionsheet_product_wavve70_0plan';
-      }else{
-        console.log('일반 wavve 바텀시트 출력');
-        hbs = 'actionsheet_product_wavve70';
-      }
+      hbs = 'actionsheet_product_wavve70';
     }else if(prodId === 'NA00006520'){
-      if(pid === 'NA00006157' || pid === 'NA00006401'){
-        console.log('0플랜 flo 바텀시트 출력');
-        hbs = 'actionsheet_product_flo70_0plan';
-      }else{
-        console.log('일반 flo 바텀시트 출력');
-        hbs = 'actionsheet_product_flo70';
-      }
+      hbs = 'actionsheet_product_flo70';
     }else if(prodId === 'NA00006484'){
       var lossCmpsNum = element.currentTarget.dataset.cmpsnum;
 
       if(lossCmpsNum === '13'){
-        console.log('tab 50% 바텀시트 출력');
         hbs = 'actionsheet_product_tab50';
       }else{
-        console.log('tab 바텀시트 출력');
         hbs = 'actionsheet_product_tab';
       }
     }else{

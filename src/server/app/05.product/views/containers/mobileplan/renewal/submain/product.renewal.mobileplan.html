@@ -110,7 +110,7 @@
 								<div class="pro-article free-service">
 									<div class="article-tit">고객님, 아직 신청하지 않은 혜택이 있어요.</div><!-- 210201 수정 -->
 									<div class="article-cont">
-										<%_ for (let i=0; i < data.lossCmpsList.length; i++) { _%>
+										<!-- <%_ for (let i=0; i < data.lossCmpsList.length; i++) { _%>
 											<script>
 												console.log('======================================');
 												console.log('손실보전번호 : ' + '<%= data.lossCmpsList[i].lossCmpsNum %>');
@@ -119,7 +119,7 @@
 												console.log('링크 URL : ' + '<%= data.lossCmpsList[i].linkUrl %>');
 												console.log('이미지 URL : ' + '<%= data.lossCmpsList[i].iconImgUrl %>');
 											</script>
-										<%_ } _%>
+										<%_ } _%> -->
 										
 										<ul id="lossCmpsUl" class="go-service add-service-list shadow-box"><!-- show toggle -->
 											<%_ for (let i=0; i < data.lossCmpsList.length; i++) { _%>
@@ -132,8 +132,7 @@
 
 														<%_ if ( data.lossCmpsList[i].botShtYn == 'Y' ) { _%>
 															<a href="javascript:void(0);">
-																<span class="service-detail" data-pid="<%= svcInfo.prodId %>"
-																							 data-cmpsnum="<%= data.lossCmpsList[i].lossCmpsNum %>"
+																<span class="service-detail" data-cmpsnum="<%= data.lossCmpsList[i].lossCmpsNum %>"
 																							 data-linkurl="<%= data.lossCmpsList[i].linkUrl %>"
 																							 data-mbrnm="<%= svcInfo.mbrNm %>" 
 																							 data-image="<%= data.lossCmpsList[i].iconImgUrl %>"
