@@ -250,6 +250,10 @@ Tw.HistoryService.prototype = {
    * @returns { boolean }
    */
   requestNetfunnel: function(url, successCallBack) {
+    if (!Tw.Environment.environment) {
+      // Tw.Environment init 안된 케이스 발생
+      return false;
+    }
     // 로그인 안된상태 (sessionStorage 정보 확인) 에서는 정상 처리
     if (!Tw.CommonHelper.getSessionStorage(Tw.SSTORE_KEY.PRE_TWM)) {
       return false

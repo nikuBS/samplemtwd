@@ -106,11 +106,14 @@ $.extend(Tw.CommonSearchMore.prototype,
 
       if ( this._accessQuery.sort === 'A' ) {
         this.$container.find('.fe-btn-sort-' + this._category).text('추천순');
-      } else if ( this._accessQuery.sort === 'D' ) {
+      }
+      else if ( this._accessQuery.sort === 'D' ) {
         this.$container.find('.fe-btn-sort-' + this._category).text('최신순');
-      } else if ( this._accessQuery.sort === 'L' ) {
+      }
+      else if ( this._accessQuery.sort === 'L' ) {
         this.$container.find('.fe-btn-sort-' + this._category).text('낮은 가격순');
-      } else if ( this._accessQuery.sort === 'H' ) {
+      }
+      else if ( this._accessQuery.sort === 'H' ) {
         this.$container.find('.fe-btn-sort-' + this._category).text('높은 가격순');
       }
 
@@ -137,15 +140,16 @@ $.extend(Tw.CommonSearchMore.prototype,
       this.$categorySlide.addClass('horizontal');
       $('#fe-category-slide').removeData('event');
       skt_landing.widgets.widget_horizontal($('.widget'));
-      this.$container.on('click', '.acco-tit', $.proxy(function(e) { // 바로가기 자식 아코디언 열림/닫힘 이벤트 바인딩
+      this.$container.on('click', '.acco-tit', $.proxy(function (e) { // 바로가기 자식 아코디언 열림/닫힘 이벤트 바인딩
         var $target = $(e.currentTarget).parent(); // 바로 상위
         $target.toggleClass('on');
-        if ($target .hasClass('on')) {
+        if ( $target.hasClass('on') ) {
           $target.find('button').attr('aria-pressed', true);
-        } else {
-          $target .find('button').attr('aria-pressed', false);
         }
-    }, this));
+        else {
+          $target.find('button').attr('aria-pressed', false);
+        }
+      }, this));
 
 
       this.$container.on('scroll', $.proxy(function () {
@@ -198,7 +202,8 @@ $.extend(Tw.CommonSearchMore.prototype,
       // 뒤로가기 초기화 정렬 초기화 처리
       $(window).bind('pageshow', function (event) {
         if ( event.originalEvent.persisted ) {
-        } else {
+        }
+        else {
           $('.fe-btn-sort-rate').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::rate')));
           $('.fe-btn-sort-service').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::service')));
           $('.fe-btn-sort-tv_internet').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::tv_internet')));
@@ -228,15 +233,18 @@ $.extend(Tw.CommonSearchMore.prototype,
 
         if ( data.length >= limitCount ) {
           data.splice(limitCount, data.length);
-        } else {
+        }
+        else {
           // 더보기 버튼 비노출 처리
           this._hasMoreContents = false;
         }
 
-      } else {
+      }
+      else {
         if ( data.length >= 20 ) {
           data.splice(20, data.length);
-        } else {
+        }
+        else {
           // 더보기 버튼 비노출 처리
           this._hasMoreContents = false;
           $('.btn-more').hide();
@@ -270,15 +278,17 @@ $.extend(Tw.CommonSearchMore.prototype,
               data[i][key] = data[i][key].replace('|', '');
             }
           }
-          if ( ( /*category === 'direct' ||*/ category === 'phone' || category === 'tablet' || category === 'accessory' ) && key === 'TYPE' ) {
+          if ( ( /*category === 'direct' ||*/ category === 'phone' || category === 'tablet' || category === 'accessory') && key === 'TYPE' ) {
             if ( data[i][key] === 'shopacc' ) {
               if ( data[i].PRODUCT_TYPE !== '' ) {
                 data[i].linkUrl = Tw.OUTLINK.DIRECT_IOT + '?categoryId=' + data[i].CATEGORY_ID +
                   '&productId=' + data[i].ACCESSORY_ID + '&productType=' + data[i].PRODUCT_TYPE;
-              } else {
+              }
+              else {
                 data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY + '?categoryId=' + data[i].CATEGORY_ID + '&accessoryId=' + data[i].ACCESSORY_ID;
               }
-            } else {
+            }
+            else {
               data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE + '?categoryId=' + data[i].CATEGORY_ID + '&productGrpId=' + data[i].PRODUCT_GRP_ID;
             }
           }
@@ -332,6 +342,10 @@ $.extend(Tw.CommonSearchMore.prototype,
           return;
         }
         listData.MENU_GROUP = listData.MENU_GROUP || '';
+        // if (listData.PROD_FLT_ID) {
+        //   listData.PROD_FILTER_CODE = this._filterServiceCode(listData.PROD_FLT_ID);
+        // }
+        listData.PROD_SMRY_EXPS_FILTER_CODE = this._filterSummaryCode(listData.PROD_SMRY_EXPS_TYP_CD);
         $parent.append(templateData({ listData: listData, CDN: cdn }));
       }, this));
 
@@ -579,14 +593,16 @@ $.extend(Tw.CommonSearchMore.prototype,
           sort: sort,
           researchQuery: encodeURIComponent(researchQuery)
         };
-      } else {
+      }
+      else {
         reqOptions = { query: encodeURIComponent(query), collection: collection, pageNum: pageNum, sort: sort };
       }
 
       if ( Tw.BrowserHelper.isApp() ) {
         if ( Tw.BrowserHelper.isAndroid() ) {
           reqOptions.device = 'A';
-        } else if ( Tw.BrowserHelper.isIos() ) {
+        }
+        else if ( Tw.BrowserHelper.isIos() ) {
           reqOptions.device = 'I';
         }
       }
@@ -677,12 +693,14 @@ $.extend(Tw.CommonSearchMore.prototype,
             if ( query !== researchQuery ) {
               this.$container.find('.fe-category.' + collection).attr('href', '/common/search/more?category=' +
                 collection + '&keyword=' + query + '&step=' + (this._step + 1) + '&sort=' + sort + '&in_keyword=' + researchQuery);
-            } else {
+            }
+            else {
               this.$container.find('.fe-category.' + collection).attr('href', '/common/search/more?category=' +
                 collection + '&keyword=' + query + '&step=' + (this._step + 1) + '&sort=' + sort);
             }
 
-          } else {
+          }
+          else {
             Tw.Logger.info('[common.search.more] [_sortRate] search api 리턴 오류!!!', res.code);
             return;
           }
@@ -742,7 +760,8 @@ $.extend(Tw.CommonSearchMore.prototype,
               researchQuery: encodeURIComponent(researchQuery),
               device: 'A'
             };
-          } else {
+          }
+          else {
             reqOptions = {
               query: encodeURIComponent(query),
               collection: 'all',
@@ -753,7 +772,8 @@ $.extend(Tw.CommonSearchMore.prototype,
               device: 'I'
             };
           }
-        } else {
+        }
+        else {
           reqOptions = {
             query: encodeURIComponent(query),
             collection: 'all',
@@ -763,7 +783,8 @@ $.extend(Tw.CommonSearchMore.prototype,
             researchQuery: encodeURIComponent(researchQuery)
           };
         }
-      } else {
+      }
+      else {
         if ( Tw.BrowserHelper.isApp() ) {
           if ( Tw.BrowserHelper.isAndroid() ) {
             reqOptions = {
@@ -773,7 +794,8 @@ $.extend(Tw.CommonSearchMore.prototype,
                 '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A',
               device: 'A'
             };
-          } else {
+          }
+          else {
             reqOptions = {
               query: encodeURIComponent(query),
               collection: 'all',
@@ -782,7 +804,8 @@ $.extend(Tw.CommonSearchMore.prototype,
               device: 'I'
             };
           }
-        } else {
+        }
+        else {
           reqOptions = {
             query: encodeURIComponent(query),
             collection: 'all',
@@ -808,7 +831,8 @@ $.extend(Tw.CommonSearchMore.prototype,
 
               if ( keyName === 'smart' || keyName === 'immediate' || keyName === 'banner' || keyName === 'lastevent' || keyName === 'direct' ) {
                 continue;
-              } else {
+              }
+              else {
                 var categoryStr = '.fe-' + keyName + '-count';
                 // Tw.Logger.info('[' + keyName + ']', contentsCnt + '건');
                 // Tw.Logger.info('[' + keyName + ']', this.$container.find(categoryStr));
@@ -816,7 +840,8 @@ $.extend(Tw.CommonSearchMore.prototype,
                 if ( contentsCnt < 1 ) {
                   // this.$container.find(categoryStr).parents('li').hide();
                   this.$container.find(categoryStr).parents('li').remove();
-                } else {
+                }
+                else {
                   this.$container.find(categoryStr).text(contentsCnt);
 
                   categoryStr = '.fe-category.' + keyName;
@@ -834,7 +859,8 @@ $.extend(Tw.CommonSearchMore.prototype,
                       query + '&step=' + (this._step + 1) + '&in_keyword=' + researchQuery + '&sort=' + sort + '&redirect=N');
                     this.$container.find(categoryStr).attr('href', '/common/search/more?category=' + keyName +
                       '&keyword=' + query + '&step=' + (this._step + 1) + '&in_keyword=' + researchQuery + '&sort=' + sort);
-                  } else {
+                  }
+                  else {
                     // this.$container.find('.fe-category.all').attr('href', '/common/search?category=all&keyword=' +
                     // query + '&step=' + (this._step + 1) + '&sort=' + this._sort);
                     // this.$container.find(categoryStr).attr('href', '/common/search/more?category=' + keyName +
@@ -892,7 +918,8 @@ $.extend(Tw.CommonSearchMore.prototype,
             // 선택된 카테고리를 화면 좌측으로 붙여서 노출해주기 위한 처리[E]
 
 
-          } else {
+          }
+          else {
             Tw.Logger.info('[common.search.more] [_categoryInit] search api 리턴 오류!!!', res.code);
             return;
           }
@@ -996,7 +1023,8 @@ $.extend(Tw.CommonSearchMore.prototype,
             sort: sort,
             device: 'A'
           };
-        } else if ( Tw.BrowserHelper.isIos() ) {
+        }
+        else if ( Tw.BrowserHelper.isIos() ) {
           reqOptions = {
             query: encodeURIComponent(this._searchInfo.query),
             collection: this._category,
@@ -1004,7 +1032,8 @@ $.extend(Tw.CommonSearchMore.prototype,
             sort: sort,
             device: 'I'
           };
-        } else {
+        }
+        else {
           reqOptions = {
             query: encodeURIComponent(this._searchInfo.query),
             collection: this._category,
@@ -1012,7 +1041,8 @@ $.extend(Tw.CommonSearchMore.prototype,
             sort: sort
           };
         }
-      } else {
+      }
+      else {
         reqOptions = {
           query: encodeURIComponent(this._searchInfo.query),
           collection: this._category,
@@ -1063,7 +1093,8 @@ $.extend(Tw.CommonSearchMore.prototype,
               $('.btn-more').hide();
             }
 
-          } else {
+          }
+          else {
             Tw.Logger.info('[common.search.more] [_showMore] search api 리턴 오류!!!', res.code);
             return;
           }
@@ -1128,7 +1159,8 @@ $.extend(Tw.CommonSearchMore.prototype,
         sort += '.tablet-' + (Tw.CommonHelper.getCookie(sortsName[5]) || 'D');
         sort += '.accessory-' + (Tw.CommonHelper.getCookie(sortsName[6]) || 'D');
         linkUrl = replaceQueryParam('sort', sort, linkUrl);
-      } else {
+      }
+      else {
         sort = Tw.CommonHelper.getCookie('search_sort::' + category);
         linkUrl = replaceQueryParam('sort', sort, linkUrl);
       }
@@ -1146,11 +1178,14 @@ $.extend(Tw.CommonSearchMore.prototype,
       if ( this._searchInfo.search[0] ) {
         if ( this._searchInfo.search[0].direct && this._searchInfo.search[0].direct.sort ) {
           sort = this._searchInfo.search[0].direct.sort;
-        } else if ( this._searchInfo.search[0].phone && this._searchInfo.search[0].phone.sort ) {
+        }
+        else if ( this._searchInfo.search[0].phone && this._searchInfo.search[0].phone.sort ) {
           sort = this._searchInfo.search[0].phone.sort;
-        } else if ( this._searchInfo.search[0].tablet && this._searchInfo.search[0].tablet.sort ) {
+        }
+        else if ( this._searchInfo.search[0].tablet && this._searchInfo.search[0].tablet.sort ) {
           sort = this._searchInfo.search[0].tablet.sort;
-        } else if ( this._searchInfo.search[0].accessory && this._searchInfo.search[0].accessory.sort ) {
+        }
+        else if ( this._searchInfo.search[0].accessory && this._searchInfo.search[0].accessory.sort ) {
           sort = this._searchInfo.search[0].accessory.sort;
         }
       }
@@ -1158,7 +1193,7 @@ $.extend(Tw.CommonSearchMore.prototype,
       if ( sort && sort.indexOf('-') !== -1 ) {
         sort = sort.substr(sort.indexOf('-') + 1);
       }
-      
+
       var listData = [
         // { 'label-attr': 'for=ra0', 'txt': Tw.SEARCH_FILTER_STR.ACCURACY,
         //   'radio-attr':'id="ra0" data-type="R" name="selectFilter" value="'+Tw.SEARCH_FILTER_STR.ACCURACY+'" '+
@@ -1261,7 +1296,8 @@ $.extend(Tw.CommonSearchMore.prototype,
             'label-attr': 'for=ra' + i, 'txt': i,
             'radio-attr': 'id="ra' + i + '" data-idx="' + i + '" name="selectPage" value="' + i + '" checked'
           });
-        } else {
+        }
+        else {
           //_returnData.push({option : '' , value : i , attr : 'data-idx='+i});
           _returnData.push({
             'label-attr': 'for=ra' + i, 'txt': i,
