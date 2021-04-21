@@ -68,33 +68,4 @@ Tw.HandlebarHelper = (function () {
     return (num*1) + 1;
   });
 
-  Handlebars.registerHelper('int', function(num) {
-    return parseInt(num, 10);
-  });
-
-  Handlebars.registerHelper('ifNumber', function(v1, operator, v2, options) {
-    v1 = parseInt(v1, 10);
-    v2 = parseInt(v2, 10);
-    switch ( operator ) {
-      case '===':
-        return (v1 === v2) ? options.fn(this) : options.inverse(this);
-      case '!==':
-        return (v1 !== v2) ? options.fn(this) : options.inverse(this);
-      case '<':
-        return (v1 < v2) ? options.fn(this) : options.inverse(this);
-      case '<=':
-        return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-      case '>':
-        return (v1 > v2) ? options.fn(this) : options.inverse(this);
-      case '>=':
-        return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-      case '&&':
-        return (v1 && v2) ? options.fn(this) : options.inverse(this);
-      case '||':
-        return (v1 || v2) ? options.fn(this) : options.inverse(this);
-      default:
-        return options.inverse(this);
-    }
-  });
-
 })();
