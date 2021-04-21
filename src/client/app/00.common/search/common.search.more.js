@@ -342,7 +342,9 @@ $.extend(Tw.CommonSearchMore.prototype,
           return;
         }
         listData.MENU_GROUP = listData.MENU_GROUP || '';
-        listData.PROD_FILTER_CODE = this._filterServiceCode(listData.PROD_FLT_ID);
+        // if (listData.PROD_FLT_ID) {
+        //   listData.PROD_FILTER_CODE = this._filterServiceCode(listData.PROD_FLT_ID);
+        // }
         listData.PROD_SMRY_EXPS_FILTER_CODE = this._filterSummaryCode(listData.PROD_SMRY_EXPS_TYP_CD);
         $parent.append(templateData({ listData: listData, CDN: cdn }));
       }, this));

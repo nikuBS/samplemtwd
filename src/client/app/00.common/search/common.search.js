@@ -599,9 +599,10 @@ Tw.CommonSearch.prototype = {
 
         var childList = [];
         listData.MENU_GROUP = listData.MENU_GROUP || '';
-        listData.PROD_FILTER_CODE = this._filterServiceCode(listData.PROD_FLT_ID);
+        // if (listData.PROD_FLT_ID) {
+        //   listData.PROD_FILTER_CODE = this._filterServiceCode(listData.PROD_FLT_ID);
+        // }
         listData.PROD_SMRY_EXPS_FILTER_CODE = this._filterSummaryCode(listData.PROD_SMRY_EXPS_TYP_CD);
-
         // 자식이 있는 경우.
         if ( listData.MENU_GROUP !== '' && listData.MENU_GROUP !== undefined){
           var docids = listData.DOCID.split('$');
