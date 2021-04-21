@@ -104,7 +104,6 @@ class ProductHelper {
    * @param basOfrCharCntCtt - 문자 (Optional)
    * @param basDataUnit - 데이터 단위
    * @param isVcallFormat - 음성 단위 사용여부
-   * @param selAgrmtAplyMfixAmt - 선택약정반영월정액 (Optional) - OP002-13119
    */
   static convProductSpecifications(
     basFeeInfo?: any,
@@ -112,8 +111,7 @@ class ProductHelper {
     basOfrVcallTmsCtt?: any,
     basOfrCharCntCtt?: any,
     basDataUnit = DATA_UNIT.MB,
-    isVcallFormat = true,
-    selAgrmtAplyMfixAmt?: any
+    isVcallFormat = true
   ): any {
     /**
      * 데이터 검증
@@ -127,8 +125,7 @@ class ProductHelper {
       basFeeInfo: isValid(basFeeInfo) ? ProductHelper.convProductBasfeeInfo(basFeeInfo) : null,
       basOfrDataQtyCtt: isValid(basOfrDataQtyCtt) ? ProductHelper.convProductBasOfrDataQtyCtt(basOfrDataQtyCtt, basDataUnit) : null,
       basOfrVcallTmsCtt: isValid(basOfrVcallTmsCtt) ? ProductHelper.convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt, isVcallFormat) : null,
-      basOfrCharCntCtt: isValid(basOfrCharCntCtt) ? ProductHelper.convProductBasOfrCharCntCtt(basOfrCharCntCtt) : null,
-      selAgrmtAplyMfixAmt: isValid(selAgrmtAplyMfixAmt) ? ProductHelper.convProductBasfeeInfo(selAgrmtAplyMfixAmt) : null
+      basOfrCharCntCtt: isValid(basOfrCharCntCtt) ? ProductHelper.convProductBasOfrCharCntCtt(basOfrCharCntCtt) : null
     };
   }
 
