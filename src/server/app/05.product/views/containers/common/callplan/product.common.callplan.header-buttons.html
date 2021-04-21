@@ -5,13 +5,9 @@
         <% if ( !isDiscount ) { %>
         <span class="opacity80"><%= ( isRoaming || isWireplanAdd || isMobileplanAdd ) ? '이용요금' : '월정액' %>(<%= basFeeSubText %>)</span><br>
         <strong class="price-type"><%= prodRedisInfo.summary.basFeeInfo.value %></strong>
-            <% if ( !prodRedisInfo.summary.basFeeInfo.isNaN ) { %>
+        <% if ( !prodRedisInfo.summary.basFeeInfo.isNaN ) { %>
         <span class="unit">원</span>
-                <% if ( prodRedisInfo.summary.selAgrmtAplyMfixAmt) { %> <!-- 선택 약정 금액이 있으면서 월정액 요금이 숫자인 경우만 노출, 가입중단 또는 월정액 요금이 상세참조 등은 노출하지 않음 -->
-        <strong class="tod-choice idpt-mobile">선택 약정 반영 시 <span><%= prodRedisInfo.summary.selAgrmtAplyMfixAmt.value %></span>원</strong><!-- 210208 [OP002-13114] 추가 -->
-                <% } %>
-            <% } %>
-
+        <% } %>
         <% } %>
     </p>
     <% } %>
