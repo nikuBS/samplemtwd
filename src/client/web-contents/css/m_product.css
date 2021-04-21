@@ -1278,7 +1278,7 @@
 
 /* 210208 [OP002-13114] [요금팀] 요금제 선택약정 반영금액 표기 */
 .idpt-product-detail .idpt-product-detail-ledgercase .tod-choice{display:block; color:#fff; font-size:0.75rem}
-.idpt-product-detail .idpt-product-detail-ledgercase .button-ledger.tod-middle{margin-top: 0.85rem}
+.productdetails-ledgercase .tod-choice{display:block; color:#fff; font-size:0.75rem}
 
 /* 210308 [OP002-13603] 온라인 T-World BTV 채널수 현행화 요청 */
 .idpt-benefit .idpt-charge-wrap .charge-box-list.col3 > li {width: 33.33333333333333%;}
