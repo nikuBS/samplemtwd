@@ -86,7 +86,7 @@ class CommonSearch extends TwViewController {
             suggestQuery : searchResult.result.suggestQuery,
             step : step,
             from : from,
-            searchKategorie: _this._getSearchKategorie(searchResult.result)
+            searchCategory: _this._getSearchCategory(searchResult.result)
           });
         });
 
@@ -204,7 +204,7 @@ class CommonSearch extends TwViewController {
                     suggestQuery : _searchResult.result.suggestQuery,
                     step : step,
                     from : null,
-                    searchKategorie: _this._getSearchKategorie(_searchResult.result)
+                    searchCategory: _this._getSearchCategory(_searchResult.result)
                   });
                 });
               } else {
@@ -243,7 +243,7 @@ class CommonSearch extends TwViewController {
               searchTotalCount: searchResult.result.totalcount,
               arrKeyword: arrKeyword,
               arrKeywordSize: arrKeywordSize,
-              searchKategorie: _this._getSearchKategorie(searchResult.result)
+              searchCategory: _this._getSearchCategory(searchResult.result)
             });
           }
 
@@ -267,7 +267,7 @@ class CommonSearch extends TwViewController {
             searchTotalCount: searchResult.result.totalcount,
             arrKeyword: arrKeyword,
             arrKeywordSize: arrKeywordSize,
-            searchKategorie: _this._getSearchKategorie(searchResult.result)
+            searchCategory: _this._getSearchCategory(searchResult.result)
           });
         }
       }
@@ -502,8 +502,8 @@ class CommonSearch extends TwViewController {
    * @param result 검색 결과
    * @returns 카테고리별 검색 결과 정보
    */
-  private _getSearchKategorie(result: any): any {
-    const searchKategorie = {
+  private _getSearchCategory(result: any): any {
+    const searchCategory = {
       immediate: {},
       smart: {},
       shortcut: {},
@@ -531,7 +531,7 @@ class CommonSearch extends TwViewController {
       lastevent: {}
     };
 
-    const keyArr: Array<string> = Object.keys(searchKategorie);
+    const keyArr: Array<string> = Object.keys(searchCategory);
     let key: string;
 
     if ( result && result.search && result.search.length > 0 ) {
@@ -539,14 +539,14 @@ class CommonSearch extends TwViewController {
         for ( let i = 0; i < keyArr.length; i++ ) {
           key = keyArr[i];
           if ( search[key] ) {
-            searchKategorie[key] = search[key];
+            searchCategory[key] = search[key];
             break;
           }
         }
       });
     }
 
-    return searchKategorie;
+    return searchCategory;
   }
 }
 

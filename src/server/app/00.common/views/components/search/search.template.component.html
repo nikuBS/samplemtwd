@@ -6,7 +6,7 @@
 
 <script type="text/x-handlebars-template" id="common_template">
     <div class="tod-horizon-shadow">
-        <div class="widget"> 
+        <div class="widget">
             <!-- <div class="widget-box horizontal" id="fe-category-slide"> -->
             <div class="widget-box" id="fe-category-slide">
                 <div id="fe-category-area" class="horizontal-slide slide-nopd tod-hoz-tabtype1">
@@ -80,6 +80,115 @@
 </script>
 
 <script type="text/x-handlebars-template" id="rate_template">
+    <li>
+        <div class="tod-nmp-item {{listData.PROD_SMRY_EXPS_FILTER_CODE}}">
+            <a href="/product/callplan?prod_id={{listData.PRID}}" data-category="rate" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.PROD_NM}}" class="item-link">
+                <div class="rn-prod-name">
+                    <p class="p-name">{{{listData.PROD_NM}}}</p>
+                    <p class="p-price">
+                        {{#isNaN listData.BAS_FEE_INFO }}
+                            {{listData.BAS_FEE_INFO}}
+                        {{else}}
+                            {{currencyComma listData.BAS_FEE_INFO}}원
+                        {{/isNaN}}
+                    </p>
+                </div>
+                {{#ifNumber listData.SEL_AGRMT_APLY_MFIX_AMT '>' 0 }}
+                    <div class="rn-prod-sale">
+                        <span>선택약정 반영 시</span>
+                        <em>{{currencyComma listData.SEL_AGRMT_APLY_MFIX_AMT}}원</em>
+                    </div>
+                {{/ifNumber}}
+                <div class="rn-prod-info">
+                    <ul class="p-etc">
+                        {{#ifCond listData.BAS_OFR_DATA_QTY_CTT '!==' ''}}
+                            <li class="v-data">
+                                <i class="p-icon18-data"><span class="blind">데이터</span></i>
+                                {{#isNaN listData.BAS_OFR_DATA_QTY_CTT}}
+                                    {{listData.BAS_OFR_DATA_QTY_CTT}}
+                                {{else}}
+                                    {{listData.BAS_OFR_DATA_QTY_CTT}}GB
+                                {{/isNaN}}
+                            </li>
+                        {{else ifCond listData.BAS_OFR_MB_DATA_QTY_CTT '!==' ''}}
+                            <li class="v-data">
+                                <i class="p-icon18-data"><span class="blind">데이터</span></i>
+                                {{#isNaN listData.BAS_OFR_MB_DATA_QTY_CTT}}
+                                    {{listData.BAS_OFR_MB_DATA_QTY_CTT}}
+                                {{else}}
+                                    {{listData.BAS_OFR_MB_DATA_QTY_CTT}}MB
+                                {{/isNaN}}
+                            </li>
+                        {{/ifCond}}
+                        {{#ifCond listData.BAS_OFR_VCALL_TMS_CTT '!==' ''}}
+                            <li>
+                                <i class="p-icon18-phone"><span class="blind">음성</span></i>
+                                {{#isNaN listData.BAS_OFR_VCALL_TMS_CTT}}
+                                    {{listData.BAS_OFR_VCALL_TMS_CTT}}
+                                {{else}}
+                                    {{listData.BAS_OFR_VCALL_TMS_CTT}}분
+                                {{/isNaN}}
+                            </li>
+                        {{/ifCond}}
+                        {{#ifCond listData.BAS_OFR_CHAR_CNT_CTT '!==' ''}}
+                            <li>
+                                <i class="p-icon18-sms"><span class="blind">문자</span></i>
+                                {{#isNaN listData.BAS_OFR_CHAR_CNT_CTT}}
+                                    {{listData.BAS_OFR_CHAR_CNT_CTT}}
+                                {{else}}
+                                    {{listData.BAS_OFR_CHAR_CNT_CTT}}건
+                                {{/isNaN}}
+                            </li>
+                        {{/ifCond}}
+                    </ul>
+                </div>
+                {{#ifCond listData.benefitList '||' listData.addBenefitList}}
+                    <div class="rn-prod-benefit">
+                        {{#if listData.benefitList.length}}
+                        <ul>
+                            {{#each listData.benefitList}}
+                            <li>
+                                <i class="p-icon16-img"><img src="{{../CDN}}{{RGST_IMG_URL}}" alt=""></i>
+                                <span class="txt">{{EXPS_BENF_NM}} {{BENF_DTL_CTT}}</span>
+                                {{#ifCond BENF_AMT '!==' ''}}
+                                    <span class="price">
+                                            <del>{{currencyComma BENF_AMT}}원</del>
+                                            <i class="icon-arr">→</i>
+                                            <em>{{currencyComma USE_AMT}}원</em>
+                                        </span>
+                                {{/ifCond}}
+                            </li>
+                            {{/each}}
+                        </ul>
+                        {{/if }}
+                        {{#if listData.addBenefitList.length}}
+                            <div class="p-benefit-choice">
+                                <p class="title">추가혜택 <strong>{{listData.addBenefitList.length}}개</strong>를 선택해주세요</p>
+                                <ul>
+                                {{#each listData.addBenefitList}}
+                                    <li>
+                                        <i class="p-icon16-img"><img src="{{../CDN}}{{RGST_IMG_URL}}" alt=""></i>
+                                        <span class="txt">{{EXPS_BENF_NM}} {{BENF_DTL_CTT}}</span>
+                                        {{#ifCond BENF_AMT '!==' ''}}
+                                        <span class="price">
+                                            <del>{{currencyComma BENF_AMT}}원</del>
+                                            <i class="icon-arr">→</i>
+                                            <em>{{currencyComma USE_AMT}}원</em>
+                                        </span>
+                                        {{/ifCond}}
+                                    </li>
+                                {{/each}}
+                                </ul>
+                            </div>
+                        {{/if}}
+                    </div>
+                {{/ifCond}}
+            </a>
+        </div>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="rate_old_template">
     <li class="category-type">
         <!-- <button class="link rate-element list-data" data-url="/product/callplan?prod_id={{listData.PRID}}" data-category="rate" data-id="{{listData.DOCID}}"  data-tit="{{removeTag listData.PROD_NM}}"> -->
         <button class="link rate-element list-data" href="/product/callplan?prod_id={{listData.PRID}}" data-category="rate" data-id="{{listData.DOCID}}"  data-tit="{{removeTag listData.PROD_NM}}">
@@ -90,7 +199,7 @@
                     <span class="money">{{listData.BAS_FEE_INFO}}</span>
                     {{else}}
                     <span class="money">{{currencyComma listData.BAS_FEE_INFO}}</span>원
-                    {{/isNaN}}       
+                    {{/isNaN}}
                 </p>
             </div>
             <ul class="products-detailinfo02">
@@ -146,7 +255,7 @@
                     <span class="tag-text">#{{{this}}}</span>
                     {{/ifCond}}
                     {{/each}}
-                </div>    
+                </div>
             {{/ifCond}}
         </button>
     </li>
@@ -188,7 +297,7 @@
                 <span class="tag-text">#{{{this}}}</span>
                 {{/ifCond}}
                 {{/each}}
-            </div>    
+            </div>
             {{/ifCond}}
         </button>
     </li>
@@ -266,7 +375,7 @@
     </li>
 </script>
 
-<!-- T다이렉트 
+<!-- T다이렉트
 <script type="text/x-handlebars-template" id="direct_template">
     <li>
         <button class="direct-element list-data link" title="새창" href="{{listData.linkUrl}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{removeTag listData.PRODUCT_NM}}">
