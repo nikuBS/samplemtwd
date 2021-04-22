@@ -872,25 +872,31 @@ export default class RenewProduct extends TwViewController {
                 if(searchProductId){
                   return this.apiService.request(API_CMD.BFF_10_0183, {}, {}, [ searchProductId ]).map((resp) => {
                     //console.log('### pipe3 BFF_10_0183 : ' + JSON.stringify(resp));
+                    this.logger.debug(JSON.stringify(resp));
     
                     if(resp.code === API_CODE.CODE_00) { 
                       //console.log('### pipe3 end : success');
                       lossCmpsInfo.set("multiAddition", resp.result);
                       return resp.code;
                     }else if (resp.code === 'ICAS4003') {
-                      let multiAddition = '';
-                      multiAddition += '{';
-                      for(let i = 0 ; i < searchProductId.split('~').length; i++){
-                        multiAddition += '"' + searchProductId.split('~')[i] + '":' + '"N"';
-                        if(i < searchProductId.split('~').length - 1){
-                          multiAddition += ',';
+                      try{
+                        let multiAddition = '';
+                        multiAddition += '{';
+                        for(let i = 0 ; i < searchProductId.split('~').length; i++){
+                          multiAddition += '"' + searchProductId.split('~')[i] + '":' + '"N"';
+                          if(i < searchProductId.split('~').length - 1){
+                            multiAddition += ',';
+                          }
                         }
+                        multiAddition += '}';
+                        lossCmpsInfo.set("multiAddition", JSON.parse(multiAddition));
+                        //console.log('### pipe3 end : ICAS4003 => ' + JSON.parse(multiAddition));
+    
+                        return API_CODE.CODE_00;
+                      }catch(e){
+                        this.logger.error(e);
+                        return Observable.of(null); 
                       }
-                      multiAddition += '}';
-                      lossCmpsInfo.set("multiAddition", JSON.parse(multiAddition));
-                      //console.log('### pipe3 end : ICAS4003 => ' + JSON.parse(multiAddition));
-  
-                      return API_CODE.CODE_00;
                     }else{
                       //console.log('### pipe3 end : fail');
                       return Observable.of(null); 
