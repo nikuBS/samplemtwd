@@ -53,6 +53,7 @@ Tw.ProductRenewalList.prototype = {
     },
 
     _initFilterPopup: function(e){
+      this.curMobileFilter = '';
       this.curFilter = [];
       var $target = $(e.currentTarget);
       this._handleClickChangeFilters($target);
