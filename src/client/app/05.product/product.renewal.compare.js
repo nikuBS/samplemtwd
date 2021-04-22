@@ -283,8 +283,6 @@ Tw.ProductCompare.prototype = {
       }else{
         this.compareData.curPlan.isSelAgrmtAplyMfixAmt = false;
       }
-      // 선택약정 안보이게 처리(임시)
-      this.compareData.curPlan.isSelAgrmtAplyMfixAmt = false; 
     },
 
    /**
