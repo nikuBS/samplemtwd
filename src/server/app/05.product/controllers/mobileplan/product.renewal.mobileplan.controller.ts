@@ -879,7 +879,6 @@ export default class RenewProduct extends TwViewController {
                       lossCmpsInfo.set("multiAddition", resp.result);
                       return resp.code;
                     }else if (resp.code === 'ICAS4003') {
-                      try{
                         let multiAddition = '';
                         multiAddition += '{';
                         for(let i = 0 ; i < searchProductId.split('~').length; i++){
@@ -893,10 +892,6 @@ export default class RenewProduct extends TwViewController {
                         //console.log('### pipe3 end : ICAS4003 => ' + JSON.parse(multiAddition));
     
                         return API_CODE.CODE_00;
-                      }catch(e){
-                        this.logger.error(e);
-                        return Observable.of(null); 
-                      }
                     }else{
                       //console.log('### pipe3 end : fail');
                       return Observable.of(null); 
