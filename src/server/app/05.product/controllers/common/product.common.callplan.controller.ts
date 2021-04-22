@@ -222,7 +222,7 @@ class ProductCommonCallplan extends TwViewController {
       // 상품 요약데이터
       summary: [prodRedisInfo.summary,
         ProductHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo, basDataTxt.txt,
-          prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt, basDataTxt.unit, false),
+          prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt, basDataTxt.unit, false, prodRedisInfo.summary.selAgrmtAplyMfixAmt),
         { smryHtmlCtt: EnvHelper.replaceCdnUrl(this._removePcImgs(prodRedisInfo.summary.smryHtmlCtt)) }].reduce((a, b) => {
         return Object.assign(a, b);
       }),
