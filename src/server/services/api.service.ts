@@ -14,7 +14,6 @@ import { SvcInfoModel } from '../models/svc-info.model';
 import DateHelper from '../utils/date.helper';
 import CommonHelper from '../utils/common.helper';
 import BrowserHelper from '../utils/browser.helper';
-import { Request } from 'express';
 
 /**
  * @desc API 요청을 위한 service
@@ -186,7 +185,6 @@ class ApiService {
     if ( !FormatHelper.isEmpty(params) ) {
       path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
     }
-    path = escape(path);
     return path;
   }
 
