@@ -13,7 +13,7 @@ class ParamsHelper {
     }
     let result = '?';
     Object.keys(params).forEach(key => {
-      result = result + key + '=' + escape(params[key]) + '&';
+      result = result + key + '=' + params[key] + '&';
     });
     result = result.substring(0, result.length - 1);
     return result;
