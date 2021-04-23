@@ -14,6 +14,7 @@ import { SvcInfoModel } from '../models/svc-info.model';
 import DateHelper from '../utils/date.helper';
 import CommonHelper from '../utils/common.helper';
 import BrowserHelper from '../utils/browser.helper';
+import { Request } from 'express';
 
 /**
  * @desc API 요청을 위한 service
@@ -185,6 +186,7 @@ class ApiService {
     if ( !FormatHelper.isEmpty(params) ) {
       path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
     }
+    path = escape(path);
     return path;
   }
 
@@ -263,8 +265,15 @@ class ApiService {
    */
   private handleError(observer, command, req, res, options, err) {
     if ( !err.response && err.stack ) {
-      this.logger.error(this, '[Programming error] Stack :: ', err.stack);
-      this.logger.error(this, '[Programming error] SvcInfo :: ', req.session && req.session.svcInfo);
+      const errorLog = {
+        stack : err.stack,
+        reqUrl : req.url,
+        reqParam: req.params,
+        reqHeader : req.headers,
+        session : req.session, 
+        svcInfo : req.session.svcInfo
+      }
+      this.logger.error(this, '[Programming error] handleError :: ', JSON.stringify(errorLog));
       // page controller 에서 error 가 발생하여 무한로딩이 발생 시 error 페이지 노출 하도록 추가
       return res.status(500).render('error.page-not-found.html', {
         svcInfo: req.session ? req.session.svcInfo : null,
