@@ -197,6 +197,25 @@ Tw.TidLandingComponent.prototype = {
    * @desc 회원가입 요청
    */
   goSignup: function () {
+
+    this._apiService
+      .request(Tw.API_CMD.BFF_01_0069, {property: 'bool.signup.visible'})
+          .done($.proxy(function(appStorResult) {
+            var iOSAppStoreYn = appStorResult.result.split(':')[1];
+            if (iOSAppStoreYn === 'true') {
+              this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/member/signup-guide', $.proxy(this._onNativeSignup, this));
+            } else {
+              if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isIos()) {
+                Tw.CommonHelper.openUrlExternal('https://m.tworld.co.kr/common/member/signup-guide');
+              } else {
+                this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/member/signup-guide', $.proxy(this._onNativeSignup, this));
+              }
+            }
+          }, this))
+          .fail(function(err) {
+
+          });
+
     // iOS 스토어 심사대비 회원가입 URL을 out link로 연결되도록 수정(심사 후 원복 예정)
     // if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isIos()) {
     //   Tw.CommonHelper.openUrlExternal('https://m.tworld.co.kr/common/member/signup-guide');
@@ -204,7 +223,7 @@ Tw.TidLandingComponent.prototype = {
     //   this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/member/signup-guide', $.proxy(this._onNativeSignup, this));
     // }
     // ios 스토어 심사 통과 링크 
-    this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/member/signup-guide', $.proxy(this._onNativeSignup, this));
+    // this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/member/signup-guide', $.proxy(this._onNativeSignup, this));
   },
 
   /**
