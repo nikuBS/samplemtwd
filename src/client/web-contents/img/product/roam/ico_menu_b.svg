@@ -1,8 +1,0 @@
-<svg height="49" viewBox="0 0 48 49" width="48" xmlns="http://www.w3.org/2000/svg">
-    <g fill="#000" fill-rule="evenodd">
-        <path d="m0 .44h48v48h-48z" opacity="0"/>
-        <rect height="3" rx="1.5" width="42" x="2" y="9.44"/>
-        <rect height="3" rx="1.5" width="42" x="2" y="22.44"/>
-        <rect height="3" rx="1.5" width="42" x="2" y="35.44"/>
-    </g>
-</svg>
