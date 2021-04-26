@@ -36745,6 +36745,9 @@ body.apphome .section-box {
 .tod-nmp-srhbox .extraservice-list .tod-nmp-item {background-color:transparent}
 .tod-nmp-srhbox .extraservice-list .tod-nmp-item .rn-prod-info {border-color:#f2f2f2}
 
+/* 210405 [OP002-13420] 검색영역 - 검색 결과 내 배너 검색 결과 추가 */
+.direct-shop-wrap.tod-promotion li img{height:4.5625rem}
+
 /* 210412 [OP002-14248] T Factory 노출도 강화요건 */
 .main-faq-menu ul li .menu-bt.ico-type17 .ico {background-image: url(/img/customer/bg_cs_01_01_18_01.png)}
 .main-faq-menu ul.col4 li{width:25%}

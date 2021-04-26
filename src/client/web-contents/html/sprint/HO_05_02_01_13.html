@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <!-- 191101_css링크수정 - main.css삭제/components추가 -->
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 컴포너트 위젯 -->
+    <!-- <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /> --><!-- [C] 단락별 컴퍼넌트 -->
+    <!-- //191101_css링크수정 - main.css삭제/components추가 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+</head>
+<body>
+    <!-- #skip_navigation 팝업페이지 바로가기 삭제 Grand open 접근성
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div>
+    // #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <!-- 191127 [OP002-4532] 수정 (header, content 영역을 검색 메인 페이지에 맞춰 구조 변경) -->
+        <div class="searchbox-header">
+            <!-- 191001 [OP002-4009] 수정01 -->
+            <div class="sch-form tod-sch-form">
+                <!-- <form role="search" action="." > -->
+                    <div class="searchbox-close"><button class="close-area"><span class="tod-blind">이전</span></button></div>
+                    <span class="inputbox">
+                        <span class="input">
+                            <input type="search" name="search" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="">
+                            <button class="cancel" style="display:none"><span class="blind">삭제</span></button>
+                        </span>
+                    </span>
+                    <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                <!-- </form> -->
+            </div>
+            <!-- //191001 [OP002-4009] 수정01 -->
+        </div>
+        <!-- //191127 [OP002-4532] 수정 (header, content 영역을 검색 메인 페이지에 맞춰 구조 변경) -->
+        <!--// #header -->
+        
+        <!-- #contents -->
+        <!-- 191127 [OP002-4532] 수정 (전체 UI개선) -->
+        <div id="contents" class="container-wrap">
+            <div class="search-content">
+                <!-- 200318 [OP002-7211] 추가_01 -->
+                
+                <!-- 연관 검색어 -->
+                <div class="cont-box nogaps">
+                    <div class="tod-related-keywords tod-horizon-shadow">
+                        <p class="tit"><span>연관<span class="blind">검색어</span></span></p>
+                        <div class="widget"> 
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide">
+                                    <ul class="horizontal-list">
+                                        <li><button>휴대폰임대</button></li>
+                                        <li><a href="#">휴대폰임대</a></li>
+                                        <li><a href="#">분실 폰 찾기 플러스</a></li>
+                                        <li><a href="#">친구찾기</a></li>
+                                        <li><a href="#">분실파손</a></li>
+                                        <li><a href="#">분실 폰 찾기 플러스</a></li>
+                                        <li><a href="#">분실 폰 찾기 플러스</a></li>
+                                        <li><a href="#">친구찾기</a></li>
+                                        <li><a href="#">분실파손</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //연관 검색어 -->
+    
+                <!-- 전체 검색결과 건수 및 결과 내 재검색 -->
+                <div class="cont-box bgnone noborder pb10 tod-re-searchbox">
+                    <h2 class="tit">검색결과 총 <span class="num">84</span>건</h2>
+                    <div class="inputbox tod-searchtype1">
+                        <span class="input">
+                            <input type="search" placeholder="결과 내 재검색" title="검색어 입력" value=""><!-- 191212 input type 변경 -->
+                        </span>
+                        <button class="btn-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+                <!-- //전체 검색결과 건수 및 결과 내 재검색 -->
+    
+                <!-- 카테고리 탭 -->
+                <div class="tod-srhcategory-scrwrap"><!-- 스크롤 위치가 카테고리 탭을 지나가면 해당 영역 상단 고정. class="fixed" 추가 -->
+                    <div class="tod-horizon-shadow">
+                        <div class="widget"> 
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide slide-nopd tod-hoz-tabtype1">
+                                    <ul class="horizontal-list">
+                                        <li><button>전체<span class="num">84</span></button></li><!-- class="on" 일때 선택된 탭의 위치가 화면에 먼저 노출 -->
+                                        <li><a href="#">바로가기<span class="num">16</span></a></li>
+                                        <li><a href="#">요금제<span class="num">84</span></a></li>
+                                        <li><a href="#">부가서비스<span class="num">84</span></a></li>
+                                        <li><a href="#">인터넷/집전화/IPTV<span class="num">84</span></a></li>
+                                        <li><a href="#">결합상품<span class="num">84</span></a></li>
+                                        <li><a href="#">T로밍<span class="num">84</span></a></li>
+                                        <li><a href="#">T앱<span class="num">84</span></a></li>
+                                        <!-- 210302 [OP002-13456] T다이렉트샵 하위 카테고리 추가_01 -->
+                                        <li><a href="#">휴대폰<span class="num">6</span></a></li>
+                                        <li><a href="#">태블릿/2nd Device<span class="num">9</span></a></li>
+                                        <li><a href="#">액세서리<span class="num">33</span></a></li>
+                                        <!-- //210302 [OP002-13456] T다이렉트샵 하위 카테고리 추가_01 -->
+                                        <li><a href="#">T멤버십<span class="num">84</span></a></li>
+                                        <li><a href="#">진행중인 이벤트<span class="num">84</span></a></li>
+                                        <li><a href="#">혜택/할인<span class="num">84</span></a></li>
+                                        <li><a href="#">지점/대리점, A/S센터<span class="num">84</span></a></li>
+                                        <li><a href="#">자주 하는 질문<span class="num">84</span></a></li>
+                                        <li><a href="#">공지사항<span class="num">84</span></a></li>
+                                        <li><a href="#">이용자 피해예방 주의보<span class="num">84</span></a></li>
+                                        <li><a href="#">이럴 땐 이렇게 하세요<span class="num">84</span></a></li>
+                                        <li><a href="#">서비스 이용안내<span class="num">84</span></a></li>
+                                        <li><a href="#">사이트 이용방법<span class="num">84</span></a></li>
+                                        <li class="on"><a href="#">프로모션<span class="num">84</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //카테고리 탭 -->
+    
+                <hr class="cont-sp type1" aria-hidden="true">
+    
+                <!-- 결합상품 -->
+                <div class="cont-box nogaps-btm">
+                    <div class="tod-searchlist-head">
+                        <h3 class="tit">프로모션 <span class="num">6</span></h3>
+                    </div>
+                    <div class="direct-shop-wrap tod-srhtype1 tod-promotion">
+						<ul>
+							<li>
+								<a href="#" class="link" title="새창">
+									<div class="img"><img src="/img/etc/promotion-even-ban.png" alt="" /></div>
+									<div class="cont pl20">
+										<div class="tit">배너명이 노출됩니다 </div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="link" title="새창">
+									<div class="img"><img src="/img/etc/promotion-even-ban.png" alt="" /></div>
+									<div class="cont pl20">
+										<div class="tit">배너명이 노출됩니다 배너명이 노출됩니다 </div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="link" title="새창">
+									<div class="img"><img src="/img/etc/promotion-even-ban.png" alt="" /></div>
+									<div class="cont pl20">
+										<div class="tit">배너명이 노출됩니다 </div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="link" title="새창">
+									<div class="img"><img src="/img/etc/promotion-even-ban.png" alt="" /></div>
+									<div class="cont pl20">
+										<div class="tit">배너명이 노출됩니다 </div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="link" title="새창">
+									<div class="img"><img src="/img/etc/promotion-even-ban.png" alt="" /></div>
+									<div class="cont pl20">
+										<div class="tit">배너명이 노출됩니다 배너명이 노출됩니다 배너명이 노출됩니다</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="btn-more">
+                        <button><span class="blind">결합상품</span>더보기</button>
+                    </div>
+                </div>
+                <!-- //결합상품 -->   
+                <hr class="cont-sp type1" aria-hidden="true">
+            </div>
+        </div>
+        <!-- //191127 [OP002-4532] 수정 (전체 UI개선) -->
+        <!--// #contents -->
+    </div>
+    
+    <!-- 191127 [OP002-4532] 수정 (전체 UI개선) -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //카테고리 탭
+            var $category = $('.tod-srhcategory-scrwrap'),
+                categoryTop = $category.offset().top,
+                $horizontalSlide = $category.find('.horizontal-slide'),
+                $categoryOn = $horizontalSlide.find('li.on'),
+                leftPosition = $categoryOn.offset().left - (($horizontalSlide.width() / 2) - ($categoryOn.width() / 2));
+
+            $(window).on('scroll', function () {
+                $category.toggleClass('fixed', ($(window).scrollTop() + $('.searchbox-header').height()) > categoryTop);
+            });
+
+            setTimeout(function () {
+                $horizontalSlide.scrollLeft(leftPosition);
+            }, 0);
+        });
+    </script>
+    <!-- //191127 [OP002-4532] 수정 (전체 UI개선) -->
+</body>
+</html>
