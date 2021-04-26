@@ -181,22 +181,19 @@ $.extend(Tw.CommonSearchMore.prototype,
       // this.$container.find('.horizontal-list').css('width', '2431px');
 
       // 최근 검색어 클릭시 초기화
-      this.$container.on('click', '#auto_complete_list li, #recently_keyword_list li a', function (/* e */) {
-        Tw.CommonHelper.setCookie('search_sort::rate', 'C');
-        Tw.CommonHelper.setCookie('search_sort::service', 'C');
-        Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
-        Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
-        // Tw.CommonHelper.setCookie('search_sort::direct', 'D');
-        Tw.CommonHelper.setCookie('search_sort::phone', 'D');
-        Tw.CommonHelper.setCookie('search_sort::tablet', 'D');
-        Tw.CommonHelper.setCookie('search_sort::accessory', 'D');
-      });
+      this.$container.on('click', '#auto_complete_list li, #recently_keyword_list li a', $.proxy(function () {
+        Tw.Logger.info('[common.search] [최근 검색어 클릭]', '');
+        // 정렬조건 쿠키 초기화
+        this._initSearchSortCookie(this._svcInfo);
+      }, this));
 
       function sortCodeToName(code) {
         if ( code === 'A' ) return '추천순';
         if ( code === 'H' ) return '높은 가격순';
         if ( code === 'L' ) return '낮은 가격순';
         if ( code === 'D' ) return '최신순';
+        if ( code === 'C' ) return '클릭순';
+        if ( code === 'R' ) return '정확도순';
       }
 
       // 뒤로가기 초기화 정렬 초기화 처리
@@ -423,9 +420,9 @@ $.extend(Tw.CommonSearchMore.prototype,
      * @returns {String}
      */
     _getSortCd: function (categoryId) {
-      Tw.Logger.info('[common.search.more] [_getSortCd]', '선택된 categoryId : ' + categoryId);
-      Tw.Logger.info('[common.search.more] [_getSortCd]', 'this.accessQuery : ' + this._accessQuery);
-      Tw.Logger.info('[common.search.more] [_getSortCd]', 'this._reqOptions.sortCd (AS-IS) : ' + this._reqOptions.sortCd);
+      Tw.Logger.info('[common.search.more] [_getSortCd]', '선택된 categoryId : ', categoryId);
+      // Tw.Logger.info('[common.search.more] [_getSortCd]', 'this.accessQuery : ', this._accessQuery);
+      // Tw.Logger.info('[common.search.more] [_getSortCd]', 'this._reqOptions.sortCd (AS-IS) : ', this._reqOptions.sortCd);
 
       this._reqOptions.sortCd.replace(
         categoryId + '-' + this._reqOptions.sortCd.substring(this._reqOptions.sortCd.indexOf(categoryId + '-') +
@@ -436,39 +433,50 @@ $.extend(Tw.CommonSearchMore.prototype,
       Tw.Logger.info('[common.search.more] [_getSortCd]', 'this._reqOptions.sortCd (TO-BE) : ' + this._reqOptions.sortCd);
       this._paramObj.sort = Tw.CommonHelper.getCookie('search_sort::' + categoryId) || 'A';
 
-      this._sortCd = [
-        {
-          list: [
-            {
-              txt: Tw.SEARCH_FILTER_STR.CLICK,  // 클릭순
-              'radio-attr': (this._paramObj.sort === 'C') ? 'class="focus-elem" sort="C" checked' : 'class="focus-elem" sort="C"',
-              'label-attr': ' ',
-              sort: 'C'
-            },
-            {
-              txt: Tw.SEARCH_FILTER_STR.NEW,  // 최신순
-              // 'radio-attr': (this._sort === 'D') ? 'class="focus-elem" sort="D" checked' : 'class="focus-elem" sort="D"',
-              'radio-attr': (this._paramObj.sort === 'D') ? 'class="focus-elem" sort="D" checked' : 'class="focus-elem" sort="D"',
-              'label-attr': ' ',
-              sort: 'D'
-            },
-            {
-              txt: Tw.SEARCH_FILTER_STR.LOW,  // 낮은 가격순
-              // 'radio-attr': (this._sort === 'L') ? 'class="focus-elem" sort="L" checked' : 'class="focus-elem" sort="L"',
-              'radio-attr': (this._paramObj.sort === 'L') ? 'class="focus-elem" sort="L" checked' : 'class="focus-elem" sort="L"',
-              'label-attr': ' ',
-              sort: 'L'
-            },
-            {
-              txt: Tw.SEARCH_FILTER_STR.HIGH,  // 높은 가격순
-              // 'radio-attr': (this._sort === 'H') ? 'class="focus-elem" sort="H" checked' : 'class="focus-elem" sort="H"',
-              'radio-attr': (this._paramObj.sort === 'H') ? 'class="focus-elem" sort="H" checked' : 'class="focus-elem" sort="H"',
-              'label-attr': ' ',
-              sort: 'H'
-            }
-          ]
-        }
-      ];
+      // 정렬조건 배열
+      var sortOptions = [];
+
+      // 로그인시 && (요금제 || 부가서비스)
+      if ( this._svcInfo && this._svcInfo.svcMgmtNum && (categoryId === 'rate' || categoryId === 'service') ) {
+        sortOptions.push({
+          txt: Tw.SEARCH_FILTER_STR.ADMIN,  // 추천순
+          'radio-attr': (this._paramObj.sort === 'A') ? 'class="focus-elem" sort="A" checked' : 'class="focus-elem" sort="A"',
+          'label-attr': ' ',
+          sort: 'A'
+        });
+      }
+      
+      sortOptions.push({
+        txt: Tw.SEARCH_FILTER_STR.CLICK,  // 클릭순
+        'radio-attr': (this._paramObj.sort === 'C') ? 'class="focus-elem" sort="C" checked' : 'class="focus-elem" sort="C"',
+        'label-attr': ' ',
+        sort: 'C'
+      });
+
+      sortOptions.push({
+        txt: Tw.SEARCH_FILTER_STR.NEW,  // 최신순
+        'radio-attr': (this._paramObj.sort === 'D') ? 'class="focus-elem" sort="D" checked' : 'class="focus-elem" sort="D"',
+        'label-attr': ' ',
+        sort: 'D'
+      });
+
+      sortOptions.push({
+        txt: Tw.SEARCH_FILTER_STR.LOW,  // 낮은 가격순
+        'radio-attr': (this._paramObj.sort === 'L') ? 'class="focus-elem" sort="L" checked' : 'class="focus-elem" sort="L"',
+        'label-attr': ' ',
+        sort: 'L'
+      });
+
+      sortOptions.push({
+        txt: Tw.SEARCH_FILTER_STR.HIGH,  // 높은 가격순
+        'radio-attr': (this._paramObj.sort === 'H') ? 'class="focus-elem" sort="H" checked' : 'class="focus-elem" sort="H"',
+        'label-attr': ' ',
+        sort: 'H'
+      });
+
+      this._sortCd = [{
+        list: sortOptions
+      }];
 
       Tw.Logger.info('[common.search.more] [_getSortCd]', categoryId + ' 카테고리의 정렬기준 : ' + this._paramObj.sort);
 
@@ -553,9 +561,8 @@ $.extend(Tw.CommonSearchMore.prototype,
     _sortRate: function (options) {
       var _this = this;
       Tw.Logger.info('[common.search.more] [_sortRate]', '호출');
+      Tw.Logger.info('[common.search.more] [_sortRate]', 'options : ', options);
       // e.preventDefault();   // a tag 의 # 링크가 동작하지 않도록 하기 위해 처리
-
-      Tw.Logger.info('[common.search.more] [_sortRate]', 'options : ' + options);
 
       var searchApi = Tw.BrowserHelper.isApp() ? Tw.API_CMD.SEARCH_APP : Tw.API_CMD.SEARCH_WEB;
 
@@ -568,9 +575,7 @@ $.extend(Tw.CommonSearchMore.prototype,
 
       var query = this._searchInfo.query;
       var researchQuery = this._searchInfo.researchQuery;
-
       var reqOptions;
-
 
       // var collection = 'rate';
       // var pageNum = 1;
@@ -615,12 +620,8 @@ $.extend(Tw.CommonSearchMore.prototype,
         .done($.proxy(function (res) {
           if ( res.code === 0 ) {
             Tw.Logger.info('[common.search.more] [_sortRate] search result', res.result);
-
-            Tw.Logger.info('[common.search.more] [_sortRate] res.result.search[0]', res.result.search[0]);
-
             // var sortedRateResultArr = res.result.search[0];
-
-            Tw.Logger.info('[common.search.more] [_sortRate]', '(res.result.search[0])[0] : ' + res.result.search[0][collection]);
+            // Tw.Logger.info('[common.search.more] [_sortRate]', '(res.result.search[0])[0] : ' + res.result.search[0][collection]);
 
             _this._storedResult = res.result.search[0][collection].data;
             _this._hasMoreContents = true;
@@ -697,6 +698,15 @@ $.extend(Tw.CommonSearchMore.prototype,
             else {
               this.$container.find('.fe-category.' + collection).attr('href', '/common/search/more?category=' +
                 collection + '&keyword=' + query + '&step=' + (this._step + 1) + '&sort=' + sort);
+            }
+
+            try {
+              if ( location && location.search ) {
+                // 뒤로가기 시 정렬규칙을 유지할 수 있도록 수정
+                history.replaceState({}, '', location.pathname + location.search.replace(/\&sort=[A-Z]/, '&sort=' + sort));
+              }
+            } catch ( e ) {
+              Tw.Logger.info('[common.search.more] [_sortRate] ', e);
             }
 
           }
@@ -828,11 +838,9 @@ $.extend(Tw.CommonSearchMore.prototype,
               keyName = Object.keys(res.result.search[i])[0];
               contentsCnt = Number(res.result.search[i][keyName].count);
 
-
               if ( keyName === 'smart' || keyName === 'immediate' || keyName === 'banner' || keyName === 'lastevent' || keyName === 'direct' ) {
                 continue;
-              }
-              else {
+              } else {
                 var categoryStr = '.fe-' + keyName + '-count';
                 // Tw.Logger.info('[' + keyName + ']', contentsCnt + '건');
                 // Tw.Logger.info('[' + keyName + ']', this.$container.find(categoryStr));
@@ -848,7 +856,7 @@ $.extend(Tw.CommonSearchMore.prototype,
 
                   var sort = this._reqOptions.sortCd.substring(this._reqOptions.sortCd.indexOf(keyName + '-') +
                     keyName.length + 1, this._reqOptions.sortCd.indexOf(keyName + '-') + keyName.length + 2);
-                  Tw.Logger.info('[common.search.more] [_categoryInit]', keyName + '의 정렬기준 : ' + sort);
+                  // Tw.Logger.info('[common.search.more] [_categoryInit]', keyName + '의 정렬기준 : ' + sort);
 
                   if ( query !== researchQuery ) {
                     // this.$container.find('.fe-category.all').attr('href', '/common/search?category=all&keyword=' +
@@ -876,8 +884,7 @@ $.extend(Tw.CommonSearchMore.prototype,
                 totalCnt += contentsCnt;
               }
 
-              Tw.Logger.info('[common.search.more] [_categoryInit]', '전체 의 정렬기준 : ' + this.$container.find('.fe-category.all').attr('href'));
-
+              // Tw.Logger.info('[common.search.more] [_categoryInit]', '전체 의 정렬기준 : ' + this.$container.find('.fe-category.all').attr('href'));
               // this._showShortcutList(this._arrangeData(res.result.search[i][keyName].data,keyName),keyName,this._cdn);
             } // end for
 
@@ -885,7 +892,7 @@ $.extend(Tw.CommonSearchMore.prototype,
             $('#fe-category-slide').addClass('horizontal');
             $('#fe-category-slide').removeData('event');
             skt_landing.widgets.widget_horizontal($('.widget'));
-            Tw.Logger.info('[common.search.more] [_categoryInit]', '카테고리 영역 width 를 가변적으로 조정해주는 처리 완료');
+            // Tw.Logger.info('[common.search.more] [_categoryInit]', '카테고리 영역 width 를 가변적으로 조정해주는 처리 완료');
             // 카테고리 영역을 모두 그려주고 나서 해당 스와이프 영역의 width 를 동적으로 맞춰주기 위한 처리[E]
 
 
@@ -947,6 +954,8 @@ $.extend(Tw.CommonSearchMore.prototype,
      * @returns {void}
      */
     _doSearch: function (evt) {
+      Tw.Logger.info('[common.search.more] [_doSearch]', '');
+
       var keyword = this.$inputElement.val();
       if ( Tw.FormatHelper.isEmpty(keyword) || keyword.trim().length <= 0 ) {
         this.$inputElement.blur();
@@ -959,8 +968,15 @@ $.extend(Tw.CommonSearchMore.prototype,
       requestUrl += encodeURIComponent(keyword);
       requestUrl += '&step=' + (Number(this._step) + 1);
       var sort = '&sort=shortcut-C';
-      sort += '.rate-C';
-      sort += '.service-C';
+
+      // 로그인시
+      if ( this._svcInfo && this._svcInfo.svcMgmtNum ) {
+        sort += '.rate-A';
+        sort += '.service-A';
+      } else {
+        sort += '.rate-C';
+        sort += '.service-C';
+      }
       sort += '.tv_internet-C';
       sort += '.troaming-C';
       // sort += '.direct-D';
@@ -971,14 +987,8 @@ $.extend(Tw.CommonSearchMore.prototype,
       this._addRecentlyKeyword(keyword);
       this._moveUrl(requestUrl);
 
-      Tw.CommonHelper.setCookie('search_sort::rate', 'C');
-      Tw.CommonHelper.setCookie('search_sort::service', 'C');
-      Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
-      Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
-      // Tw.CommonHelper.setCookie('search_sort::direct', 'D');
-      Tw.CommonHelper.setCookie('search_sort::phone', 'D');
-      Tw.CommonHelper.setCookie('search_sort::tablet', 'D');
-      Tw.CommonHelper.setCookie('search_sort::accessory', 'D');
+      // 정렬조건 쿠키 초기화
+      this._initSearchSortCookie(this._svcInfo);
     },
     /**
      * @function
@@ -1147,20 +1157,19 @@ $.extend(Tw.CommonSearchMore.prototype,
 
       var sort = '';
       if ( category === 'all' ) {
-        var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', /*'search_sort::direct',*/ 'search_sort::phone', 'search_sort::tablet', 'search_sort::accessory'];
-        //shortcut-C.rate-C.service-C.tv_internet-C.troaming-C
+        var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 
+                          'search_sort::phone', 'search_sort::tablet', 'search_sort::accessory'];
+        
         sort = 'shortcut-C';
         sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'C');
         sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'C');
         sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'C');
         sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'C');
-        // sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
         sort += '.phone-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
         sort += '.tablet-' + (Tw.CommonHelper.getCookie(sortsName[5]) || 'D');
         sort += '.accessory-' + (Tw.CommonHelper.getCookie(sortsName[6]) || 'D');
         linkUrl = replaceQueryParam('sort', sort, linkUrl);
-      }
-      else {
+      } else {
         sort = Tw.CommonHelper.getCookie('search_sort::' + category);
         linkUrl = replaceQueryParam('sort', sort, linkUrl);
       }

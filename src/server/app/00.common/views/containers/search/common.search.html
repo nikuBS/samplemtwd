@@ -45,11 +45,19 @@ if (code === 'C') return '클릭순';
 function sortToCodeName(seq, sort) {
 // shortcut-A.rate-H.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A
 // let sortName = ["바로가기", "요금제", "부가서비스", "인터넷/집전화/IPTV", "T로밍", "T다이렉트샵", "자주 하는 질문"];
-let sortCode = sort.split('.')[seq].split('-')[1];
+let sortCode = '';
+if ( typeof sort !== 'undefined' && sort ) {
+    if ( sort.indexOf('.')!== -1 && sort.indexOf('-') !== -1 ) {
+        var sortArr = sort.split('.');
+        if ( sortArr.length >= seq ) {
+            sortCode = sort.split('.')[seq].split('-')[1];
+        }
+    } else {
+        sortCode = sort;
+    }
+}
 return [sortCode, codeToData(sortCode)]
 }
-
-
 %>
 <!-- #skip_navigation 팝업페이지 바로가기 삭제 Grand open 접근성
     <div id="skipNav" class="skip_navi">
@@ -95,10 +103,10 @@ return [sortCode, codeToData(sortCode)]
     <!-- #contents -->
     <div id="contents" class="container-wrap fe-container-wrap">
 
-
         <div class="search-content container">
             <!-- 연관 검색어 -->
-            <% if(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0){ %>
+            <% if ( typeof relatedKeyword !== 'undefined' && relatedKeyword && relatedKeyword.result && relatedKeyword.result.Word ) { %>
+            <% var sortParam = sort ? '&sort=' + sort : ''; %> 
             <div class="cont-box nogaps">
                 <div class="tod-related-keywords tod-horizon-shadow">
                     <p class="tit"><span>연관<span class="blind">검색어</span></span></p>
@@ -106,9 +114,9 @@ return [sortCode, codeToData(sortCode)]
                         <div class="widget-box horizontal">
                             <div class="horizontal-slide">
                                 <ul class="horizontal-list">
-                                    <% for(var i=0; i < relatedKeyword.result.Word.length && i<=4; i++){ %>
+                                    <% for(var i=0; i < relatedKeyword.result.Word.length && i <= 4; i++){ %>
                                     <li>
-                                        <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(relatedKeyword.result.Word[i]) %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
+                                        <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(relatedKeyword.result.Word[i]) %><%= sortParam %> " data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
                                             <%= relatedKeyword.result.Word[i] %>
                                         </a>
                                     </li>
@@ -1317,7 +1325,7 @@ return [sortCode, codeToData(sortCode)]
 <% include ../../components/tmap.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,'<%- CDN %>','<%- step %>','<%- from %>','<%- nowUrl %>')._init();
+        new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,'<%- CDN %>','<%- step %>','<%- from %>','<%- sort %>','<%- nowUrl %>')._init();
     });
 </script>
 <% include ../../components/end.component.html %>
