@@ -11,7 +11,6 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import { TERM_STRING } from '../../../../../types/string.type';
 import EnvHelper from '../../../../../utils/env.helper';
-import MyTJoinPhoneNumChgAlarmExt from '../../../../04.myt-join/controllers/submain/myt-join.submain.phone.extalarm.controller';
 
 export default class MainMenuSettingsTerms extends TwViewController {
 
@@ -27,7 +26,7 @@ export default class MainMenuSettingsTerms extends TwViewController {
   // 101번 약관은 외부 url을 iframe으로 표기
   private urlMap = {
     101: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.1_iframe1.html', // 멤버십 회원약관
-    103: 'https://www.sktmembership.co.kr/mobile/html/iframe/2.1_iframe1.html' // 멤버십 개인정보처리방침 
+    103: 'https://www.sktmembership.co.kr/mobile/html/iframe/2.1_iframe1.html' // 멤버십 개인정보처리방침
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
@@ -49,13 +48,13 @@ export default class MainMenuSettingsTerms extends TwViewController {
         });
         return;
       }
-      // 개인정보수집/이용동의약관 팝업 
+      // 개인정보수집/이용동의약관 팝업
       if (id === '55' && req.query.type === 'p') {
         this.getTermContent(res, svcInfo, pageInfo, id).subscribe(
           (resp) => {
             if (!FormatHelper.isEmpty(resp)) {
               const title = '개인정보수집/이용동의 약관';
-              const actionTitle = resp.title.includes('_') ? resp.title.split('_')[1] : resp.title; // BFF에서 
+              const actionTitle = resp.title.includes('_') ? resp.title.split('_')[1] : resp.title; // BFF에서
               res.render(`menu/settings/main.menu.settings.term-type-${req.query.type}.html`, {
                 svcInfo, pageInfo, title, content: resp.content, viewId, id, actionTitle
               });

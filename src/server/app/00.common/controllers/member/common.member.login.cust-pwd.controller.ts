@@ -6,7 +6,6 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { COOKIE_KEY } from '../../../../types_en/common.type';
 
 class CommonMemberLoginCustPwd extends TwViewController {
   constructor() {
@@ -23,23 +22,15 @@ class CommonMemberLoginCustPwd extends TwViewController {
    * @param  {any} pageInfo - 페이지 정보
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-
-    const isGlobal = req.cookies[COOKIE_KEY.GLOBAL_ENGLISH] || false
-    if ( isGlobal ) {
-      const target = '/en/main/home';
-      res.render('member/en.common.member.login.cust-pwd.html', { svcInfo: svcInfo, target: target, pageInfo: pageInfo });
-    } else {
-      // iOS에서 query target 에 query 포함 전체 url이 넘어오는 이슈로 인해 예외처리 추가
-      // ex: req.query.target = "/common/member/login/cust-pwd?target=/main/home"
-      const chkTarget = 'target=';
-      let target = req.query.target || '/main/home';
-      const targetIndex = target.indexOf(chkTarget);
-      if (targetIndex > -1) {
-        target = target.substring(targetIndex + chkTarget.length, target.length);
-      }
-      res.render('member/common.member.login.cust-pwd.html', { svcInfo: svcInfo, target: target, pageInfo: pageInfo });
+    // iOS에서 query target 에 query 포함 전체 url이 넘어오는 이슈로 인해 예외처리 추가
+    // ex: req.query.target = "/common/member/login/cust-pwd?target=/main/home"
+    const chkTarget = 'target=';
+    let target = req.query.target || '/main/home';
+    const targetIndex = target.indexOf(chkTarget);
+    if (targetIndex > -1) {
+      target = target.substring(targetIndex + chkTarget.length, target.length);
     }
-
+    res.render('member/common.member.login.cust-pwd.html', { svcInfo: svcInfo, target: target, pageInfo: pageInfo });
   }
 }
 

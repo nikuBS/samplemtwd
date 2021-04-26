@@ -1,40 +1,35 @@
-var gulp       = require('gulp'),
-    gutil      = require('gulp-util'),
-    uglify     = require('gulp-uglify'),
-    cleanCSS   = require('gulp-clean-css'),
-    concat     = require('gulp-concat'),
-    webserver  = require('gulp-webserver'),
-    livereload = require('gulp-livereload'),
-    rename     = require('gulp-rename'),
-    // base64     = require('gulp-base64'),
-    rev        = require('gulp-rev'),
-    sort       = require('gulp-sort'),
-    extend     = require('gulp-extend'),
-    shell      = require('gulp-shell'),
-    clean      = require('gulp-clean'),
-    remoteSrc  = require('gulp-remote-src'),
-    jeditor    = require('gulp-json-editor'),
-    options    = require('gulp-options'),
+var gulp        = require('gulp'),
+    gutil       = require('gulp-util'),
+    uglify      = require('gulp-uglify'),
+    cleanCSS    = require('gulp-clean-css'),
+    concat      = require('gulp-concat'),
+    webserver   = require('gulp-webserver'),
+    rename      = require('gulp-rename'),
+    rev         = require('gulp-rev'),
+    sort        = require('gulp-sort'),
+    extend      = require('gulp-extend'),
+    shell       = require('gulp-shell'),
+    clean       = require('gulp-clean'),
+    remoteSrc   = require('gulp-remote-src'),
+    jeditor     = require('gulp-json-editor'),
+    options     = require('gulp-options'),
     browserSync = require('browser-sync').create(),
-    jshint     = require('gulp-jshint');
+    jshint      = require('gulp-jshint');
 
 var appNames = ['common', 'main', 'myt-data', 'myt-fare', 'myt-join', 'product', 'benefit', 'membership', 'customer', 'tevent'];
 var dist = 'dist/';
 
 var manifest = {};
-var manifest_en = {};
-
 var version = options.get('ver');
 // var manifestFile = 'manifest.json';
 var manifestFile = version !== 'undefined' ? 'manifest.' + version + '.json' : 'manifest.json';
-var manifestFile_en = version !== 'undefined' ? 'manifest_en.' + version + '.json' : 'manifest_en.json';
 var manifest_dist = 'src/server/';
 var error = function (err) {
   gutil.log(gutil.colors.red('[Error]'), err);
   process.exit(1);
 };
 
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync', function () {
   return browserSync.init({
     port: 3001,
     server: {
@@ -45,8 +40,8 @@ gulp.task('browser-sync', function() {
         res.setHeader('Access-Control-Allow-Headers', '*');
         next();
       }
-    },
-  })
+    }
+  });
 });
 
 gulp.task('pre-clean', function () {
@@ -183,31 +178,8 @@ gulp.task('js-component', function (done) {
     .pipe(gulp.dest(dist + 'js'))
     .pipe(rev.manifest(dist + 'tmp/component-manifest.json'))
     .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
+    .pipe(browserSync.reload({ stream: true }));
 });
-
-//영문
-gulp.task('en_js-component', function () {
-  return gulp.src([
-    'src/client/component_en/**/*.js',
-    'src/client/common_en/**/*.js'
-  ])
-    .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter('jshint-stylish'))
-    // .pipe(jshint.reporter('fail'))
-    .pipe(sort())
-    .pipe(concat('component_en.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .on('error', error)
-    .pipe(rename('component_en.min.js'))
-    .pipe(rev())
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(rev.manifest(dist + 'tmp_en/component-manifest.json'))
-    .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
-});
-
 gulp.task('js-util', function () {
   return gulp.src([
     'src/client/configs/**/*.js',
@@ -227,29 +199,7 @@ gulp.task('js-util', function () {
     .pipe(gulp.dest(dist + 'js'))
     .pipe(rev.manifest(dist + 'tmp/util-manifest.json'))
     .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
-});
-//영문
-gulp.task('en_js-util', function () {
-  return gulp.src([
-    'src/client/configs/**/*.js',
-    'src/client/types_en/**/*.js',
-    'src/client/utils_en/**/*.js',
-    'src/client/services_en/**/*.js'])
-    .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter('jshint-stylish'))
-    // .pipe(jshint.reporter('fail'))
-    .pipe(sort())
-    .pipe(concat('util_en.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .on('error', error)
-    .pipe(rename('util_en.min.js'))
-    .pipe(rev())
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(rev.manifest(dist + 'tmp_en/util-manifest.json'))
-    .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('js-component-client', function () {
@@ -267,25 +217,7 @@ gulp.task('js-component-client', function () {
     .pipe(rename(manifest['component.min.js']))
     .on('error', error)
     .pipe(gulp.dest(dist + 'js'))
-    .pipe(browserSync.reload({ stream : true }));
-});
-//영문
-gulp.task('en_js-component-client', function () {
-  return gulp.src([
-    'src/client/component_en/**/*.js',
-    'src/client/common_en/**/*.js'])
-    .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter('jshint-stylish'))
-    // .pipe(jshint.reporter('fail'))
-    .pipe(sort())
-    .pipe(concat('component_en.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .on('error', error)
-    .pipe(rename(manifest_en['component_en.min.js']))
-    .on('error', error)
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(browserSync.reload({ stream : true }));
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('js-util-client', function () {
@@ -305,27 +237,7 @@ gulp.task('js-util-client', function () {
     .pipe(rename(manifest['util.min.js']))
     .on('error', error)
     .pipe(gulp.dest(dist + 'js'))
-    .pipe(browserSync.reload({ stream : true }));
-});
-//영문
-gulp.task('en_js-util-client', function () {
-  return gulp.src([
-    'src/client/configs/**/*.js',
-    'src/client/types_en/**/*.js',
-    'src/client/utils_en/**/*.js',
-    'src/client/services_en/**/*.js'])
-    .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter('jshint-stylish'))
-    // .pipe(jshint.reporter('fail'))
-    .pipe(sort())
-    .pipe(concat('util_en.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .on('error', error)
-    .pipe(rename(manifest_en['util_en.min.js']))
-    .on('error', error)
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(browserSync.reload({ stream : true }));
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 appNames.forEach(function (app, index) {
@@ -346,7 +258,7 @@ appNames.forEach(function (app, index) {
         merge: true
       }))
       .pipe(gulp.dest('.'))
-      .pipe(browserSync.reload({ stream : true }));
+      .pipe(browserSync.reload({ stream: true }));
   });
 });
 appNames.forEach(function (app, index) {
@@ -362,48 +274,9 @@ appNames.forEach(function (app, index) {
       .on('error', error)
       .pipe(rename(manifest[app + '.min.js']))
       .pipe(gulp.dest(dist + 'js'))
-      .pipe(browserSync.reload({ stream : true }));
+      .pipe(browserSync.reload({ stream: true }));
   });
 });
-//영문
-appNames.forEach(function (app_en, index_en) {
-  gulp.task('en_js-' + app_en, function () {
-    return gulp.src('src/client/app_en/0' + index_en + '.' + app_en + '/**/*.js')
-      .pipe(jshint('.jshintrc'))
-      .pipe(jshint.reporter('jshint-stylish'))
-      // .pipe(jshint.reporter('fail'))
-      .pipe(sort())
-      .pipe(concat(app_en + '_en.js'))
-      .pipe(gulp.dest(dist + 'js'))
-      .pipe(uglify())
-      .on('error', error)
-      .pipe(rename(app_en + '_en.min.js'))
-      .pipe(rev())
-      .pipe(gulp.dest(dist + 'js'))
-      .pipe(rev.manifest(dist + 'tmp_en/' + app_en + '-manifest.json', {
-        merge: true
-      }))
-      .pipe(gulp.dest('.'))
-      .pipe(browserSync.reload({ stream : true }));
-  });
-});
-appNames.forEach(function (app_en, index) {
-  gulp.task('en_js-' + app_en + '-client', function () {
-    return gulp.src('src/client/app_en/0' + index + '.' + app_en + '/**/*.js')
-      .pipe(jshint('.jshintrc'))
-      .pipe(jshint.reporter('jshint-stylish'))
-      // .pipe(jshint.reporter('fail'))
-      .pipe(sort())
-      .pipe(concat(app_en + '_en.js'))
-      .pipe(gulp.dest(dist + 'js'))
-      .pipe(uglify())
-      .on('error', error)
-      .pipe(rename(manifest_en[app_en + '_en.min.js']))
-      .pipe(gulp.dest(dist + 'js'))
-      .pipe(browserSync.reload({ stream : true }));
-  });
-});
-
 gulp.task('css-vendor', function () {
   return gulp.src([
     'node_modules/slick-carousel/slick/slick.css'])
@@ -432,31 +305,9 @@ gulp.task('js-rb', function () {
       merge: true
     }))
     .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
+    .pipe(browserSync.reload({ stream: true }));
 });
 
-//영문
-gulp.task('en_js-rb', function () {
-  return gulp.src([
-    'src/client/web-contents/js/$vars_en.js',
-    'src/client/web-contents/js/chart_en.js',
-    'src/client/web-contents/js/common_en.js',
-    'src/client/web-contents/js/widgets_en.js'
-  ])
-    .pipe(sort())
-    .pipe(concat('script_en.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .on('error', error)
-    .pipe(rename('script_en.min.js'))
-    .pipe(rev())
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(rev.manifest(dist + 'tmp_en/js-manifest.json', {
-      merge: true
-    }))
-    .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
-});
 gulp.task('css-rb', function () {
   return gulp.src([
     'src/client/web-contents/css/common.css',
@@ -486,36 +337,7 @@ gulp.task('css-rb', function () {
       merge: true
     }))
     .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
-});
-
-//영문
-gulp.task('en_css-rb', function () {
-  return gulp.src([
-    'src/client/web-contents/css/common_en.css',
-    'src/client/web-contents/css/layout_en.css',
-    'src/client/web-contents/css/widgets_en.css',
-    'src/client/web-contents/css/components_en.css',
-    'src/client/web-contents/css/style_en.css'])
-    // .pipe(base64({
-    //   baseDir: 'src/client/web-contents/',
-    //   extensions: ['svg', 'png', /\.jpg#datauri$/i],
-    //   maxImageSize: 10 * 1024 * 1024, // bytes
-    //   debug: true
-    // }))
-    .pipe(concat('style_en.css'))
-    // .pipe(imagehash())
-    .pipe(cleanCSS())
-    .pipe(gulp.dest(dist + 'css'))
-    .on('error', error)
-    .pipe(rename('style_en.min.css'))
-    .pipe(rev())
-    .pipe(gulp.dest(dist + 'css'))
-    .pipe(rev.manifest(dist + 'tmp_en/css-manifest.json', {
-      merge: true
-    }))
-    .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('css-main', function () {
@@ -543,63 +365,8 @@ gulp.task('css-main', function () {
       merge: true
     }))
     .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
+    .pipe(browserSync.reload({ stream: true }));
 });
-
-//영문
-gulp.task('en_css-main', function () {
-  return gulp.src([
-    'src/client/web-contents/css/common_en.css',
-    'src/client/web-contents/css/layout_en.css',
-    'src/client/web-contents/css/widgets_en.css',
-    'src/client/web-contents/css/components_en.css',
-    'src/client/web-contents/css/style_en.css',
-    'src/client/web-contents/css/main_en.css'])
-    // .pipe(base64({
-    //   baseDir: 'src/client/web-contents/',
-    //   extensions: ['svg', 'png', /\.jpg#datauri$/i],
-    //   maxImageSize: 10 * 1024 * 1024, // bytes
-    //   debug: true
-    // }))
-    .pipe(concat('mainstyle_en.css'))
-    // .pipe(imagehash())
-    .pipe(cleanCSS())
-    .pipe(gulp.dest(dist + 'css'))
-    .on('error', error)
-    .pipe(rename('mainstyle_en.min.css'))
-    .pipe(rev())
-    .pipe(gulp.dest(dist + 'css'))
-    .pipe(rev.manifest(dist + 'tmp_en/css-main-manifest.json', {
-      merge: true
-    }))
-    .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
-});
-
-gulp.task('en_css-products', function () {
-  return gulp.src([
-    'src/client/web-contents/css/products_en.css'])
-    // .pipe(base64({
-    //   baseDir: 'src/client/web-contents/',
-    //   extensions: ['svg', 'png', /\.jpg#datauri$/i],
-    //   maxImageSize: 10 * 1024 * 1024, // bytes
-    //   debug: true
-    // }))
-    .pipe(concat('productstyle_en.css'))
-    // .pipe(imagehash())
-    .pipe(cleanCSS())
-    .pipe(gulp.dest(dist + 'css'))
-    .on('error', error)
-    .pipe(rename('productstyle_en.min.css'))
-    .pipe(rev())
-    .pipe(gulp.dest(dist + 'css'))
-    .pipe(rev.manifest(dist + 'tmp_en/css-products-manifest.json', {
-      merge: true
-    }))
-    .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
-});
-
 gulp.task('css-idpt', function () {
   return gulp.src([
     'src/client/web-contents/css/idpt-service-mobile.css'])
@@ -615,7 +382,7 @@ gulp.task('css-idpt', function () {
       merge: true
     }))
     .pipe(gulp.dest('.'))
-    .pipe(browserSync.reload({ stream : true }));
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('myt-adv-css', function () {
@@ -626,13 +393,13 @@ gulp.task('myt-adv-css', function () {
 gulp.task('img', function () {
   return gulp.src('src/client/web-contents/img/**/*')
     .pipe(gulp.dest(dist + 'img'))
-    .pipe(browserSync.reload({ stream : true }));
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('hbs', function () {
   return gulp.src('src/client/web-contents/hbs/**/*')
     .pipe(gulp.dest(dist + 'hbs'))
-    .pipe(browserSync.reload({ stream : true }));
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('font', function () {
@@ -646,13 +413,6 @@ gulp.task('manifest', function () {
     .pipe(gulp.dest(manifest_dist))
     .pipe(gulp.dest(dist));
 });
-//영문
-gulp.task('manifest_en', function () {
-  return gulp.src([dist + 'tmp_en/*.json'])
-    .pipe(extend(manifestFile_en))
-    .pipe(gulp.dest(manifest_dist))
-    .pipe(gulp.dest(dist));
-});
 
 gulp.task('cab', function () {
   return gulp.src('src/client/web-contents/cab/**/*')
@@ -662,7 +422,7 @@ gulp.task('cab', function () {
 gulp.task('hbs-front', function () {
   return gulp.src('src/client/web-hbs/**/*')
     .pipe(gulp.dest(dist + 'hbs'))
-    .pipe(browserSync.reload({ stream : true }));
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('mp4', function () {
@@ -675,10 +435,6 @@ gulp.task('post-clean', function () {
     .pipe(clean());
 });
 
-gulp.task('post-clean_en', function () {
-  return gulp.src(dist + 'tmp_en').pipe(clean());
-
-});
 
 gulp.task('watch', function () {
   gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs-front']);
@@ -695,27 +451,11 @@ gulp.task('get-manifest', function () {
     }));
 });
 
-gulp.task('get-manifest_en', function () {
-  return remoteSrc('manifest_en.json', {
-    base: 'http://localhost:3001/'
-  })
-    .on('error', error)
-    .pipe(jeditor(function (json) {
-      manifest_en = json;
-    }));
-});
-
 gulp.task('js-app', appNames.map(function (app) {
   return 'js-' + app;
 }));
-gulp.task('en_js-app', appNames.map(function (app) {
-  return 'en_js-' + app;
-}));
 gulp.task('js-app-client', appNames.map(function (app) {
   return 'js-' + app + '-client';
-}));
-gulp.task('en_js-app-client', appNames.map(function (app) {
-  return 'en_js-' + app + '-client';
 }));
 gulp.task('js', ['js-util', 'js-component', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
@@ -723,57 +463,26 @@ gulp.task('vendor', ['js-vendor', 'js-vendor-ex', 'css-vendor']);
 gulp.task('json', ['json-chatbot-1', 'json-chatbot-2', 'json-chatbot-3', 'json-chatbot-4', 'json-chatbot-5', 'json-chatbot-6', 'json-chatbot-7', 'json-chatbot-8']);
 gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'myt-adv-css', 'img', 'hbs', 'font', 'mp4', 'json']);
 
-gulp.task('en_js', ['en_js-util', 'en_js-component', 'en_js-app']);
-gulp.task('en_js-client', ['en_js-util-client', 'en_js-component-client', 'en_js-app-client']);
-gulp.task('en_rb', ['en_js-rb', 'en_css-rb', 'en_css-main', 'en_css-products']);
-
 gulp.task('task', ['vendor', 'js', 'rb', 'cab']);
-gulp.task('en_task', ['en_js', 'en_rb']);
 gulp.task('run', ['browser-sync', 'watch']);
 
 gulp.task('default', shell.task([
   'gulp pre-clean --ver=' + version,
   'gulp task --ver=' + version,
-  'gulp en_task --ver=' + version,
   'gulp hbs-front --ver=' + version,
   'gulp manifest --ver=' + version,
-  'gulp manifest_en --ver=' + version,
   'gulp post-clean --ver=' + version,
-  'gulp post-clean_en --ver=' + version,
   'gulp run --ver=' + version
 ]));
 
 gulp.task('build', shell.task([
   'gulp pre-clean --ver=' + version,
   'gulp task --ver=' + version,
-  'gulp en_task --ver=' + version,
   'gulp hbs-front --ver=' + version,
   'gulp manifest --ver=' + version,
-  'gulp manifest_en --ver=' + version,
-  'gulp post-clean --ver=' + version,
-  'gulp post-clean_en --ver=' + version
+  'gulp post-clean --ver=' + version
 ]));
 
-gulp.task('client-build', ['get-manifest', 'get-manifest_en'], function () {
-  gulp.start('js-client', 'en_js-client');
-});
-
-gulp.task('ko-build', shell.task([
-  'gulp pre-clean --ver=' + version,
-  'gulp task --ver=' + version,
-  'gulp hbs-front --ver=' + version,
-  'gulp manifest --ver=' + version,
-  'gulp post-clean --ver=' + version,
-  'gulp ko-run --ver=' + version
-]));
-
-gulp.task('ko-run', ['browser-sync', 'ko-watch']);
-
-gulp.task('ko-watch', function () {
-  gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs-front']);
-  gulp.watch('src/client/**/*.js', { interval: 500 }, ['ko-client-build']);
-});
-
-gulp.task('ko-client-build', ['get-manifest'], function () {
+gulp.task('client-build', ['get-manifest'], function () {
   gulp.start('js-client');
 });

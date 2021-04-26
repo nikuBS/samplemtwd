@@ -8,7 +8,6 @@ import DateHelper from '../../utils/date.helper';
 import { SHORTCUT_LOGIN_TYPE } from '../../types/bff.type';
 import FormatHelper from '../../utils/format.helper';
 import BrowserHelper from '../../utils/browser.helper';
-import { COOKIE_KEY } from '../../types_en/common.type';
 
 const mapping = require('../mtwmweb_op.json');
 
@@ -49,15 +48,6 @@ class ShortcutRouter {
         });
 
       } else if ( req.path === '/' ) {
-        // 2020. 10. 28. 영문 페이지 => Menu => Settings => Set English T world as Default 가 설정되어있는 상태라면
-        // '/' 로 접근하는 WEB의 페이지에 대해서 '/en/main/home' 으로 redirect 함. [김기남]
-        if ( !BrowserHelper.isApp(req) ) {
-          const isEng = req.cookies[COOKIE_KEY.GLOBAL_ENGLISH] || false;
-          if ( isEng ) {
-            res.redirect('/en/main/home');
-            return;
-          }
-        }
         res.redirect('/main/home');
       } else if ( req.path === '/s.jsp' ) {
         const encParam = req.query.p || '';

@@ -340,7 +340,8 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
             this._modifyMenu(
               res.result.isLogin,
               res.result.userInfo,
-              this.tideUpMenuInfo(res.result.frontMenus, res.result.userInfo)
+              // this.tideUpMenuInfo(res.result.frontMenus, res.result.userInfo) // 어드민에 등록된 메뉴항목으로 설정
+              this.tideUpMenuInfo([], res.result.userInfo) // <- 임의 테스트
             );
             this._isMenuSet = true;
             Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.CHANGE_LOGIN_STATUS, 'N');
@@ -945,6 +946,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @param  {Object} userInfo - 현재 사용자의 정보
    */
   tideUpMenuInfo: function (menuInfo, userInfo) {
+    if (!menuInfo || menuInfo.length === 0) {
+      return [];
+    }
     // expsSeq에 따라 한번 정렬해줌
     var sorted =  _.chain(menuInfo)
       .filter(function (item) {

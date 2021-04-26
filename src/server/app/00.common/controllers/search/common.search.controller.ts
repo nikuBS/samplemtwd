@@ -11,10 +11,8 @@ import FormatHelper from '../../../../utils/format.helper';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE, API_VERSION} from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
-import MyTDataHotData from '../../../02.myt-data/controllers/usage/myt-data.hotdata.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
 import LoggerService from '../../../../services/logger.service';
-import { request } from 'https';
 
 class CommonSearch extends TwViewController {
   private readonly log;
