@@ -45,7 +45,7 @@ inKeyword = encodeURIComponent(inKeyword);
 
     <div id="contents" class="search-content fe-aria-hidden-el fe-container-wrap container-wrap">
         <div class="search-content">
-            <% if(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0){ %>
+            <% if ( typeof relatedKeyword !== 'undefined' && relatedKeyword && relatedKeyword.result && relatedKeyword.result.Word && relatedKeyword.result.Word.length > 0 ) { %>
             <div class="cont-box nogaps">
                 <div class="tod-related-keywords tod-horizon-shadow">
                     <p class="tit"><span>연관<span class="blind">검색어</span></span></p>

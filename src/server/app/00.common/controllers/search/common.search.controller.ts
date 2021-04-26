@@ -29,9 +29,20 @@ class CommonSearch extends TwViewController {
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const from = req.header('referer') ? req.query.from : null;
     const pageNum = req.query.page || 1;
-    let sort = req.query.sort || 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.direct-D.phone-D.tablet-D.accessory-D';
     let redirectParam = req.query.redirect || 'Y';
     const _this = this;
+
+    let sort = '';
+    if ( req.query && req.query.sort ) {
+      sort = req.query.sort;
+    } else {
+      if ( svcInfo ) {
+        sort = 'shortcut-C.rate-A.service-A.tv_internet-C.troaming-C.direct-D.phone-D.tablet-D.accessory-D';
+      } else {
+        sort = 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.direct-D.phone-D.tablet-D.accessory-D';
+      }
+    }
+
     // const sort = 'A';  // 추천순 (Admin)
     // const sort = 'D';  // 최신순 (Date)
     // const sort = 'H';  // 높은가격순 (HighPrice)
@@ -224,9 +235,9 @@ class CommonSearch extends TwViewController {
               }
             });
           } else {
-            let keywords: string = searchResult.result.query;
-            let arrKeyword = keywords.split(' ');
-            let arrKeywordSize: number = 0;
+            const keywords: string = searchResult.result.query;
+            const arrKeyword = keywords.split(' ');
+            let arrKeywordSize = 0;
             if ('Y' === searchResult.result.orSearch) {
               arrKeywordSize = arrKeyword.length || 0;
             }
@@ -248,9 +259,9 @@ class CommonSearch extends TwViewController {
           }
 
         } else {
-          let keywords: string = searchResult.result.query;
-          let arrKeyword = keywords.split(' ');
-          let arrKeywordSize: number = 0;
+          const keywords: string = searchResult.result.query;
+          const arrKeyword = keywords.split(' ');
+          let arrKeywordSize = 0;
           if ('Y' === searchResult.result.orSearch) {
             arrKeywordSize = arrKeyword.length || 0;
           }

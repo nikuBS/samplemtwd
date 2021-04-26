@@ -31,15 +31,6 @@
         if (code === 'D') return '최신순';
         if (code === 'C') return '클릭순';
     }
-
-    // sortToCodeName(1, sort)[0]
-    function sortToCodeName(seq, sort) {
-        // shortcut-A.rate-H.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A
-        // let sortName = ["바로가기", "요금제", "부가서비스", "인터넷/집전화/IPTV", "T로밍", "T다이렉트샵", "자주 하는 질문"];
-        let sortCode = sort.split('.')[seq].split('-')[1];
-        return [sortCode, codeToData(sortCode)]
-    }
-
 %>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 
@@ -86,7 +77,7 @@
     <div id="contents" class="container-wrap fe-container-wrap">
         <div class="search-content container">
             <!-- 연관 검색어 -->
-            <% if(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0){ %>
+            <% if ( typeof relatedKeyword !== 'undefined' && relatedKeyword && relatedKeyword.result && relatedKeyword.result.Word && relatedKeyword.result.Word.length > 0 ) { %>
             <div class="cont-box nogaps">
                 <div class="tod-related-keywords tod-horizon-shadow">
                     <p class="tit"><span>연관<span class="blind">검색어</span></span></p>
